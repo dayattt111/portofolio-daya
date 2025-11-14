@@ -1,0 +1,191 @@
+import { Users, Link as LinkIcon, Award } from 'lucide-react';
+
+interface Partner {
+  name: string;
+  description: string;
+  logo: string;
+  role: string;
+  year: string;
+  link: string;
+  color: string;
+}
+
+const partners: Partner[] = [
+  {
+    name: 'React Community ID',
+    description: 'Active member and contributor to React ecosystem in Indonesia',
+    logo: '⚛️',
+    role: 'Core Member',
+    year: '2021-Present',
+    link: '#',
+    color: '#00ff88'
+  },
+  {
+    name: 'Dev.to Community',
+    description: 'Technical writer and mentor, 10k+ followers',
+    logo: '📝',
+    role: 'Top Writer',
+    year: '2020-Present',
+    link: '#',
+    color: '#ff006e'
+  },
+  {
+    name: 'JavaScript Meetup Jakarta',
+    description: 'Regular speaker and event organizer',
+    logo: '🎤',
+    role: 'Speaker & Organizer',
+    year: '2019-Present',
+    link: '#',
+    color: '#b537f2'
+  },
+  {
+    name: 'Open Source Foundation',
+    description: 'Maintainer of popular open source projects',
+    logo: '🔓',
+    role: 'Project Maintainer',
+    year: '2020-Present',
+    link: '#',
+    color: '#ffbe0b'
+  },
+  {
+    name: 'Tech Startup Accelerator',
+    description: 'Mentor for 20+ startups, helped secure $2M+ funding',
+    logo: '🚀',
+    role: 'Technical Mentor',
+    year: '2021-Present',
+    link: '#',
+    color: '#00a3ff'
+  },
+  {
+    name: 'Women in Tech',
+    description: 'Advocate for diversity and inclusion in tech',
+    logo: '👩‍💻',
+    role: 'Supporter',
+    year: '2020-Present',
+    link: '#',
+    color: '#ff69b4'
+  }
+];
+
+export default function CommunityPartners() {
+  return (
+    <section id="community" className="section-retro">
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="scroll-animate mb-16">
+          <h2 className="section-title">
+            [ COMMUNITY & PARTNERSHIPS ]
+          </h2>
+          <p className="text-center text-gray-400 font-retro text-sm md:text-base mt-4">
+            &gt; Building and contributing to amazing communities
+          </p>
+        </div>
+
+        {/* Partners Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+          {partners.map((partner, index) => (
+            <div
+              key={index}
+              className="scroll-animate group"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              <div 
+                className="retro-card-dark h-full flex flex-col hover:scale-105 transition-transform cursor-pointer"
+                style={{
+                  borderLeftWidth: '4px',
+                  borderLeftColor: partner.color,
+                  background: `linear-gradient(135deg, rgba(10, 14, 39, 0.8) 0%, rgba(10, 26, 46, 0.6) 100%)`
+                }}
+              >
+                {/* Logo & Badge */}
+                <div className="mb-6 flex items-start justify-between">
+                  <div className="text-5xl">{partner.logo}</div>
+                  <div 
+                    className="px-2 py-1 rounded text-xs font-pixel border"
+                    style={{
+                      borderColor: partner.color,
+                      color: partner.color,
+                      backgroundColor: `${partner.color}15`
+                    }}
+                  >
+                    {partner.role}
+                  </div>
+                </div>
+
+                {/* Content */}
+                <h3 className="text-xl font-pixel font-bold mb-2" style={{ color: partner.color }}>
+                  {partner.name}
+                </h3>
+                <p className="text-gray-300 font-retro text-sm mb-6 flex-grow">
+                  {partner.description}
+                </p>
+
+                {/* Meta */}
+                <div className="flex items-center gap-2 text-gray-400 font-retro text-xs mb-6">
+                  <Award className="w-4 h-4" />
+                  {partner.year}
+                </div>
+
+                {/* Link Button */}
+                <a
+                  href={partner.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 px-4 py-2 border border-current rounded transition-all hover:shadow-lg text-sm font-pixel"
+                  style={{ color: partner.color }}
+                >
+                  <LinkIcon className="w-4 h-4" />
+                  VISIT
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Community Stats */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
+          {[
+            { icon: '👥', label: 'COMMUNITY MEMBERS', value: '50K+' },
+            { icon: '📢', label: 'TALKS GIVEN', value: '25+' },
+            { icon: '🤝', label: 'MENTEES', value: '100+' },
+            { icon: '💡', label: 'PROJECTS LED', value: '12' }
+          ].map((stat, i) => (
+            <div key={i} className="scroll-animate" style={{ animationDelay: `${0.5 + i * 0.1}s` }}>
+              <div className="retro-card text-center">
+                <div className="text-4xl mb-3">{stat.icon}</div>
+                <div className="text-xs font-pixel text-gray-300 mb-2">[ {stat.label} ]</div>
+                <div className="text-2xl font-pixel font-bold text-neon-cyan">
+                  {stat.value}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Call to Action */}
+        <div className="scroll-animate">
+          <div className="retro-card glass-effect text-center py-12 px-8">
+            <h3 className="text-2xl font-pixel font-bold text-neon-pink mb-4">
+              JOIN THE COMMUNITY!
+            </h3>
+            <p className="text-gray-300 font-retro mb-8 max-w-2xl mx-auto">
+              &gt; Whether you're a beginner or expert, there's a place for you. Let's build amazing things together!
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button className="pixel-btn">
+                JOIN DISCORD
+              </button>
+              <a
+                href="https://wa.me/6282197855715?text=Hi%2C%20I%20want%20to%20connect%20with%20your%20community!"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="pixel-btn-outline text-center"
+              >
+                MESSAGE ME
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

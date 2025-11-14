@@ -1,9 +1,12 @@
 import Hero from './components/Hero';
+import Navbar from './components/Navbar';
 import About from './components/About';
+import Experience from './components/Experience';
 import Projects from './components/Projects';
+import Certificates from './components/Certificates';
+import CommunityPartners from './components/CommunityPartners';
 import Skills from './components/Skills';
 import Contact from './components/Contact';
-import Navbar from './components/Navbar';
 import { useEffect } from 'react';
 
 function App() {
@@ -34,7 +37,10 @@ function App() {
       <div className="scanline-overlay"></div>
       <Hero />
       <About />
+      <Experience />
       <Projects />
+      <Certificates />
+      <CommunityPartners />
       <Skills />
       <Contact />
     </div>

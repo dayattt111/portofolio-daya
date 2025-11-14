@@ -11,7 +11,7 @@ export default function Navbar() {
       setIsScrolled(window.scrollY > 50);
 
       // Detect active section
-      const sections = ['home', 'about', 'projects', 'skills', 'contact'];
+      const sections = ['home', 'about', 'experience', 'projects', 'certificates', 'community', 'skills', 'contact'];
       const scrollPosition = window.scrollY + 100;
 
       sections.forEach(sectionId => {
@@ -41,25 +41,28 @@ export default function Navbar() {
   const navItems = [
     { id: 'home', label: '[HOME]' },
     { id: 'about', label: '[ABOUT]' },
+    { id: 'experience', label: '[EXPERIENCE]' },
     { id: 'projects', label: '[PROJECTS]' },
+    { id: 'certificates', label: '[CERTS]' },
+    { id: 'community', label: '[COMMUNITY]' },
     { id: 'skills', label: '[SKILLS]' },
     { id: 'contact', label: '[CONTACT]' },
   ];
 
   return (
     <>
-      <nav className={`navbar-retro transition-all duration-300 ${isScrolled ? 'shadow-2xl' : ''}`}>
+      <nav className={`navbar-retro glass-effect transition-all duration-300 ${isScrolled ? 'shadow-2xl' : ''}`}>
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-neon-cyan border-2 border-neon-cyan flex items-center justify-center">
+            <div className="w-10 h-10 bg-neon-cyan border-2 border-neon-cyan flex items-center justify-center animate-pulse">
               <span className="text-retro-darker font-pixel text-xs">▶</span>
             </div>
-            <span className="font-pixel text-lg text-neon-cyan hidden sm:block">CODER</span>
+            <span className="font-pixel text-lg text-neon-cyan hidden sm:block">RETRO</span>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-6">
             {navItems.map(item => (
               <button
                 key={item.id}
@@ -84,7 +87,7 @@ export default function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-neon-cyan hover:text-neon-pink transition-colors"
+            className="lg:hidden text-neon-cyan hover:text-neon-pink transition-colors"
           >
             {isOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
@@ -92,7 +95,7 @@ export default function Navbar() {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden bg-retro-dark/95 border-t-2 border-neon-pink">
+          <div className="lg:hidden bg-retro-dark/95 border-t-2 border-neon-pink">
             <div className="flex flex-col gap-2 p-4">
               {navItems.map(item => (
                 <button
