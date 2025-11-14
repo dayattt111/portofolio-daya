@@ -51,23 +51,23 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={`navbar-retro glass-effect transition-all duration-300 ${isScrolled ? 'shadow-2xl' : ''}`}>
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <nav className={`navbar-retro glass-effect transition-all duration-300 sticky top-0 z-50 ${isScrolled ? 'shadow-2xl' : ''}`}>
+        <div className="max-w-7xl mx-auto px-3 md:px-4 py-3 md:py-4 flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-neon-cyan border-2 border-neon-cyan flex items-center justify-center animate-pulse">
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <div className="w-9 md:w-10 h-9 md:h-10 bg-neon-cyan border-2 border-neon-cyan flex items-center justify-center animate-pulse">
               <span className="text-retro-darker font-pixel text-xs">▶</span>
             </div>
-            <span className="font-pixel text-lg text-neon-cyan hidden sm:block">RETRO</span>
+            <span className="font-pixel text-sm md:text-lg text-neon-cyan hidden sm:block">PORTFOLIO</span>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-6">
+          <div className="hidden lg:flex items-center gap-4 xl:gap-6">
             {navItems.map(item => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className={`nav-link-retro ${activeSection === item.id ? 'active' : ''}`}
+                className={`nav-link-retro text-sm xl:text-base ${activeSection === item.id ? 'active' : ''}`}
               >
                 {item.label}
               </button>
@@ -79,7 +79,7 @@ export default function Navbar() {
             href="https://wa.me/6282197855715?text=Halo%2C%20saya%20tertarik%20dengan%20portfolio%20mu!"
             target="_blank"
             rel="noopener noreferrer"
-            className="pixel-btn hidden md:block text-xs"
+            className="pixel-btn hidden md:block text-xs py-2 px-3"
           >
             CONTACT
           </a>
@@ -87,21 +87,21 @@ export default function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden text-neon-cyan hover:text-neon-pink transition-colors"
+            className="lg:hidden text-neon-cyan hover:text-neon-pink transition-colors flex-shrink-0"
           >
-            {isOpen ? <X size={28} /> : <Menu size={28} />}
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="lg:hidden bg-retro-dark/95 border-t-2 border-neon-pink">
-            <div className="flex flex-col gap-2 p-4">
+          <div className="lg:hidden bg-retro-dark/95 border-t-2 border-neon-pink max-h-96 overflow-y-auto">
+            <div className="flex flex-col gap-1 p-3 md:p-4">
               {navItems.map(item => (
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className={`text-left px-4 py-3 transition-all border-l-4 ${
+                  className={`text-left px-4 py-2 md:py-3 transition-all border-l-4 text-sm ${
                     activeSection === item.id
                       ? 'border-l-neon-yellow text-neon-yellow'
                       : 'border-l-neon-cyan text-neon-cyan hover:border-l-neon-pink hover:text-neon-pink'
@@ -114,7 +114,7 @@ export default function Navbar() {
                 href="https://wa.me/6282197855715?text=Halo%2C%20saya%20tertarik%20dengan%20portfolio%20mu!"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="pixel-btn mt-4 w-full text-center text-xs"
+                className="pixel-btn mt-3 md:mt-4 w-full text-center text-xs py-2"
               >
                 CONTACT
               </a>

@@ -146,28 +146,33 @@ export default function Hero() {
 
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-retro-dark/30"></div>
 
-      <div className="relative z-10 flex flex-col items-center justify-center h-screen gap-8 px-4 text-center">
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen gap-6 md:gap-8 px-4 py-20 text-center">
         {/* Animated Icon */}
-        <div className="mb-8 animate-bounce">
-          <div className="w-24 h-24 border-4 border-neon-cyan bg-retro-dark/50 flex items-center justify-center relative">
-            <Zap className="w-12 h-12 text-neon-cyan animate-pulse" />
+        <div className="mb-4 md:mb-8 animate-bounce">
+          <div className="w-20 md:w-24 h-20 md:h-24 border-4 border-neon-cyan bg-retro-dark/50 flex items-center justify-center relative">
+            <Zap className="w-10 md:w-12 h-10 md:h-12 text-neon-cyan animate-pulse" />
             <div className="absolute -top-2 -right-2 w-6 h-6 bg-neon-pink border-2 border-neon-pink"></div>
           </div>
         </div>
 
         {/* Main Title */}
-        <div className="space-y-4">
-          <h1 className="hero-title">
-            RETRO
-          </h1>
-          <h1 className="hero-title text-neon-pink">
-            CODER
-          </h1>
-          <div className="h-1 w-48 mx-auto bg-gradient-to-r from-transparent via-neon-cyan to-transparent"></div>
+        <div className="space-y-6">
+          <div className="text-center">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-pixel font-bold text-neon-cyan mb-2 animate-pulse">
+              Welcome
+            </h1>
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-pixel font-bold text-neon-pink mb-4">
+              Muh. Amin Hidayat
+            </h2>
+            <h3 className="text-lg md:text-2xl lg:text-3xl font-retro text-neon-yellow">
+              Portfolio Website
+            </h3>
+          </div>
+          <div className="h-1 w-48 mx-auto bg-gradient-to-r from-neon-cyan via-neon-pink to-neon-purple"></div>
         </div>
 
         {/* Subtitle */}
-        <p className="hero-subtitle max-w-2xl mx-auto">
+        <p className="hero-subtitle max-w-2xl mx-auto text-sm md:text-base">
           [ FULL STACK DEVELOPER | UI/UX ENTHUSIAST | 8-BIT PIXEL ART ]
         </p>
 
@@ -185,7 +190,7 @@ export default function Hero() {
         </div>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 mt-8">
+        <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mt-6 md:mt-8">
           <button
             onClick={scrollToContact}
             className="pixel-btn"

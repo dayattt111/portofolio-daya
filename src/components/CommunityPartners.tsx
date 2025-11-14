@@ -69,19 +69,19 @@ const partners: Partner[] = [
 
 export default function CommunityPartners() {
   return (
-    <section id="community" className="section-retro">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="scroll-animate mb-16">
-          <h2 className="section-title">
+    <section id="community" className="section-retro py-12 md:py-20">
+      <div className="max-w-6xl mx-auto px-3 md:px-4">
+        <div className="scroll-animate mb-12 md:mb-16">
+          <h2 className="section-title text-3xl md:text-4xl lg:text-5xl">
             [ COMMUNITY & PARTNERSHIPS ]
           </h2>
-          <p className="text-center text-gray-400 font-retro text-sm md:text-base mt-4">
+          <p className="text-center text-gray-400 font-retro text-xs md:text-base mt-3 md:mt-4">
             &gt; Building and contributing to amazing communities
           </p>
         </div>
 
         {/* Partners Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8 mb-12 md:mb-16">
           {partners.map((partner, index) => (
             <div
               key={index}
@@ -97,8 +97,8 @@ export default function CommunityPartners() {
                 }}
               >
                 {/* Logo & Badge */}
-                <div className="mb-6 flex items-start justify-between">
-                  <div className="text-5xl">{partner.logo}</div>
+                <div className="mb-4 md:mb-6 flex items-start justify-between">
+                  <div className="text-4xl md:text-5xl">{partner.logo}</div>
                   <div 
                     className="px-2 py-1 rounded text-xs font-pixel border"
                     style={{
@@ -112,16 +112,16 @@ export default function CommunityPartners() {
                 </div>
 
                 {/* Content */}
-                <h3 className="text-xl font-pixel font-bold mb-2" style={{ color: partner.color }}>
+                <h3 className="text-lg md:text-xl font-pixel font-bold mb-2" style={{ color: partner.color }}>
                   {partner.name}
                 </h3>
-                <p className="text-gray-300 font-retro text-sm mb-6 flex-grow">
+                <p className="text-gray-300 font-retro text-xs md:text-sm mb-4 md:mb-6 flex-grow">
                   {partner.description}
                 </p>
 
                 {/* Meta */}
-                <div className="flex items-center gap-2 text-gray-400 font-retro text-xs mb-6">
-                  <Award className="w-4 h-4" />
+                <div className="flex items-center gap-2 text-gray-400 font-retro text-xs mb-4 md:mb-6">
+                  <Award className="w-3 md:w-4 h-3 md:h-4" />
                   {partner.year}
                 </div>
 
@@ -130,10 +130,10 @@ export default function CommunityPartners() {
                   href={partner.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 px-4 py-2 border border-current rounded transition-all hover:shadow-lg text-sm font-pixel"
+                  className="flex items-center justify-center gap-2 px-4 py-2 border border-current rounded transition-all hover:shadow-lg text-xs md:text-sm font-pixel"
                   style={{ color: partner.color }}
                 >
-                  <LinkIcon className="w-4 h-4" />
+                  <LinkIcon className="w-3 md:w-4 h-3 md:h-4" />
                   VISIT
                 </a>
               </div>
@@ -142,7 +142,7 @@ export default function CommunityPartners() {
         </div>
 
         {/* Community Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 mb-12 md:mb-16">
           {[
             { icon: '👥', label: 'COMMUNITY MEMBERS', value: '50K+' },
             { icon: '📢', label: 'TALKS GIVEN', value: '25+' },
@@ -151,9 +151,9 @@ export default function CommunityPartners() {
           ].map((stat, i) => (
             <div key={i} className="scroll-animate" style={{ animationDelay: `${0.5 + i * 0.1}s` }}>
               <div className="retro-card text-center">
-                <div className="text-4xl mb-3">{stat.icon}</div>
+                <div className="text-3xl md:text-4xl mb-2 md:mb-3">{stat.icon}</div>
                 <div className="text-xs font-pixel text-gray-300 mb-2">[ {stat.label} ]</div>
-                <div className="text-2xl font-pixel font-bold text-neon-cyan">
+                <div className="text-xl md:text-2xl font-pixel font-bold text-neon-cyan">
                   {stat.value}
                 </div>
               </div>
@@ -163,22 +163,22 @@ export default function CommunityPartners() {
 
         {/* Call to Action */}
         <div className="scroll-animate">
-          <div className="retro-card glass-effect text-center py-12 px-8">
-            <h3 className="text-2xl font-pixel font-bold text-neon-pink mb-4">
+          <div className="retro-card glass-effect text-center py-8 md:py-12 px-4 md:px-8">
+            <h3 className="text-xl md:text-2xl font-pixel font-bold text-neon-pink mb-3 md:mb-4">
               JOIN THE COMMUNITY!
             </h3>
-            <p className="text-gray-300 font-retro mb-8 max-w-2xl mx-auto">
+            <p className="text-gray-300 font-retro text-xs md:text-base mb-6 md:mb-8 max-w-2xl mx-auto">
               &gt; Whether you're a beginner or expert, there's a place for you. Let's build amazing things together!
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="pixel-btn">
+            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
+              <button className="pixel-btn text-xs md:text-base py-2 md:py-3">
                 JOIN DISCORD
               </button>
               <a
                 href="https://wa.me/6282197855715?text=Hi%2C%20I%20want%20to%20connect%20with%20your%20community!"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="pixel-btn-outline text-center"
+                className="pixel-btn-outline text-center text-xs md:text-base py-2 md:py-3"
               >
                 MESSAGE ME
               </a>

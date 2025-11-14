@@ -67,23 +67,23 @@ const experiences: ExperienceItem[] = [
 
 export default function Experience() {
   return (
-    <section id="experience" className="section-retro">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="scroll-animate mb-16">
-          <h2 className="section-title">
+    <section id="experience" className="section-retro py-12 md:py-20">
+      <div className="max-w-6xl mx-auto px-3 md:px-4">
+        <div className="scroll-animate mb-12 md:mb-16">
+          <h2 className="section-title text-3xl md:text-4xl lg:text-5xl">
             [ WORK EXPERIENCE ]
           </h2>
-          <p className="text-center text-gray-400 font-retro text-sm md:text-base mt-4">
+          <p className="text-center text-gray-400 font-retro text-xs md:text-base mt-3 md:mt-4">
             &gt; From junior to senior, building amazing things
           </p>
         </div>
 
         {/* Timeline */}
-        <div className="relative px-4 md:px-0">
+        <div className="relative px-2 md:px-0">
           {/* Vertical Line */}
           <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-neon-cyan via-neon-pink to-neon-purple"></div>
 
-          <div className="space-y-12">
+          <div className="space-y-6 md:space-y-12">
             {experiences.map((exp, index) => (
               <div
                 key={index}
@@ -105,39 +105,41 @@ export default function Experience() {
                   ></div>
 
                   {/* Header */}
-                  <div className="mb-4">
-                    <h3 className="text-2xl font-pixel font-bold mb-2" style={{ color: exp.color }}>
+                  <div className="mb-3 md:mb-4">
+                    <h3 className="text-xl md:text-2xl font-pixel font-bold mb-2" style={{ color: exp.color }}>
                       {exp.title}
                     </h3>
-                    <p className="font-retro text-gray-300 text-sm">
+                    <p className="font-retro text-gray-300 text-xs md:text-sm">
                       {exp.company}
                     </p>
                   </div>
 
                   {/* Meta Info */}
-                  <div className="flex flex-wrap gap-4 mb-6 text-sm font-retro">
+                  <div className="flex flex-wrap gap-2 md:gap-4 mb-4 md:mb-6 text-xs md:text-sm font-retro">
                     <div className="flex items-center gap-2 text-neon-cyan">
-                      <Calendar className="w-4 h-4" />
-                      {exp.period}
+                      <Calendar className="w-3 md:w-4 h-3 md:h-4" />
+                      <span className="hidden sm:inline">{exp.period}</span>
+                      <span className="sm:hidden">{exp.period.split(' - ')[0]}</span>
                     </div>
                     <div className="flex items-center gap-2 text-neon-pink">
-                      <MapPin className="w-4 h-4" />
-                      {exp.location}
+                      <MapPin className="w-3 md:w-4 h-3 md:h-4" />
+                      <span className="hidden sm:inline">{exp.location}</span>
+                      <span className="sm:hidden">{exp.location.split(',')[0]}</span>
                     </div>
                   </div>
 
                   {/* Description */}
-                  <p className="text-gray-300 mb-6 leading-relaxed font-retro text-sm">
+                  <p className="text-gray-300 mb-4 md:mb-6 leading-relaxed font-retro text-xs md:text-sm">
                     {exp.description}
                   </p>
 
                   {/* Achievements */}
                   <div className="space-y-2">
                     <p className="font-pixel text-xs uppercase text-neon-yellow">Key Achievements:</p>
-                    <ul className="space-y-2">
+                    <ul className="space-y-1 md:space-y-2">
                       {exp.achievements.map((achievement, i) => (
-                        <li key={i} className="flex items-start gap-3 text-gray-300 font-retro text-sm">
-                          <Award className="w-4 h-4 mt-1 flex-shrink-0" style={{ color: exp.color }} />
+                        <li key={i} className="flex items-start gap-3 text-gray-300 font-retro text-xs md:text-sm">
+                          <Award className="w-3 md:w-4 h-3 md:h-4 mt-1 flex-shrink-0" style={{ color: exp.color }} />
                           <span>{achievement}</span>
                         </li>
                       ))}
@@ -150,7 +152,7 @@ export default function Experience() {
         </div>
 
         {/* Statistics */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 mt-12 md:mt-20">
           {[
             { label: 'YEARS EXP', value: '6+' },
             { label: 'PROJECTS', value: '50+' },
@@ -159,7 +161,7 @@ export default function Experience() {
           ].map((stat, i) => (
             <div key={i} className="scroll-animate" style={{ animationDelay: `${0.5 + i * 0.1}s` }}>
               <div className="retro-card text-center">
-                <div className="text-3xl md:text-4xl font-pixel font-bold text-neon-cyan mb-2">
+                <div className="text-2xl md:text-3xl lg:text-4xl font-pixel font-bold text-neon-cyan mb-2">
                   {stat.value}
                 </div>
                 <div className="text-xs font-pixel text-gray-300">
