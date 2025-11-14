@@ -3,6 +3,7 @@ import About from './components/About';
 import Projects from './components/Projects';
 import Skills from './components/Skills';
 import Contact from './components/Contact';
+import Navbar from './components/Navbar';
 import { useEffect } from 'react';
 
 function App() {
@@ -28,7 +29,8 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#05060B] text-white overflow-x-hidden">
+    <div className="min-h-screen bg-retro-darker text-white overflow-x-hidden">
+      <Navbar />
       <div className="scanline-overlay"></div>
       <Hero />
       <About />

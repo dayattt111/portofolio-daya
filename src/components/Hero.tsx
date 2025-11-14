@@ -1,9 +1,8 @@
 import { useEffect, useRef } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Zap } from 'lucide-react';
 
 export default function Hero() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const mousePos = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -15,63 +14,103 @@ export default function Hero() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const particles: Array<{
+    // Pixel grid background
+    const drawPixelGrid = () => {
+      const pixelSize = 40;
+      ctx.strokeStyle = 'rgba(0, 255, 136, 0.05)';
+      ctx.lineWidth = 1;
+
+      for (let x = 0; x < canvas.width; x += pixelSize) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
+      }
+
+      for (let y = 0; y < canvas.height; y += pixelSize) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvas.width, y);
+        ctx.stroke();
+      }
+    };
+
+    // Animated particles
+    interface Particle {
       x: number;
       y: number;
       vx: number;
       vy: number;
-      radius: number;
-    }> = [];
-
-    for (let i = 0; i < 50; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
-        radius: Math.random() * 2 + 1
-      });
+      size: number;
+      color: string;
+      life: number;
     }
 
-    const handleMouseMove = (e: MouseEvent) => {
-      mousePos.current = { x: e.clientX, y: e.clientY };
+    const particles: Particle[] = [];
+    const colors = ['#00ff88', '#ff006e', '#b537f2', '#ffbe0b'];
+
+    const createParticle = (x: number, y: number) => {
+      particles.push({
+        x,
+        y,
+        vx: (Math.random() - 0.5) * 4,
+        vy: (Math.random() - 0.5) * 4 - 2,
+        size: Math.random() * 3 + 2,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        life: 1,
+      });
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    // Initial particles
+    for (let i = 0; i < 30; i++) {
+      createParticle(
+        Math.random() * canvas.width,
+        Math.random() * canvas.height
+      );
+    }
 
     let animationId: number;
+    let frameCount = 0;
+
     const animate = () => {
-      ctx.fillStyle = 'rgba(5, 6, 11, 0.1)';
+      // Clear with fade effect
+      ctx.fillStyle = 'rgba(5, 8, 18, 0.1)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+      // Draw grid
+      drawPixelGrid();
+
+      // Update and draw particles
       particles.forEach((p, i) => {
         p.x += p.vx;
         p.y += p.vy;
+        p.life -= 0.01;
 
-        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+        if (p.life < 0) {
+          particles.splice(i, 1);
+          return;
+        }
 
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(0, 229, 255, 0.6)';
-        ctx.fill();
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.life;
+        ctx.fillRect(p.x, p.y, p.size, p.size);
+        ctx.globalAlpha = 1;
 
-        particles.forEach((p2, j) => {
-          if (i === j) return;
-          const dx = p.x - p2.x;
-          const dy = p.y - p2.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-
-          if (dist < 150) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(0, 229, 255, ${0.2 * (1 - dist / 150)})`;
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-          }
-        });
+        // Wrap around screen
+        if (p.x > canvas.width) p.x = 0;
+        if (p.x < 0) p.x = canvas.width;
+        if (p.y > canvas.height) p.y = 0;
+        if (p.y < 0) p.y = canvas.height;
       });
+
+      // Add new particles occasionally
+      frameCount++;
+      if (frameCount % 5 === 0 && particles.length < 50) {
+        createParticle(
+          Math.random() * canvas.width,
+          Math.random() * canvas.height
+        );
+      }
 
       animationId = requestAnimationFrame(animate);
     };
@@ -86,44 +125,87 @@ export default function Hero() {
     window.addEventListener('resize', handleResize);
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationId);
     };
   }, []);
 
+  const scrollToContact = () => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden">
+    <section id="home" className="hero-section pt-20">
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 opacity-40"
+        className="absolute inset-0 opacity-50"
       />
 
-      <div className="relative z-10 text-center px-4 hero-content">
-        <div className="inline-block mb-4">
-          <div className="neon-box glow-pulse"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-retro-dark/30"></div>
+
+      <div className="relative z-10 flex flex-col items-center justify-center h-screen gap-8 px-4 text-center">
+        {/* Animated Icon */}
+        <div className="mb-8 animate-bounce">
+          <div className="w-24 h-24 border-4 border-neon-cyan bg-retro-dark/50 flex items-center justify-center relative">
+            <Zap className="w-12 h-12 text-neon-cyan animate-pulse" />
+            <div className="absolute -top-2 -right-2 w-6 h-6 bg-neon-pink border-2 border-neon-pink"></div>
+          </div>
         </div>
 
-        <h1 className="text-6xl md:text-8xl font-bold mb-6 color-shift-text">
-          JOHN DOE
-        </h1>
+        {/* Main Title */}
+        <div className="space-y-4">
+          <h1 className="hero-title">
+            RETRO
+          </h1>
+          <h1 className="hero-title text-neon-pink">
+            CODER
+          </h1>
+          <div className="h-1 w-48 mx-auto bg-gradient-to-r from-transparent via-neon-cyan to-transparent"></div>
+        </div>
 
-        <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto">
-          Full Stack Developer & Digital Creator
+        {/* Subtitle */}
+        <p className="hero-subtitle max-w-2xl mx-auto">
+          [ FULL STACK DEVELOPER | UI/UX ENTHUSIAST | 8-BIT PIXEL ART ]
         </p>
 
-        <div className="flex gap-4 justify-center mb-12">
-          <button className="neon-button">
-            View Projects
-          </button>
-          <button className="neon-button-outline">
-            Contact Me
-          </button>
+        {/* Description */}
+        <div className="max-w-2xl mx-auto text-gray-300 text-sm md:text-base space-y-2 font-retro">
+          <p className="text-neon-cyan">
+            &gt; Crafting digital experiences with vintage vibes
+          </p>
+          <p className="text-neon-purple">
+            &gt; Building modern web apps with retro aesthetic
+          </p>
+          <p className="text-neon-yellow">
+            &gt; Let's create something awesome together!
+          </p>
         </div>
-      </div>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <ChevronDown className="w-8 h-8 text-[#00E5FF]" />
+        {/* CTA Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 mt-8">
+          <button
+            onClick={scrollToContact}
+            className="pixel-btn"
+          >
+            CONTACT ME
+          </button>
+          <a
+            href="https://wa.me/6282197855715?text=Halo%2C%20saya%20tertarik%20dengan%20portfolio%20mu!"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="pixel-btn-outline"
+          >
+            WHATSAPP
+          </a>
+        </div>
+
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+          <ChevronDown className="w-8 h-8 text-neon-cyan" />
+        </div>
       </div>
     </section>
   );
