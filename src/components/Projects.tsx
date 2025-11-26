@@ -56,13 +56,13 @@ const projects: Project[] = [
   },
   {
     id: 5,
-    title: 'IoT Automation System',
-    description: 'Smart IoT platform for managing devices with automation and real-time monitoring.',
-    rating: 4,
+    title: 'Laundry Apps',
+    description: 'Laundry management app with real-time order tracking and automated notifications.',
+    rating: 5,
     color: '#ff006e',
-    stack: ['Python', 'FastAPI', 'MQTT', 'Raspberry Pi', 'Redis'],
+    stack: ['Laravel', 'React', 'Oracle','Tailwind CSS', 'Docker'],
     link: '#',
-    image: '/images/projects/project-5.svg'
+    image: '/images/projects/laundryApp.png'
   },
   {
     id: 6,
