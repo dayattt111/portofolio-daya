@@ -16,13 +16,13 @@ interface Project {
 const projects: Project[] = [
   {
     id: 1,
-    title: 'E-Commerce Platform',
-    description: 'Modern e-commerce solution with seamless checkout and inventory management.',
+    title: 'Company Profile',
+    description: 'professional company profile website with modern design and responsive layout.',
     rating: 5,
     color: '#00ff88',
-    stack: ['React', 'TypeScript', 'Node.js', 'PostgreSQL', 'Stripe'],
-    link: '#',
-    image: '/images/projects/project-1.svg'
+    stack: ['Next.Js', 'React', 'TypeScript', 'Node.js', 'Tailwind CSS'],
+    link: 'https://github.com/dayattt111',
+    image: '/images/projects/DataCCProject.png'
   },
   {
     id: 2,
@@ -31,28 +31,28 @@ const projects: Project[] = [
     rating: 5,
     color: '#ff006e',
     stack: ['React', 'Vite', 'Tailwind CSS', 'TypeScript'],
-    link: '#',
-    image: '/images/projects/project-2.svg'
+    link: 'https://github.com/dayattt111/portofolio-daya',
+    image: '/images/projects/portoProject.png'
   },
   {
     id: 3,
-    title: 'Admin Dashboard',
-    description: 'Comprehensive admin panel with real-time analytics and user management.',
-    rating: 5,
+    title: 'Organize Website DCC',
+    description: 'Website DCC',
+    rating: 4,
     color: '#b537f2',
-    stack: ['Next.js', 'Chart.js', 'MongoDB', 'Express', 'Socket.io'],
-    link: '#',
-    image: '/images/projects/project-3.svg'
+    stack: ['Laravel', 'MySql', 'Chart.js', 'Bootstrap', 'Axios'],
+    link: 'dcc-dp.com',
+    image: '/images/projects/oldDCC.png'
   },
   {
     id: 4,
-    title: 'Mobile Application',
-    description: 'Cross-platform mobile app with native performance and beautiful UI.',
-    rating: 4,
+    title: 'Organize New DCC Webiste',
+    description: 'New Website DCC with modern design and responsive layout.',
+    rating: 5,
     color: '#ffbe0b',
-    stack: ['React Native', 'Expo', 'Firebase', 'Redux', 'Axios'],
+    stack: ['React JS', 'Next Js', 'Firebase', 'Mysql', 'Three JS'],
     link: '#',
-    image: '/images/projects/project-4.svg'
+    image: '/images/projects/newDCC.png'
   },
   {
     id: 5,
