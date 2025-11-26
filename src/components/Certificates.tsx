@@ -12,6 +12,7 @@ interface Certificate {
   icon: string;
 }
 
+// Static certificate data
 const certificates: Certificate[] = [
   {
     title: 'Advanced React Developer',
@@ -76,9 +77,47 @@ const certificates: Certificate[] = [
 ];
 
 export default function Certificates() {
-  const [showAll, setShowAll] = useState(false);
-  const displayedCerts = showAll ? certificates : certificates.slice(0, 3);
-  
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [fadeState, setFadeState] = useState('fade-in');
+
+  const currentCert = certificates[currentIndex];
+
+  // Auto-play carousel
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+
+    const interval = setInterval(() => {
+      handleNext();
+    }, 5000); // Change every 5 seconds
+
+    return () => clearInterval(interval);
+  }, [currentIndex, isAutoPlaying]);
+
+  const handleNext = () => {
+    setFadeState('fade-out');
+    setTimeout(() => {
+      setCurrentIndex((prev) => (prev + 1) % certificates.length);
+      setFadeState('fade-in');
+    }, 300);
+  };
+
+  const handlePrev = () => {
+    setFadeState('fade-out');
+    setTimeout(() => {
+      setCurrentIndex((prev) => (prev - 1 + certificates.length) % certificates.length);
+      setFadeState('fade-in');
+    }, 300);
+  };
+
+  const goToSlide = (index: number) => {
+    setFadeState('fade-out');
+    setTimeout(() => {
+      setCurrentIndex(index);
+      setFadeState('fade-in');
+    }, 300);
+  };
+
   return (
     <section id="certificates" className="section-retro py-12 md:py-20">
       <div className="max-w-6xl mx-auto px-3 md:px-4">
@@ -91,132 +130,160 @@ export default function Certificates() {
           </p>
         </div>
 
-        {/* Certificate Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
-          {displayedCerts.map((cert, index) => (
-            <div
-              key={index}
-              className="scroll-animate group"
-              style={{ animationDelay: `${index * 0.1}s` }}
+        {/* Carousel Container */}
+        <div 
+          className="relative max-w-4xl mx-auto mb-12"
+          onMouseEnter={() => setIsAutoPlaying(false)}
+          onMouseLeave={() => setIsAutoPlaying(true)}
+        >
+          {/* Navigation Buttons */}
+          <button
+            onClick={handlePrev}
+            className="absolute left-0 md:-left-16 top-1/2 -translate-y-1/2 z-10 w-12 h-12 md:w-14 md:h-14 bg-retro-dark border-2 border-neon-cyan text-neon-cyan hover:bg-neon-cyan hover:text-retro-dark transition-all duration-300 flex items-center justify-center group"
+            aria-label="Previous certificate"
+          >
+            <ChevronLeft className="w-6 h-6 md:w-8 md:h-8 group-hover:animate-pulse" />
+          </button>
+
+          <button
+            onClick={handleNext}
+            className="absolute right-0 md:-right-16 top-1/2 -translate-y-1/2 z-10 w-12 h-12 md:w-14 md:h-14 bg-retro-dark border-2 border-neon-cyan text-neon-cyan hover:bg-neon-cyan hover:text-retro-dark transition-all duration-300 flex items-center justify-center group"
+            aria-label="Next certificate"
+          >
+            <ChevronRight className="w-6 h-6 md:w-8 md:h-8 group-hover:animate-pulse" />
+          </button>
+
+          {/* Certificate Card */}
+          <div 
+            className={`transition-opacity duration-300 ${fadeState === 'fade-in' ? 'opacity-100' : 'opacity-0'}`}
+          >
+            <div 
+              className="retro-card-dark p-6 md:p-10"
+              style={{
+                borderColor: currentCert.color,
+                borderWidth: '4px',
+                background: `linear-gradient(135deg, rgba(10, 14, 39, 0.95) 0%, rgba(10, 26, 46, 0.85) 100%)`
+              }}
             >
-              {/* Flip Card Container */}
-              <div className="flip-card h-full">
-                <div className="flip-card-inner h-full">
-                  {/* Front */}
-                  <div className="flip-card-front">
-                    <div 
-                      className="retro-card h-full flex flex-col items-center justify-center text-center p-6 md:p-8"
-                      style={{
-                        borderColor: cert.color,
-                        background: `linear-gradient(135deg, rgba(10, 14, 39, 0.9) 0%, rgba(10, 26, 46, 0.7) 100%)`
-                      }}
-                    >
-                      <div className="text-5xl md:text-6xl mb-4 md:mb-6 transform group-hover:scale-110 transition-transform duration-300">
-                        {cert.icon}
-                      </div>
-                      <h3 
-                        className="text-lg md:text-2xl font-pixel font-bold mb-2 line-clamp-2"
-                        style={{ color: cert.color }}
-                      >
-                        {cert.title}
-                      </h3>
-                      <p className="text-gray-300 font-retro text-xs md:text-sm mb-3 md:mb-4 line-clamp-1">
-                        by {cert.issuer}
-                      </p>
-                      <div 
-                        className="text-xs font-pixel px-3 py-2 rounded border animate-pulse"
-                        style={{
-                          borderColor: cert.color,
-                          color: cert.color,
-                          backgroundColor: `${cert.color}15`
-                        }}
-                      >
-                        ▲ FLIP TO VIEW ▲
+              {/* Icon & Title */}
+              <div className="text-center mb-8">
+                <div className="text-6xl md:text-8xl mb-6 animate-float">
+                  {currentCert.icon}
+                </div>
+                <h3 
+                  className="text-2xl md:text-4xl font-pixel font-bold mb-3"
+                  style={{ color: currentCert.color }}
+                >
+                  {currentCert.title}
+                </h3>
+                <p className="text-gray-300 font-retro text-sm md:text-lg mb-6">
+                  Issued by <span style={{ color: currentCert.color }}>{currentCert.issuer}</span>
+                </p>
+              </div>
+
+              {/* Details Grid */}
+              <div className="grid md:grid-cols-2 gap-6 mb-8">
+                {/* Left: Credential Info */}
+                <div 
+                  className="border-l-4 pl-6"
+                  style={{ borderColor: currentCert.color }}
+                >
+                  <p className="font-pixel text-xs mb-4" style={{ color: currentCert.color }}>
+                    ❯ CREDENTIAL DETAILS
+                  </p>
+                  <div className="space-y-3">
+                    <div>
+                      <p className="text-gray-400 font-retro text-xs mb-1">Issued Date:</p>
+                      <div className="flex items-center gap-2 text-gray-200 font-retro text-sm">
+                        <Calendar className="w-4 h-4" />
+                        {currentCert.date}
                       </div>
                     </div>
-                  </div>
-
-                  {/* Back */}
-                  <div className="flip-card-back">
-                    <div 
-                      className="retro-card-dark h-full flex flex-col justify-between p-6 md:p-8"
-                      style={{
-                        borderColor: cert.color,
-                        background: `linear-gradient(135deg, rgba(10, 26, 46, 0.9) 0%, rgba(10, 14, 39, 0.7) 100%)`
-                      }}
-                    >
-                      {/* Cert Details */}
-                      <div>
-                        <p className="font-pixel text-xs mb-3 md:mb-4" style={{ color: cert.color }}>
-                          ❯ CREDENTIAL DETAILS
-                        </p>
-                        <div className="space-y-2 md:space-y-3 mb-4 md:mb-6 border-l-2 border-neon-cyan pl-3">
-                          <div>
-                            <p className="text-gray-400 font-retro text-xs mb-1">Issued:</p>
-                            <div className="flex items-center gap-2 text-gray-200 font-retro text-xs md:text-sm">
-                              <Calendar className="w-3 h-3" />
-                              {cert.date}
-                            </div>
-                          </div>
-                          <div>
-                            <p className="text-gray-400 font-retro text-xs mb-1">ID:</p>
-                            <p className="text-gray-200 font-mono text-xs break-all">{cert.credentialId}</p>
-                          </div>
-                        </div>
-
-                        {/* Skills */}
-                        <p className="font-pixel text-xs mb-2 md:mb-3" style={{ color: cert.color }}>
-                          ◆ SKILLS
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                          {cert.skills.map((skill) => (
-                            <span
-                              key={skill}
-                              className="px-2 py-1 text-xs font-retro border rounded whitespace-nowrap hover:shadow-lg transition-shadow"
-                              style={{
-                                borderColor: cert.color,
-                                color: cert.color,
-                                backgroundColor: `${cert.color}10`
-                              }}
-                            >
-                              {skill}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Verify Button */}
-                      <a
-                        href={cert.credentialUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="pixel-btn-outline text-center text-xs flex items-center justify-center gap-2 mt-4 hover:shadow-lg transition-shadow"
-                      >
-                        <ExternalLink className="w-3 h-3" />
-                        VERIFY
-                      </a>
+                    <div>
+                      <p className="text-gray-400 font-retro text-xs mb-1">Credential ID:</p>
+                      <p className="text-gray-200 font-mono text-sm break-all">{currentCert.credentialId}</p>
                     </div>
                   </div>
                 </div>
+
+                {/* Right: Skills */}
+                <div>
+                  <p className="font-pixel text-xs mb-4" style={{ color: currentCert.color }}>
+                    ◆ SKILLS COVERED
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {currentCert.skills.map((skill, idx) => (
+                      <span
+                        key={idx}
+                        className="px-3 py-2 text-xs md:text-sm font-retro border rounded hover:shadow-lg transition-shadow"
+                        style={{
+                          borderColor: currentCert.color,
+                          color: currentCert.color,
+                          backgroundColor: `${currentCert.color}10`
+                        }}
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Verify Button */}
+              <div className="text-center">
+                <a
+                  href={currentCert.credentialUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 rounded transition-all hover:shadow-lg font-pixel text-sm"
+                  style={{
+                    borderColor: currentCert.color,
+                    color: currentCert.color,
+                    backgroundColor: 'transparent'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = currentCert.color;
+                    e.currentTarget.style.color = '#050812';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'transparent';
+                    e.currentTarget.style.color = currentCert.color;
+                  }}
+                >
+                  <ExternalLink className="w-4 h-4" />
+                  VERIFY CERTIFICATE
+                </a>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Carousel Indicators */}
+        <div className="flex items-center justify-center gap-3 mb-8">
+          {certificates.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`transition-all duration-300 ${
+                index === currentIndex 
+                  ? 'w-12 h-3 bg-neon-cyan' 
+                  : 'w-3 h-3 bg-gray-600 hover:bg-gray-400'
+              }`}
+              style={{
+                backgroundColor: index === currentIndex ? currentCert.color : undefined
+              }}
+              aria-label={`Go to certificate ${index + 1}`}
+            />
           ))}
         </div>
 
-        {/* Show More / Show Less Button */}
-        <div className="text-center mt-12 md:mt-16 scroll-animate flex flex-col items-center gap-6">
-          <button
-            onClick={() => setShowAll(!showAll)}
-            className="pixel-btn px-6 py-3 text-xs md:text-base hover:shadow-lg transition-shadow"
-            style={{
-              backgroundColor: showAll ? '#ff006e' : '#00ff88',
-              color: '#050812'
-            }}
-          >
-            {showAll ? '▲ SHOW LESS CERTIFICATES ▲' : `▼ SHOW MORE CERTIFICATES (${certificates.length - 3} more) ▼`}
-          </button>
-          <p className="font-retro text-gray-400 text-xs md:text-sm">
-            &gt; {certificates.length} certifications • {showAll ? 'all' : '3'} displayed
+        {/* Counter & Status */}
+        <div className="text-center">
+          <p className="font-retro text-gray-400 text-xs md:text-sm mb-2">
+            &gt; Certificate {currentIndex + 1} of {certificates.length}
+          </p>
+          <p className="font-retro text-gray-500 text-xs">
+            {isAutoPlaying ? '● Auto-playing (hover to pause)' : '⏸ Paused'}
           </p>
         </div>
       </div>

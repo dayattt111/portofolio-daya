@@ -1,0 +1,11 @@
+<svg width="600" height="400" viewBox="0 0 600 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="400" fill="#0a0e27"/>
+  <rect x="20" y="20" width="560" height="360" stroke="#00ff88" stroke-width="8" fill="#050812"/>
+  <circle cx="300" cy="120" r="60" stroke="#00ff88" stroke-width="4" fill="none"/>
+  <circle cx="300" cy="120" r="40" stroke="#00ff88" stroke-width="4" fill="none"/>
+  <circle cx="300" cy="120" r="20" fill="#00ff88"/>
+  <text x="300" y="220" text-anchor="middle" fill="#00ff88" font-family="monospace" font-size="36" font-weight="bold">REACT DEVELOPER</text>
+  <text x="300" y="260" text-anchor="middle" fill="#00ff88" font-family="monospace" font-size="18">ADVANCED CERTIFICATION</text>
+  <rect x="100" y="300" width="400" height="4" fill="#00ff88" opacity="0.5"/>
+  <text x="300" y="340" text-anchor="middle" fill="#00ff88" font-family="monospace" font-size="14">UDACITY • 2023</text>
+</svg>

@@ -54,9 +54,13 @@ export default function Navbar() {
       <nav className={`navbar-retro glass-effect transition-all duration-300 sticky top-0 z-50 ${isScrolled ? 'shadow-2xl' : ''}`}>
         <div className="max-w-7xl mx-auto px-3 md:px-4 py-3 md:py-4 flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center gap-2 flex-shrink-0">
-            <div className="w-9 md:w-10 h-9 md:h-10 bg-neon-cyan border-2 border-neon-cyan flex items-center justify-center animate-pulse">
-              <span className="text-retro-darker font-pixel text-xs">▶</span>
+          <div className="flex items-center gap-2 flex-shrink-0 cursor-pointer" onClick={() => scrollToSection('home')}>
+            <div className="w-9 md:w-10 h-9 md:h-10 border-2 border-neon-cyan flex items-center justify-center animate-pulse overflow-hidden">
+              <img 
+                src="/images/logo.svg" 
+                alt="Logo" 
+                className="w-full h-full object-cover"
+              />
             </div>
             <span className="font-pixel text-sm md:text-lg text-neon-cyan hidden sm:block">PORTFOLIO</span>
           </div>

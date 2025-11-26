@@ -1,0 +1,11 @@
+<svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="600" fill="#050812"/>
+  <rect x="50" y="50" width="700" height="500" fill="#0a0e27" stroke="#00a3ff" stroke-width="4"/>
+  <rect x="100" y="100" width="600" height="80" fill="#00a3ff" opacity="0.2"/>
+  <rect x="100" y="200" width="280" height="280" fill="#00ff88" opacity="0.2"/>
+  <rect x="420" y="200" width="280" height="280" fill="#ff006e" opacity="0.2"/>
+  <circle cx="240" cy="340" r="60" stroke="#00ff88" stroke-width="4" fill="none"/>
+  <circle cx="560" cy="340" r="60" stroke="#ff006e" stroke-width="4" fill="none"/>
+  <line x1="300" y1="340" x2="500" y2="340" stroke="#00a3ff" stroke-width="6"/>
+  <text x="400" y="550" text-anchor="middle" fill="#00a3ff" font-family="monospace" font-size="28" font-weight="bold">BLOG PLATFORM</text>
+</svg>

@@ -1,4 +1,4 @@
-import { User, Code, Zap, Palette } from 'lucide-react';
+import { Code, Zap, Palette } from 'lucide-react';
 
 export default function About() {
   return (
@@ -15,8 +15,12 @@ export default function About() {
           {/* Left - Profile */}
           <div className="scroll-animate" style={{ animationDelay: '0.1s' }}>
             <div className="retro-card">
-              <div className="aspect-square bg-gradient-to-br from-neon-cyan/20 to-neon-pink/20 border-4 border-neon-cyan mb-6 flex items-center justify-center">
-                <User className="w-32 h-32 text-neon-cyan opacity-50" />
+              <div className="aspect-square bg-gradient-to-br from-neon-cyan/20 to-neon-pink/20 border-4 border-neon-cyan mb-6 flex items-center justify-center overflow-hidden">
+                <img 
+                  src="/images/profile/avatar.svg" 
+                  alt="Muh. Amin Hidayat" 
+                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                />
               </div>
               <h3 className="text-2xl font-pixel font-bold text-neon-cyan mb-4">WHO I AM</h3>
               <p className="text-gray-300 font-retro leading-relaxed">

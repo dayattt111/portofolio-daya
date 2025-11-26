@@ -1,0 +1,12 @@
+<svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="600" fill="#050812"/>
+  <rect x="50" y="50" width="700" height="500" fill="#0a0e27" stroke="#ff006e" stroke-width="4"/>
+  <circle cx="400" cy="180" r="100" fill="#ff006e" opacity="0.2"/>
+  <circle cx="400" cy="180" r="70" fill="#ff006e" opacity="0.4"/>
+  <circle cx="400" cy="180" r="40" fill="#ff006e"/>
+  <rect x="150" y="320" width="200" height="150" fill="#00ff88" opacity="0.2"/>
+  <rect x="450" y="320" width="200" height="150" fill="#b537f2" opacity="0.2"/>
+  <path d="M200 400 L250 350 L300 400" stroke="#00ff88" stroke-width="4" fill="none"/>
+  <path d="M500 400 L550 350 L600 400" stroke="#b537f2" stroke-width="4" fill="none"/>
+  <text x="400" y="550" text-anchor="middle" fill="#ff006e" font-family="monospace" font-size="28" font-weight="bold">IOT AUTOMATION</text>
+</svg>

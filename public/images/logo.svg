@@ -1,0 +1,7 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="120" height="120" fill="#050812"/>
+  <rect x="10" y="10" width="100" height="100" stroke="#00ff88" stroke-width="4" fill="#0a0e27"/>
+  <polygon points="60,30 80,50 80,70 60,90 40,70 40,50" fill="#00ff88"/>
+  <rect x="50" y="50" width="20" height="20" fill="#ff006e"/>
+  <text x="60" y="115" text-anchor="middle" fill="#00ff88" font-family="monospace" font-size="14" font-weight="bold">MA</text>
+</svg>

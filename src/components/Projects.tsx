@@ -10,62 +10,69 @@ interface Project {
   color: string;
   stack: string[];
   link?: string;
+  image?: string;
 }
 
 const projects: Project[] = [
   {
     id: 1,
-    title: 'AI Dashboard Platform',
-    description: 'Modern analytics dashboard with real-time data visualization and AI-powered insights.',
+    title: 'E-Commerce Platform',
+    description: 'Modern e-commerce solution with seamless checkout and inventory management.',
     rating: 5,
     color: '#00ff88',
-    stack: ['React', 'TypeScript', 'TensorFlow.js', 'Chart.js', 'PostgreSQL'],
-    link: '#'
+    stack: ['React', 'TypeScript', 'Node.js', 'PostgreSQL', 'Stripe'],
+    link: '#',
+    image: '/images/projects/project-1.svg'
   },
   {
     id: 2,
-    title: 'E-Commerce Engine',
-    description: 'High-performance shopping platform with seamless checkout and inventory management.',
+    title: 'Portfolio Website',
+    description: 'Retro-themed portfolio with 8-bit aesthetics and modern functionality.',
     rating: 5,
     color: '#ff006e',
-    stack: ['Next.js', 'Stripe', 'Supabase', 'Tailwind', 'Redis'],
-    link: '#'
+    stack: ['React', 'Vite', 'Tailwind CSS', 'TypeScript'],
+    link: '#',
+    image: '/images/projects/project-2.svg'
   },
   {
     id: 3,
-    title: 'Social Media Hub',
-    description: 'Next-gen social platform with real-time messaging and content sharing features.',
+    title: 'Admin Dashboard',
+    description: 'Comprehensive admin panel with real-time analytics and user management.',
     rating: 5,
     color: '#b537f2',
-    stack: ['Node.js', 'WebSocket', 'MongoDB', 'AWS', 'GraphQL'],
-    link: '#'
+    stack: ['Next.js', 'Chart.js', 'MongoDB', 'Express', 'Socket.io'],
+    link: '#',
+    image: '/images/projects/project-3.svg'
   },
   {
     id: 4,
-    title: 'Crypto Trading App',
-    description: 'Secure cryptocurrency trading platform with live market data and portfolio tracking.',
+    title: 'Mobile Application',
+    description: 'Cross-platform mobile app with native performance and beautiful UI.',
     rating: 4,
     color: '#ffbe0b',
-    stack: ['Vue.js', 'Web3.js', 'Ethers.js', 'Docker', 'AWS Lambda'],
-    link: '#'
+    stack: ['React Native', 'Expo', 'Firebase', 'Redux', 'Axios'],
+    link: '#',
+    image: '/images/projects/project-4.svg'
   },
   {
     id: 5,
-    title: 'Fitness Tracker Pro',
-    description: 'Comprehensive health and fitness application with workout planning and progress tracking.',
-    rating: 5,
-    color: '#00ff88',
-    stack: ['React Native', 'Firebase', 'Health Kit API', 'Redux', 'Expo'],
-    link: '#'
+    title: 'IoT Automation System',
+    description: 'Smart IoT platform for managing devices with automation and real-time monitoring.',
+    rating: 4,
+    color: '#ff006e',
+    stack: ['Python', 'FastAPI', 'MQTT', 'Raspberry Pi', 'Redis'],
+    link: '#',
+    image: '/images/projects/project-5.svg'
   },
   {
     id: 6,
-    title: 'Smart Home Controller',
-    description: 'IoT platform for managing smart home devices with automation and voice control.',
-    rating: 4,
-    color: '#ff006e',
-    stack: ['Python', 'FastAPI', 'MQTT', 'OpenAI', 'Raspberry Pi'],
-    link: '#'
+    title: 'Blog Platform',
+    description: 'Modern blogging platform with markdown support and social features.',
+    rating: 5,
+    color: '#00a3ff',
+    stack: ['Next.js', 'MDX', 'Prisma', 'PostgreSQL', 'Vercel'],
+    link: '#',
+    image: '/images/projects/project-6.svg'
   }
 ];
 
@@ -106,15 +113,23 @@ export default function Projects() {
                   ></div>
 
                   <div className="relative z-10 h-full flex flex-col">
-                    {/* Project Icon */}
+                    {/* Project Image */}
                     <div className="aspect-video bg-retro-dark border-2 mb-4 flex items-center justify-center overflow-hidden relative">
                       <div 
                         className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity"
                         style={{ backgroundColor: project.color }}
                       ></div>
-                      <div className="relative z-10 flex items-center justify-center">
-                        <div className="text-4xl">■</div>
-                      </div>
+                      {project.image ? (
+                        <img 
+                          src={project.image} 
+                          alt={project.title}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        />
+                      ) : (
+                        <div className="relative z-10 flex items-center justify-center">
+                          <div className="text-4xl">■</div>
+                        </div>
+                      )}
                     </div>
 
                     {/* Content */}
