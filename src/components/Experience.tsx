@@ -1,4 +1,4 @@
-import { Briefcase, Calendar, MapPin, Award } from 'lucide-react';
+import { Calendar, MapPin, Award } from 'lucide-react';
 
 interface ExperienceItem {
   title: string;

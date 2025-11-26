@@ -1,4 +1,5 @@
-import { Users, Link as LinkIcon, Award } from 'lucide-react';
+import { Link as LinkIcon, Award } from 'lucide-react';
+import { useState } from 'react';
 
 interface Partner {
   name: string;
@@ -68,6 +69,9 @@ const partners: Partner[] = [
 ];
 
 export default function CommunityPartners() {
+  const [showAll, setShowAll] = useState(false);
+  const displayedPartners = showAll ? partners : partners.slice(0, 3);
+  
   return (
     <section id="community" className="section-retro py-12 md:py-20">
       <div className="max-w-6xl mx-auto px-3 md:px-4">
@@ -82,7 +86,7 @@ export default function CommunityPartners() {
 
         {/* Partners Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8 mb-12 md:mb-16">
-          {partners.map((partner, index) => (
+          {displayedPartners.map((partner, index) => (
             <div
               key={index}
               className="scroll-animate group"
@@ -139,6 +143,23 @@ export default function CommunityPartners() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Show More / Show Less Button */}
+        <div className="text-center mt-8 md:mt-12 scroll-animate flex flex-col items-center gap-6 mb-12 md:mb-16">
+          <button
+            onClick={() => setShowAll(!showAll)}
+            className="pixel-btn px-6 py-3 text-xs md:text-base hover:shadow-lg transition-shadow"
+            style={{
+              backgroundColor: showAll ? '#ff006e' : '#00ff88',
+              color: '#050812'
+            }}
+          >
+            {showAll ? '▲ SHOW LESS PARTNERS ▲' : `▼ SHOW MORE PARTNERS (${partners.length - 3} more) ▼`}
+          </button>
+          <p className="font-retro text-gray-400 text-xs md:text-sm">
+            &gt; {partners.length} partnerships • {showAll ? 'all' : '3'} displayed
+          </p>
         </div>
 
         {/* Community Stats */}

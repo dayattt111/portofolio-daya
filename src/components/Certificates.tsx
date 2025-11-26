@@ -1,4 +1,5 @@
-import { Award, Calendar, ExternalLink } from 'lucide-react';
+import { Calendar, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 interface Certificate {
   title: string;
@@ -75,6 +76,9 @@ const certificates: Certificate[] = [
 ];
 
 export default function Certificates() {
+  const [showAll, setShowAll] = useState(false);
+  const displayedCerts = showAll ? certificates : certificates.slice(0, 3);
+  
   return (
     <section id="certificates" className="section-retro py-12 md:py-20">
       <div className="max-w-6xl mx-auto px-3 md:px-4">
@@ -89,10 +93,10 @@ export default function Certificates() {
 
         {/* Certificate Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
-          {certificates.map((cert, index) => (
+          {displayedCerts.map((cert, index) => (
             <div
               key={index}
-              className="scroll-animate"
+              className="scroll-animate group"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               {/* Flip Card Container */}
@@ -101,33 +105,33 @@ export default function Certificates() {
                   {/* Front */}
                   <div className="flip-card-front">
                     <div 
-                      className="retro-card h-full flex flex-col items-center justify-center text-center p-6 md:p-8 group"
+                      className="retro-card h-full flex flex-col items-center justify-center text-center p-6 md:p-8"
                       style={{
                         borderColor: cert.color,
                         background: `linear-gradient(135deg, rgba(10, 14, 39, 0.9) 0%, rgba(10, 26, 46, 0.7) 100%)`
                       }}
                     >
-                      <div className="text-5xl md:text-6xl mb-4 md:mb-6 transform group-hover:scale-110 transition-transform">
+                      <div className="text-5xl md:text-6xl mb-4 md:mb-6 transform group-hover:scale-110 transition-transform duration-300">
                         {cert.icon}
                       </div>
                       <h3 
-                        className="text-lg md:text-2xl font-pixel font-bold mb-2"
+                        className="text-lg md:text-2xl font-pixel font-bold mb-2 line-clamp-2"
                         style={{ color: cert.color }}
                       >
                         {cert.title}
                       </h3>
-                      <p className="text-gray-300 font-retro text-xs md:text-sm mb-3 md:mb-4">
+                      <p className="text-gray-300 font-retro text-xs md:text-sm mb-3 md:mb-4 line-clamp-1">
                         by {cert.issuer}
                       </p>
                       <div 
-                        className="text-xs font-pixel px-3 py-2 rounded border"
+                        className="text-xs font-pixel px-3 py-2 rounded border animate-pulse"
                         style={{
                           borderColor: cert.color,
                           color: cert.color,
                           backgroundColor: `${cert.color}15`
                         }}
                       >
-                        CLICK TO VIEW
+                        ▲ FLIP TO VIEW ▲
                       </div>
                     </div>
                   </div>
@@ -144,9 +148,9 @@ export default function Certificates() {
                       {/* Cert Details */}
                       <div>
                         <p className="font-pixel text-xs mb-3 md:mb-4" style={{ color: cert.color }}>
-                          CREDENTIAL DETAILS
+                          ❯ CREDENTIAL DETAILS
                         </p>
-                        <div className="space-y-2 md:space-y-3 mb-4 md:mb-6">
+                        <div className="space-y-2 md:space-y-3 mb-4 md:mb-6 border-l-2 border-neon-cyan pl-3">
                           <div>
                             <p className="text-gray-400 font-retro text-xs mb-1">Issued:</p>
                             <div className="flex items-center gap-2 text-gray-200 font-retro text-xs md:text-sm">
@@ -162,13 +166,13 @@ export default function Certificates() {
 
                         {/* Skills */}
                         <p className="font-pixel text-xs mb-2 md:mb-3" style={{ color: cert.color }}>
-                          SKILLS
+                          ◆ SKILLS
                         </p>
                         <div className="flex flex-wrap gap-2">
                           {cert.skills.map((skill) => (
                             <span
                               key={skill}
-                              className="px-2 py-1 text-xs font-retro border rounded whitespace-nowrap"
+                              className="px-2 py-1 text-xs font-retro border rounded whitespace-nowrap hover:shadow-lg transition-shadow"
                               style={{
                                 borderColor: cert.color,
                                 color: cert.color,
@@ -186,7 +190,7 @@ export default function Certificates() {
                         href={cert.credentialUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="pixel-btn-outline text-center text-xs flex items-center justify-center gap-2 mt-4"
+                        className="pixel-btn-outline text-center text-xs flex items-center justify-center gap-2 mt-4 hover:shadow-lg transition-shadow"
                       >
                         <ExternalLink className="w-3 h-3" />
                         VERIFY
@@ -199,10 +203,20 @@ export default function Certificates() {
           ))}
         </div>
 
-        {/* More Certs Hint */}
-        <div className="text-center mt-12 md:mt-16 scroll-animate">
+        {/* Show More / Show Less Button */}
+        <div className="text-center mt-12 md:mt-16 scroll-animate flex flex-col items-center gap-6">
+          <button
+            onClick={() => setShowAll(!showAll)}
+            className="pixel-btn px-6 py-3 text-xs md:text-base hover:shadow-lg transition-shadow"
+            style={{
+              backgroundColor: showAll ? '#ff006e' : '#00ff88',
+              color: '#050812'
+            }}
+          >
+            {showAll ? '▲ SHOW LESS CERTIFICATES ▲' : `▼ SHOW MORE CERTIFICATES (${certificates.length - 3} more) ▼`}
+          </button>
           <p className="font-retro text-gray-400 text-xs md:text-sm">
-            &gt; Learning never stops... more certifications coming soon!
+            &gt; {certificates.length} certifications • {showAll ? 'all' : '3'} displayed
           </p>
         </div>
       </div>
