@@ -1,5 +1,6 @@
 import { Calendar, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import reactImg from '/images/certificates/PsertiCy.png';
 
 interface Certificate {
   title: string;
@@ -10,29 +11,32 @@ interface Certificate {
   skills: string[];
   color: string;
   icon: string;
+  image: string;
 }
 
 // Static certificate data
 const certificates: Certificate[] = [
   {
-    title: 'Advanced React Developer',
-    issuer: 'Udacity',
-    date: 'March 2023',
-    credentialId: 'UDAC-2023-001',
+    title: 'Pemateri Cyber Security',
+    issuer: 'Pandu Digital SMAN 1 Bone',
+    date: 'November 2025',
+    credentialId: '421/615/UPT.SMAN.01-BONE/XI/2025',
     credentialUrl: '#',
     skills: ['React', 'Redux', 'Testing'],
     color: '#00ff88',
-    icon: '⚛️'
+    icon: '⚛️',
+    image: reactImg
   },
   {
-    title: 'Full Stack Web Development',
+    title: 'Pemateri Network Cisco',
     issuer: 'Coursera',
     date: 'January 2023',
-    credentialId: 'COUR-2023-045',
+    credentialId: '421/615/UPT.SMAN.01-BONE/XI/2025',
     credentialUrl: '#',
     skills: ['MERN Stack', 'DevOps', 'Database'],
     color: '#ff006e',
-    icon: '🔧'
+    icon: '🔧',
+    image: '/images/certificates/PsertiNet.png'
   },
   {
     title: 'TypeScript Professional',
@@ -42,7 +46,8 @@ const certificates: Certificate[] = [
     credentialUrl: '#',
     skills: ['TypeScript', 'OOP', 'Advanced Types'],
     color: '#b537f2',
-    icon: '📘'
+    icon: '📘',
+    image: '/images/certificates/typescript.png'
   },
   {
     title: 'AWS Certified Solutions Architect',
@@ -52,7 +57,8 @@ const certificates: Certificate[] = [
     credentialUrl: '#',
     skills: ['Cloud Architecture', 'AWS Services', 'Security'],
     color: '#ffbe0b',
-    icon: '☁️'
+    icon: '☁️',
+    image: '/images/certificates/aws.png'
   },
   {
     title: 'Google Cloud Professional',
@@ -62,7 +68,8 @@ const certificates: Certificate[] = [
     credentialUrl: '#',
     skills: ['GCP', 'BigQuery', 'Kubernetes'],
     color: '#00a3ff',
-    icon: '🌩️'
+    icon: '🌩️',
+    image: '/images/certificates/gcp.png'
   },
   {
     title: 'UI/UX Design Certification',
@@ -72,7 +79,8 @@ const certificates: Certificate[] = [
     credentialUrl: '#',
     skills: ['Design Thinking', 'Prototyping', 'User Research'],
     color: '#00ff88',
-    icon: '🎨'
+    icon: '🎨',
+    image: '/images/certificates/uiux.png'
   }
 ];
 
@@ -169,6 +177,16 @@ export default function Certificates() {
               <div className="text-center mb-8">
                 <div className="text-6xl md:text-8xl mb-6 animate-float">
                   {currentCert.icon}
+                    <div 
+                      className="mx-auto mt-4 rounded-xl overflow-hidden border-4 w-[260px] aspect-[4/3]"
+                      style={{ borderColor: currentCert.color }}
+                    >
+                      <img
+                        src={currentCert.image}
+                        alt={currentCert.title}
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
                 </div>
                 <h3 
                   className="text-2xl md:text-4xl font-pixel font-bold mb-3"

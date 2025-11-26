@@ -83,7 +83,7 @@ export default function Contact() {
 
                 {/* Email */}
                 <a 
-                  href="mailto:contact@example.com"
+                  href="mailto:contact@hidayatbaru0304@gmail.com"
                   className="flex items-center gap-4 group"
                 >
                   <div className="w-14 h-14 rounded-lg bg-neon-purple/10 border-2 border-neon-purple flex items-center justify-center group-hover:bg-neon-purple/20 transition-all">
@@ -91,13 +91,13 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="font-pixel text-sm text-neon-purple">EMAIL</p>
-                    <p className="text-gray-400 hover:text-neon-purple transition-colors">your.email@example.com</p>
+                    <p className="text-gray-400 hover:text-neon-purple transition-colors">hidayatbaru0304@gmail.com</p>
                   </div>
                 </a>
 
                 {/* GitHub */}
                 <a 
-                  href="https://github.com"
+                  href="https://github.com/dayattt111"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-4 group"
@@ -107,13 +107,13 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="font-pixel text-sm text-neon-yellow">GITHUB</p>
-                    <p className="text-gray-400 hover:text-neon-yellow transition-colors">github.com/yourprofile</p>
+                    <p className="text-gray-400 hover:text-neon-yellow transition-colors">github.com/dayattt111</p>
                   </div>
                 </a>
 
                 {/* LinkedIn */}
                 <a 
-                  href="https://linkedin.com"
+                  href="http://www.linkedin.com/in/muhammad-amin-hidayat"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-4 group"
@@ -123,7 +123,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="font-pixel text-sm text-neon-cyan">LINKEDIN</p>
-                    <p className="text-gray-400 hover:text-neon-cyan transition-colors">linkedin.com/in/yourprofile</p>
+                    <p className="text-gray-400 hover:text-neon-cyan transition-colors">linkedin.com/in/muhammad-amin-hidayat</p>
                   </div>
                 </a>
               </div>
@@ -168,7 +168,7 @@ export default function Contact() {
                   value={formData.email}
                   onChange={handleChange}
                   className="retro-input"
-                  placeholder="your@email.com"
+                  placeholder="hidayatbaru0304@gmail.com"
                   required
                 />
               </div>

@@ -1,4 +1,5 @@
 import { Code, Zap, Palette } from 'lucide-react';
+// import { Image } from 'next/image';
 
 export default function About() {
   return (
@@ -17,7 +18,7 @@ export default function About() {
             <div className="retro-card">
               <div className="aspect-square bg-gradient-to-br from-neon-cyan/20 to-neon-pink/20 border-4 border-neon-cyan mb-6 flex items-center justify-center overflow-hidden">
                 <img 
-                  src="/images/profile/avatar.svg" 
+                  src="/images/profile/dayat.jpg" 
                   alt="Muh. Amin Hidayat" 
                   className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
                 />
