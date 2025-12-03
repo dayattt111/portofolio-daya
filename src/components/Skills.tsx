@@ -10,15 +10,31 @@ const skills = [
 ];
 
 const technologies = [
-  'JavaScript', 'Python', 'Docker', 'AWS', 
-  'PostgreSQL', 'GraphQL', 'React Native', 'MongoDB'
+  { name: 'JavaScript', icon: '⚡', color: 'from-yellow-400 to-yellow-600' },
+  { name: 'TypeScript', icon: '📘', color: 'from-blue-400 to-blue-600' },
+  { name: 'React', icon: '⚛️', color: 'from-cyan-400 to-cyan-600' },
+  { name: 'Node.js', icon: '🟢', color: 'from-green-400 to-green-600' },
+  { name: 'Python', icon: '🐍', color: 'from-blue-500 to-yellow-500' },
+  { name: 'Docker', icon: '🐳', color: 'from-blue-400 to-blue-700' },
+  { name: 'AWS', icon: '☁️', color: 'from-orange-400 to-orange-600' },
+  { name: 'PostgreSQL', icon: '🐘', color: 'from-blue-600 to-indigo-600' },
+  { name: 'GraphQL', icon: '◇', color: 'from-pink-500 to-purple-600' },
+  { name: 'MongoDB', icon: '🍃', color: 'from-green-500 to-green-700' },
+  { name: 'Next.js', icon: '▲', color: 'from-gray-700 to-gray-900' },
+  { name: 'Tailwind', icon: '🎨', color: 'from-cyan-400 to-blue-500' },
+  { name: 'Firebase', icon: '🔥', color: 'from-yellow-500 to-orange-600' },
+  { name: 'Git', icon: '📦', color: 'from-red-500 to-orange-500' },
+  { name: 'Figma', icon: '🎯', color: 'from-purple-500 to-pink-500' },
+  { name: 'Laravel', icon: '🔴', color: 'from-red-400 to-red-600' }
 ];
 
 export default function Skills() {
   const { theme } = useTheme();
   const [isVisible, setIsVisible] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [scrollPosition, setScrollPosition] = useState(0);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -30,6 +46,21 @@ export default function Skills() {
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
+
+  // Auto-scroll carousel
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setScrollPosition(prev => (prev + 1) % technologies.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      const scrollWidth = scrollRef.current.scrollWidth / 2;
+      scrollRef.current.scrollLeft = (scrollPosition * 150) % scrollWidth;
+    }
+  }, [scrollPosition]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,13 +94,41 @@ export default function Skills() {
               </div>
             ))}
             
-            {/* Tech Stack */}
-            <div className="grid grid-cols-4 gap-3 pt-4">
-              {technologies.map((tech) => (
-                <div key={tech} className={`p-2 rounded text-center text-xs ${theme === 'dark' ? 'bg-gray-800 text-gray-300' : 'bg-gray-100 text-gray-700'}`}>
-                  {tech}
+            {/* Tech Stack Carousel */}
+            <div className="pt-6">
+              <h3 className={`text-lg font-semibold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                Tech Stack
+              </h3>
+              <div className="relative overflow-hidden rounded-xl">
+                {/* Gradient Overlays */}
+                <div className={`absolute left-0 top-0 bottom-0 w-20 z-10 pointer-events-none ${theme === 'dark' ? 'bg-gradient-to-r from-gray-900 to-transparent' : 'bg-gradient-to-r from-white to-transparent'}`} />
+                <div className={`absolute right-0 top-0 bottom-0 w-20 z-10 pointer-events-none ${theme === 'dark' ? 'bg-gradient-to-l from-gray-900 to-transparent' : 'bg-gradient-to-l from-white to-transparent'}`} />
+                
+                {/* Scrolling Container */}
+                <div 
+                  ref={scrollRef}
+                  className="flex gap-4 overflow-x-hidden py-4 scroll-smooth"
+                >
+                  {/* Double the technologies for infinite scroll effect */}
+                  {[...technologies, ...technologies].map((tech, index) => (
+                    <div
+                      key={`${tech.name}-${index}`}
+                      className={`flex-shrink-0 w-32 p-4 rounded-xl transition-all duration-300 hover:scale-110 cursor-pointer ${theme === 'dark' ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-100 hover:bg-gray-200'}`}
+                      style={{
+                        animation: `slide 30s linear infinite`,
+                        animationDelay: `${index * 0.1}s`
+                      }}
+                    >
+                      <div className="text-center">
+                        <div className="text-3xl mb-2">{tech.icon}</div>
+                        <div className={`text-xs font-medium bg-gradient-to-r ${tech.color} bg-clip-text text-transparent`}>
+                          {tech.name}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
             </div>
           </div>
 

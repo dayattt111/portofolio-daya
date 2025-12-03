@@ -83,6 +83,7 @@ export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -97,7 +98,14 @@ export default function Projects() {
 
   return (
     <>
-      <section ref={sectionRef} id="projects" className={`py-16 transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
+      <section ref={sectionRef} id="projects" className={`py-20 relative overflow-hidden transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
+        {/* Animated Background Pattern */}
+        <div className="absolute inset-0 opacity-5 pointer-events-none">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 2px 2px, ${theme === 'dark' ? '#fff' : '#000'} 1px, transparent 0)`,
+            backgroundSize: '40px 40px'
+          }} />
+        </div>
         <div className="max-w-7xl mx-auto px-4">
           <div className={`mb-12 text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <h2 className="section-title-gradient text-3xl md:text-4xl">
@@ -117,24 +125,39 @@ export default function Projects() {
                   setSelectedProject(project);
                   setIsStackOpen(true);
                 }}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
                 className={`text-left transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
                 style={{ transitionDelay: `${index * 0.15}s` }}
               >
-                <div className={`modern-card h-full group ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}>
-                  <div className="modern-card-content h-full flex flex-col">
-                    {/* Project Image */}
-                    <div className={`aspect-video rounded-xl mb-3 flex items-center justify-center overflow-hidden relative ${theme === 'dark' ? 'bg-gray-700' : 'bg-gradient-to-br from-gray-100 to-gray-200'}`}>
+                <div className={`relative h-full group overflow-hidden rounded-2xl transition-all duration-500 ${hoveredIndex === index ? 'scale-105 shadow-2xl' : 'scale-100'} ${theme === 'dark' ? 'bg-gradient-to-br from-gray-800 to-gray-900' : 'bg-gradient-to-br from-white to-gray-50'} border ${theme === 'dark' ? 'border-gray-700' : 'border-gray-200'}`}>
+                  {/* Hover Glow Effect */}
+                  <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}>
+                    <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-2xl blur-xl opacity-30" />
+                  </div>
+
+                  <div className="relative z-10 p-6 h-full flex flex-col">
+                    {/* Project Image with Overlay */}
+                    <div className={`aspect-video rounded-xl mb-4 overflow-hidden relative group ${theme === 'dark' ? 'bg-gray-700' : 'bg-gradient-to-br from-gray-100 to-gray-200'}`}>
                       {project.image ? (
-                        <img 
-                          src={project.image} 
-                          alt={project.title}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                        />
+                        <>
+                          <img 
+                            src={project.image} 
+                            alt={project.title}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        </>
                       ) : (
-                        <div className="flex items-center justify-center">
+                        <div className="flex items-center justify-center h-full">
                           <div className={`text-4xl ${theme === 'dark' ? 'text-gray-600' : 'text-gray-400'}`}>■</div>
                         </div>
                       )}
+                      
+                      {/* Floating Badge */}
+                      <div className="absolute top-3 right-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-xs px-3 py-1 rounded-full font-semibold shadow-lg transform group-hover:scale-110 transition-transform">
+                        NEW
+                      </div>
                     </div>
 
                     {/* Content */}

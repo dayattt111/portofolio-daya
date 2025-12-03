@@ -510,6 +510,30 @@
   .rotate-slow {
     animation: rotate 20s linear infinite;
   }
+
+  /* Slide Animation for Carousel */
+  @keyframes slide {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(calc(-150px * 16));
+    }
+  }
+
+  /* Parallax Scroll Effect */
+  @keyframes parallax-float {
+    0%, 100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-20px) rotate(5deg);
+    }
+  }
+
+  .parallax-float {
+    animation: parallax-float 8s ease-in-out infinite;
+  }
 }
 
 @layer utilities {
