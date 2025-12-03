@@ -3,96 +3,107 @@ import { Code, Zap, Palette } from 'lucide-react';
 
 export default function About() {
   return (
-    <section id="about" className="section-retro">
+    <section id="about" className="section-modern bg-gradient-to-b from-white via-gray-50 to-white">
       <div className="max-w-6xl mx-auto px-4">
-        <div className="scroll-animate mb-16">
-          <h2 className="section-title">
-            [ ABOUT ME ]
+        <div className="scroll-animate mb-16 text-center">
+          <h2 className="section-title-gradient animate-fade-in-up">
+            About Me
           </h2>
+          <p className="text-gray-600 mt-4 text-lg">Get to know more about my skills and experience</p>
         </div>
 
         {/* Main Content */}
         <div className="grid md:grid-cols-2 gap-12 mb-16">
           {/* Left - Profile */}
-          <div className="scroll-animate" style={{ animationDelay: '0.1s' }}>
-            <div className="retro-card">
-              <div className="aspect-square bg-gradient-to-br from-neon-cyan/20 to-neon-pink/20 border-4 border-neon-cyan mb-6 flex items-center justify-center overflow-hidden">
-                <img 
-                  src="/images/profile/dayat.jpg" 
-                  alt="Muh. Amin Hidayat" 
-                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
-                />
+          <div className="scroll-animate animate-fade-in-up stagger-1">
+            <div className="modern-card">
+              <div className="modern-card-content">
+                <div className="aspect-square bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl mb-6 flex items-center justify-center overflow-hidden group">
+                  <img 
+                    src="/images/profile/dayat.jpg" 
+                    alt="Muh. Amin Hidayat" 
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-800 mb-4">Who I Am</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Passionate developer crafting beautiful and functional digital experiences. I combine creativity with technical expertise to build modern, responsive web applications.
+                </p>
               </div>
-              <h3 className="text-2xl font-pixel font-bold text-neon-cyan mb-4">WHO I AM</h3>
-              <p className="text-gray-300 font-retro leading-relaxed">
-                &gt; Passionate developer crafting beautiful and functional digital experiences with a love for retro aesthetics and modern technology.
-              </p>
             </div>
           </div>
 
           {/* Right - Quick Stats */}
           <div className="space-y-6">
-            <div className="scroll-animate" style={{ animationDelay: '0.15s' }}>
-              <div className="retro-card-dark">
-                <h4 className="text-lg font-pixel text-neon-pink mb-4">EXPERIENCE</h4>
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-neon-cyan font-retro">Frontend Development</span>
-                    <div className="flex gap-1">
-                      {[...Array(5)].map((_, i) => (
-                        <div key={i} className="w-3 h-3 bg-neon-cyan border border-neon-cyan"></div>
-                      ))}
+            <div className="scroll-animate animate-fade-in-up stagger-2">
+              <div className="modern-card">
+                <div className="modern-card-content">
+                  <h4 className="text-xl font-bold text-gray-800 mb-6">Skills Level</h4>
+                  <div className="space-y-4">
+                    <div>
+                      <div className="flex justify-between mb-2">
+                        <span className="text-gray-700 font-medium">Frontend Development</span>
+                        <span className="text-blue-600 font-semibold">95%</span>
+                      </div>
+                      <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div className="bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full" style={{ width: '95%' }}></div>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-neon-purple font-retro">Backend Development</span>
-                    <div className="flex gap-1">
-                      {[...Array(4)].map((_, i) => (
-                        <div key={i} className="w-3 h-3 bg-neon-purple border border-neon-purple"></div>
-                      ))}
+                    <div>
+                      <div className="flex justify-between mb-2">
+                        <span className="text-gray-700 font-medium">Backend Development</span>
+                        <span className="text-purple-600 font-semibold">85%</span>
+                      </div>
+                      <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div className="bg-gradient-to-r from-purple-500 to-purple-600 h-2 rounded-full" style={{ width: '85%' }}></div>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-neon-yellow font-retro">UI/UX Design</span>
-                    <div className="flex gap-1">
-                      {[...Array(5)].map((_, i) => (
-                        <div key={i} className="w-3 h-3 bg-neon-yellow border border-neon-yellow"></div>
-                      ))}
+                    <div>
+                      <div className="flex justify-between mb-2">
+                        <span className="text-gray-700 font-medium">UI/UX Design</span>
+                        <span className="text-pink-600 font-semibold">90%</span>
+                      </div>
+                      <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div className="bg-gradient-to-r from-pink-500 to-pink-600 h-2 rounded-full" style={{ width: '90%' }}></div>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-neon-cyan font-retro">Problem Solving</span>
-                    <div className="flex gap-1">
-                      {[...Array(5)].map((_, i) => (
-                        <div key={i} className="w-3 h-3 bg-neon-cyan border border-neon-cyan"></div>
-                      ))}
+                    <div>
+                      <div className="flex justify-between mb-2">
+                        <span className="text-gray-700 font-medium">Problem Solving</span>
+                        <span className="text-blue-600 font-semibold">95%</span>
+                      </div>
+                      <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div className="bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full" style={{ width: '95%' }}></div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="scroll-animate" style={{ animationDelay: '0.2s' }}>
-              <div className="retro-card">
-                <h4 className="text-lg font-pixel text-neon-cyan mb-4">ACHIEVEMENTS</h4>
-                <ul className="space-y-2 font-retro text-gray-300">
-                  <li className="flex gap-2">
-                    <span className="text-neon-pink">▶</span>
-                    <span>&gt; 50+ Projects Completed</span>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-neon-purple">▶</span>
-                    <span>&gt; 100+ Happy Clients</span>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-neon-yellow">▶</span>
-                    <span>&gt; 5+ Years Experience</span>
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="text-neon-cyan">▶</span>
-                    <span>&gt; Award Winning Designer</span>
-                  </li>
-                </ul>
+            <div className="scroll-animate animate-fade-in-up stagger-3">
+              <div className="modern-card bg-gradient-to-br from-blue-50 to-purple-50">
+                <div className="modern-card-content">
+                  <h4 className="text-xl font-bold text-gray-800 mb-4">Achievements</h4>
+                  <ul className="space-y-3 text-gray-700">
+                    <li className="flex items-center gap-3">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                      <span>50+ Projects Completed</span>
+                    </li>
+                    <li className="flex items-center gap-3">
+                      <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                      <span>100+ Happy Clients</span>
+                    </li>
+                    <li className="flex items-center gap-3">
+                      <div className="w-2 h-2 bg-pink-500 rounded-full"></div>
+                      <span>5+ Years Experience</span>
+                    </li>
+                    <li className="flex items-center gap-3">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                      <span>Award Winning Designer</span>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
@@ -101,41 +112,47 @@ export default function About() {
         {/* Three Column Grid */}
         <div className="grid md:grid-cols-3 gap-8">
           {/* Card 1: What I Do */}
-          <div className="scroll-animate" style={{ animationDelay: '0.1s' }}>
-            <div className="retro-card-dark h-full hover:scale-105 transition-transform">
-              <div className="w-16 h-16 mb-6 flex items-center justify-center bg-neon-cyan/20 border-2 border-neon-cyan">
-                <Code className="w-8 h-8 text-neon-cyan" />
+          <div className="scroll-animate animate-fade-in-up stagger-4">
+            <div className="modern-card h-full group">
+              <div className="modern-card-content">
+                <div className="w-16 h-16 mb-6 flex items-center justify-center bg-gradient-to-br from-blue-100 to-blue-200 rounded-xl group-hover:scale-110 transition-transform">
+                  <Code className="w-8 h-8 text-blue-600" />
+                </div>
+                <h3 className="text-xl font-bold mb-4 text-gray-800">What I Do</h3>
+                <p className="text-gray-600 leading-relaxed text-sm">
+                  Full-stack development with expertise in React, TypeScript, and modern web technologies. Specializing in creating beautiful, performant, and accessible user interfaces.
+                </p>
               </div>
-              <h3 className="text-xl font-pixel font-bold mb-4 text-neon-cyan">WHAT I DO</h3>
-              <p className="text-gray-300 leading-relaxed font-retro text-sm">
-                &gt; Full-stack development with expertise in React, TypeScript, and modern web technologies. Specializing in creating beautiful, performant, and accessible user interfaces.
-              </p>
             </div>
           </div>
 
           {/* Card 2: My Approach */}
-          <div className="scroll-animate" style={{ animationDelay: '0.2s' }}>
-            <div className="retro-card-dark h-full hover:scale-105 transition-transform">
-              <div className="w-16 h-16 mb-6 flex items-center justify-center bg-neon-pink/20 border-2 border-neon-pink">
-                <Zap className="w-8 h-8 text-neon-pink" />
+          <div className="scroll-animate animate-fade-in-up stagger-5">
+            <div className="modern-card h-full group">
+              <div className="modern-card-content">
+                <div className="w-16 h-16 mb-6 flex items-center justify-center bg-gradient-to-br from-purple-100 to-purple-200 rounded-xl group-hover:scale-110 transition-transform">
+                  <Zap className="w-8 h-8 text-purple-600" />
+                </div>
+                <h3 className="text-xl font-bold mb-4 text-gray-800">My Approach</h3>
+                <p className="text-gray-600 leading-relaxed text-sm">
+                  Performance-driven development with attention to detail. Every project is optimized, accessible, and visually stunning with clean, modern design principles.
+                </p>
               </div>
-              <h3 className="text-xl font-pixel font-bold mb-4 text-neon-pink">MY APPROACH</h3>
-              <p className="text-gray-300 leading-relaxed font-retro text-sm">
-                &gt; Performance-driven development with attention to detail. Every project is optimized, accessible, and visually stunning with a touch of retro aesthetics.
-              </p>
             </div>
           </div>
 
           {/* Card 3: Design Philosophy */}
-          <div className="scroll-animate" style={{ animationDelay: '0.3s' }}>
-            <div className="retro-card-dark h-full hover:scale-105 transition-transform">
-              <div className="w-16 h-16 mb-6 flex items-center justify-center bg-neon-purple/20 border-2 border-neon-purple">
-                <Palette className="w-8 h-8 text-neon-purple" />
+          <div className="scroll-animate animate-fade-in-up stagger-6">
+            <div className="modern-card h-full group">
+              <div className="modern-card-content">
+                <div className="w-16 h-16 mb-6 flex items-center justify-center bg-gradient-to-br from-pink-100 to-pink-200 rounded-xl group-hover:scale-110 transition-transform">
+                  <Palette className="w-8 h-8 text-pink-600" />
+                </div>
+                <h3 className="text-xl font-bold mb-4 text-gray-800">Design Philosophy</h3>
+                <p className="text-gray-600 leading-relaxed text-sm">
+                  Modern aesthetics meets functional design. Blending clean UI with contemporary design principles to create unique and memorable digital experiences.
+                </p>
               </div>
-              <h3 className="text-xl font-pixel font-bold mb-4 text-neon-purple">DESIGN PHILOSOPHY</h3>
-              <p className="text-gray-300 leading-relaxed font-retro text-sm">
-                &gt; Retro vibes meets modern UI/UX. Blending vintage pixel art aesthetics with contemporary design principles to create unique and memorable digital experiences.
-              </p>
             </div>
           </div>
         </div>
