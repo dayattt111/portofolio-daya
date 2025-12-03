@@ -152,101 +152,166 @@ export default function Certificates() {
           <p className={`text-lg ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Continuous learning & professional development</p>
         </div>
 
-        {/* Carousel Container */}
+        {/* 3-Item Carousel Container */}
         <div
-          className="relative max-w-4xl mx-auto"
+          className={`relative transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
           onMouseEnter={() => setIsAutoPlaying(false)}
           onMouseLeave={() => setIsAutoPlaying(true)}
         >
           {/* Navigation Buttons */}
           <button
             onClick={handlePrev}
-            className={`absolute left-0 -ml-4 md:-ml-16 top-1/2 -translate-y-1/2 p-3 rounded-full shadow-lg z-10 transition-all hover:scale-110 ${theme === 'dark' ? 'bg-gray-800 hover:bg-gray-700 border-gray-700' : 'bg-white hover:bg-gray-50 border-gray-200'} border-2`}
+            className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-14 p-4 rounded-full shadow-xl z-20 transition-all hover:scale-110 group ${theme === 'dark' ? 'bg-gray-800 hover:bg-gray-700 border-gray-700' : 'bg-white hover:bg-gray-50 border-gray-200'} border-2`}
           >
-            <ChevronLeft className={`w-6 h-6 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`} />
+            <ChevronLeft className={`w-6 h-6 transition-transform group-hover:-translate-x-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`} />
           </button>
 
           <button
             onClick={handleNext}
-            className={`absolute right-0 -mr-4 md:-mr-16 top-1/2 -translate-y-1/2 p-3 rounded-full shadow-lg z-10 transition-all hover:scale-110 ${theme === 'dark' ? 'bg-gray-800 hover:bg-gray-700 border-gray-700' : 'bg-white hover:bg-gray-50 border-gray-200'} border-2`}
+            className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-14 p-4 rounded-full shadow-xl z-20 transition-all hover:scale-110 group ${theme === 'dark' ? 'bg-gray-800 hover:bg-gray-700 border-gray-700' : 'bg-white hover:bg-gray-50 border-gray-200'} border-2`}
           >
-            <ChevronRight className={`w-6 h-6 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`} />
+            <ChevronRight className={`w-6 h-6 transition-transform group-hover:translate-x-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`} />
           </button>
-          {/* Certificate Card */}
-          <div className={`rounded-xl shadow-lg overflow-hidden ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}>
-            <div className={`p-8 transition-opacity duration-300 ${fadeState === 'fade-in' ? 'opacity-100' : 'opacity-0'}`}>
+
+          {/* 3 Certificates Grid with Carousel Effect */}
+          <div className="grid md:grid-cols-3 gap-6 px-4">
+            {[-1, 0, 1].map((offset) => {
+              const index = (currentIndex + offset + certificates.length) % certificates.length;
+              const cert = certificates[index];
+              const isCenter = offset === 0;
               
-              {/* Certificate Image */}
-              <div className={`w-full mb-6 rounded-xl overflow-hidden ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-100'}`}>
-                <img
-                  src={currentCert.image}
-                  alt={currentCert.title}
-                  className="w-full h-auto object-contain"
-                />
-              </div>
-
-              {/* Certificate Info */}
-              <div className="text-center">
-                <div className="text-5xl mb-4">{currentCert.icon}</div>
-
-                <h3 className={`text-2xl md:text-3xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
-                  {currentCert.title}
-                </h3>
-
-                <p className={`mb-1 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Issued by {currentCert.issuer}</p>
-                <p className={`text-sm mb-6 ${theme === 'dark' ? 'text-gray-500' : 'text-gray-500'}`}>{currentCert.date}</p>
-
-                <button
-                  onClick={() => setShowModal(true)}
-                  className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2 rounded-lg hover:shadow-lg transition-all text-sm font-medium"
+              return (
+                <div
+                  key={`${index}-${offset}`}
+                  className={`transition-all duration-500 ${
+                    isCenter 
+                      ? 'scale-100 opacity-100 z-10' 
+                      : 'scale-90 opacity-60 blur-[2px]'
+                  } ${fadeState === 'fade-in' ? 'translate-y-0' : 'translate-y-4'}`}
                 >
-                  <span>View Certificate</span>
-                </button>
-              </div>
-            </div>
+                  <div 
+                    className={`group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer ${
+                      isCenter ? 'ring-2 ring-blue-500 hover:scale-105' : 'hover:scale-95'
+                    } ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}
+                    onClick={() => isCenter && setShowModal(true)}
+                  >
+                    {/* Glow Effect on Center */}
+                    {isCenter && (
+                      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 animate-gradient-shift" />
+                    )}
+
+                    <div className="relative z-10 p-4">
+                      {/* Certificate Image */}
+                      <div className={`aspect-[4/3] rounded-xl overflow-hidden mb-4 relative ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-100'}`}>
+                        <img
+                          src={cert.image}
+                          alt={cert.title}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        />
+                        {isCenter && (
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        )}
+                      </div>
+
+                      {/* Certificate Info - Compact */}
+                      <div className="text-center space-y-2">
+                        <div className="text-2xl">{cert.icon}</div>
+                        
+                        <h3 className={`text-sm md:text-base font-bold line-clamp-2 ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
+                          {cert.title}
+                        </h3>
+
+                        <p className={`text-xs line-clamp-1 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+                          {cert.issuer}
+                        </p>
+
+                        <div className="flex items-center justify-center gap-2 text-xs">
+                          <Calendar className="w-3 h-3 text-blue-500" />
+                          <span className={theme === 'dark' ? 'text-gray-500' : 'text-gray-500'}>
+                            {cert.date}
+                          </span>
+                        </div>
+
+                        {/* View Button - Only show on center */}
+                        {isCenter && (
+                          <button
+                            className="mt-2 text-xs font-medium text-blue-500 hover:text-blue-600 transition-colors flex items-center gap-1 mx-auto"
+                          >
+                            <ExternalLink className="w-3 h-3" />
+                            View Details
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Indicators with Animation */}
+          <div className="flex items-center justify-center gap-3 mt-8">
+            {certificates.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToSlide(index)}
+                className={`transition-all duration-300 rounded-full ${
+                  index === currentIndex 
+                    ? 'w-12 h-3 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 shadow-lg' 
+                    : `w-3 h-3 ${theme === 'dark' ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-300 hover:bg-gray-400'}`
+                }`}
+              />
+            ))}
+          </div>
+
+          {/* Auto Play Status */}
+          <div className="text-center mt-6">
+            <span className={`inline-flex items-center gap-2 text-sm px-4 py-2 rounded-full ${theme === 'dark' ? 'bg-gray-800 text-gray-400' : 'bg-gray-100 text-gray-600'}`}>
+              {isAutoPlaying ? (
+                <>
+                  <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                  Auto-playing
+                </>
+              ) : (
+                <>
+                  <span className="w-2 h-2 bg-gray-400 rounded-full" />
+                  Paused
+                </>
+              )}
+            </span>
           </div>
         </div>
-
-        {/* Indicators */}
-        <div className="flex items-center justify-center gap-3 mt-8">
-          {certificates.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => goToSlide(index)}
-              className={`transition-all rounded-full ${
-                index === currentIndex 
-                  ? 'w-10 h-3 bg-gradient-to-r from-blue-500 to-purple-500' 
-                  : 'w-3 h-3 bg-gray-300 hover:bg-gray-400'
-              }`}
-            />
-          ))}
-        </div>
-
-        {/* Auto Play Status */}
-        <p className="text-center text-gray-500 text-sm mt-4 font-medium">
-          {isAutoPlaying ? '● Auto-playing' : '⏸ Paused'}
-        </p>
       </div>
 
-      {/* MODAL */}
+      {/* MODAL with Enhanced Animation */}
       {showModal && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-[999] animate-fade-in">
-          <div className={`w-full max-w-5xl rounded-2xl p-8 relative overflow-y-auto max-h-[90vh] shadow-2xl animate-scale-in ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}>
+        <div 
+          className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center p-4 z-[999] animate-fade-in"
+          onClick={() => setShowModal(false)}
+        >
+          <div 
+            className={`w-full max-w-5xl rounded-2xl p-8 relative overflow-y-auto max-h-[90vh] shadow-2xl animate-scale-in ${theme === 'dark' ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'}`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Animated Background Gradient */}
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-pink-500/5 animate-gradient-shift rounded-2xl" />
 
             {/* CLOSE BUTTON */}
             <button
-              className={`absolute top-4 right-4 transition-colors p-2 rounded-full ${theme === 'dark' ? 'text-gray-400 hover:text-gray-200 hover:bg-gray-700' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'}`}
+              className={`absolute top-4 right-4 transition-all p-2 rounded-full z-10 hover:rotate-90 ${theme === 'dark' ? 'text-gray-400 hover:text-white hover:bg-red-500' : 'text-gray-500 hover:text-white hover:bg-red-500'}`}
               onClick={() => setShowModal(false)}
             >
               <X size={28} />
             </button>
 
             {/* MODAL CONTENT */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
               
               {/* LEFT CONTENT */}
               <div>
-                <h2 className={`text-3xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
+                <div className="text-5xl mb-4 animate-bounce">{currentCert.icon}</div>
+                
+                <h2 className={`text-3xl font-bold mb-3 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent`}>
                   {currentCert.title}
                 </h2>
 
@@ -254,26 +319,29 @@ export default function Certificates() {
                   Issued by <span className="font-semibold text-blue-500">{currentCert.issuer}</span>
                 </p>
 
-                <div className="text-gray-700 space-y-4">
-                  <div>
-                    <p className="text-gray-500 text-sm mb-2 font-medium">Issued Date:</p>
-                    <div className="flex items-center gap-2 text-gray-800">
-                      <Calendar className="w-5 h-5 text-blue-500" /> {currentCert.date}
+                <div className="space-y-4">
+                  <div className={`p-4 rounded-xl ${theme === 'dark' ? 'bg-gray-700/50' : 'bg-gray-50'}`}>
+                    <p className={`text-sm mb-2 font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>Issued Date:</p>
+                    <div className={`flex items-center gap-2 ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
+                      <Calendar className="w-5 h-5 text-blue-500" /> 
+                      <span className="font-semibold">{currentCert.date}</span>
                     </div>
                   </div>
 
-                  <div>
+                  <div className={`p-4 rounded-xl ${theme === 'dark' ? 'bg-gray-700/50' : 'bg-gray-50'}`}>
                     <p className={`text-sm mb-2 font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>Credential ID:</p>
-                    <p className={`font-mono text-sm px-3 py-2 rounded ${theme === 'dark' ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-800'}`}>{currentCert.credentialId}</p>
+                    <p className={`font-mono text-sm px-3 py-2 rounded ${theme === 'dark' ? 'bg-gray-800 text-gray-300' : 'bg-gray-100 text-gray-800'}`}>
+                      {currentCert.credentialId}
+                    </p>
                   </div>
 
                   <div>
-                    <p className={`text-sm mb-2 font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>Skills:</p>
+                    <p className={`text-sm mb-3 font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>Skills Covered:</p>
                     <div className="flex flex-wrap gap-2">
                       {currentCert.skills.map((skill, idx) => (
                         <span
                           key={idx}
-                          className={`px-3 py-1 rounded-full text-xs font-medium ${theme === 'dark' ? 'bg-blue-900/50 text-blue-300' : 'bg-blue-100 text-blue-700'}`}
+                          className={`px-4 py-2 rounded-full text-xs font-medium transition-all hover:scale-110 ${theme === 'dark' ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white' : 'bg-gradient-to-r from-blue-500 to-purple-500 text-white'} shadow-lg`}
                         >
                           {skill}
                         </span>
@@ -284,31 +352,43 @@ export default function Certificates() {
                   <a
                     href={currentCert.credentialUrl}
                     target="_blank"
-                    className="inline-flex items-center gap-2 mt-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2 rounded-lg hover:shadow-lg transition-all text-sm font-medium"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 mt-6 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white px-8 py-3 rounded-xl hover:shadow-2xl transition-all text-sm font-semibold group hover:scale-105"
                   >
-                    <ExternalLink className="w-4" />
+                    <ExternalLink className="w-4 group-hover:rotate-45 transition-transform" />
                     <span>Verify Certificate</span>
                   </a>
                 </div>
               </div>
 
-              {/* RIGHT — IMAGE */}
-              <div className={`flex items-center justify-center rounded-xl p-4 ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-50'}`}>
+              {/* RIGHT — IMAGE with Hover Effect */}
+              <div className={`flex items-center justify-center rounded-xl p-4 overflow-hidden group ${theme === 'dark' ? 'bg-gray-700/50' : 'bg-gray-50'}`}>
                 <img
                   src={currentCert.image}
                   alt="Certificate"
-                  className="rounded-lg w-full object-contain"
+                  className="rounded-lg w-full object-contain transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
             </div>
 
-            {/* BACK BUTTON */}
-            <div className="text-center mt-8">
+            {/* Navigation Between Certificates in Modal */}
+            <div className="flex items-center justify-center gap-4 mt-8">
               <button
-                onClick={() => setShowModal(false)}
-                className={`px-8 py-3 rounded-lg border-2 font-medium transition-all ${theme === 'dark' ? 'border-gray-600 text-gray-300 hover:bg-gray-700' : 'border-gray-300 text-gray-700 hover:bg-gray-50'}`}
+                onClick={handlePrev}
+                className={`p-3 rounded-full transition-all hover:scale-110 ${theme === 'dark' ? 'bg-gray-700 hover:bg-gray-600 text-gray-300' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'}`}
               >
-                Close
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              
+              <span className={`text-sm font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+                {currentIndex + 1} / {certificates.length}
+              </span>
+              
+              <button
+                onClick={handleNext}
+                className={`p-3 rounded-full transition-all hover:scale-110 ${theme === 'dark' ? 'bg-gray-700 hover:bg-gray-600 text-gray-300' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'}`}
+              >
+                <ChevronRight className="w-5 h-5" />
               </button>
             </div>
 

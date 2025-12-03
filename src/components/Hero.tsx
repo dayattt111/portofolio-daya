@@ -155,40 +155,85 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Right Section - Profile Image */}
-          <div className="relative animate-fade-in-up stagger-2">
+          {/* Right Section - Profile Image with 3D Animation */}
+          <div 
+            className="relative animate-fade-in-up stagger-2 perspective-1000"
+            onMouseMove={(e) => {
+              const rect = e.currentTarget.getBoundingClientRect();
+              const x = ((e.clientX - rect.left) / rect.width - 0.5) * 20;
+              const y = ((e.clientY - rect.top) / rect.height - 0.5) * -20;
+              const img = e.currentTarget.querySelector('.profile-3d') as HTMLElement;
+              if (img) {
+                img.style.transform = `perspective(1000px) rotateX(${y}deg) rotateY(${x}deg) scale3d(1.05, 1.05, 1.05)`;
+              }
+            }}
+            onMouseLeave={(e) => {
+              const img = e.currentTarget.querySelector('.profile-3d') as HTMLElement;
+              if (img) {
+                img.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+              }
+            }}
+          >
             <div className="relative w-full max-w-md mx-auto">
+              {/* Animated Rings */}
+              <div className="absolute inset-0 animate-spin-slow">
+                <div className="absolute inset-8 rounded-full border-2 border-dashed border-blue-500/30"></div>
+              </div>
+              <div className="absolute inset-0 animate-spin-reverse">
+                <div className="absolute inset-12 rounded-full border-2 border-dotted border-purple-500/30"></div>
+              </div>
+
               {/* Floating Decoration Elements */}
-              <div className="absolute -top-4 -left-4 w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl opacity-20 animate-float"></div>
-              <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-gradient-to-br from-pink-500 to-rose-600 rounded-2xl opacity-20 animate-float" style={{ animationDelay: '1s' }}></div>
+              <div className="absolute -top-4 -left-4 w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl opacity-20 animate-float blur-xl"></div>
+              <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-gradient-to-br from-pink-500 to-rose-600 rounded-2xl opacity-20 animate-float blur-xl" style={{ animationDelay: '1s' }}></div>
               
-              {/* Profile Image Container */}
+              {/* Profile Image Container with 3D Effect */}
               <div className="relative z-10">
-                <div className="aspect-square rounded-3xl overflow-hidden shadow-soft-2xl border-4 border-white/10 backdrop-blur-sm bg-gradient-to-br from-blue-500/10 to-purple-600/10">
+                <div 
+                  className="profile-3d aspect-square rounded-3xl overflow-hidden shadow-2xl border-4 backdrop-blur-sm bg-gradient-to-br from-blue-500/10 to-purple-600/10 transition-transform duration-300 ease-out"
+                  style={{ 
+                    borderColor: theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+                    transformStyle: 'preserve-3d'
+                  }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-purple-500/20 to-pink-500/20 animate-gradient-shift"></div>
                   <img 
                     src="/images/profile/profile.jpg" 
                     alt="Muh. Amin Hidayat"
-                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                    className="w-full h-full object-cover relative z-10"
+                    style={{ transform: 'translateZ(20px)' }}
                     onError={(e) => {
-                      // Fallback gradient jika gambar tidak ada
                       const target = e.target as HTMLImageElement;
                       target.style.display = 'none';
-                      target.parentElement!.innerHTML = '<div class="w-full h-full bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 flex items-center justify-center"><span class="text-8xl font-bold text-white">AH</span></div>';
+                      target.parentElement!.innerHTML += '<div class="absolute inset-0 w-full h-full bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 flex items-center justify-center z-10"><span class="text-8xl font-bold text-white">AH</span></div>';
                     }}
                   />
+                  
+                  {/* 3D Overlay Layers */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60" style={{ transform: 'translateZ(30px)' }}></div>
                 </div>
               </div>
 
-              {/* Floating Stats */}
-              <div className="absolute top-10 -left-6 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl p-4 shadow-soft-xl animate-float">
-                <div className="text-2xl font-bold gradient-text">5+</div>
+              {/* Floating Stats with Animation */}
+              <div 
+                className={`absolute top-10 -left-6 backdrop-blur-md rounded-2xl p-4 shadow-2xl animate-float border ${theme === 'dark' ? 'bg-gray-800/90 border-gray-700' : 'bg-white/90 border-gray-200'}`}
+                style={{ transform: 'translateZ(50px)' }}
+              >
+                <div className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">5+</div>
                 <div className={`text-xs ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Years Exp</div>
               </div>
               
-              <div className="absolute bottom-10 -right-6 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl p-4 shadow-soft-xl animate-float" style={{ animationDelay: '0.5s' }}>
-                <div className="text-2xl font-bold gradient-text">50+</div>
+              <div 
+                className={`absolute bottom-10 -right-6 backdrop-blur-md rounded-2xl p-4 shadow-2xl animate-float border ${theme === 'dark' ? 'bg-gray-800/90 border-gray-700' : 'bg-white/90 border-gray-200'}`}
+                style={{ animationDelay: '0.5s', transform: 'translateZ(50px)' }}
+              >
+                <div className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-rose-600 bg-clip-text text-transparent">50+</div>
                 <div className={`text-xs ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Projects</div>
               </div>
+
+              {/* Particle Effects */}
+              <div className="absolute top-1/4 left-0 w-2 h-2 bg-blue-500 rounded-full animate-ping opacity-75"></div>
+              <div className="absolute bottom-1/4 right-0 w-2 h-2 bg-purple-500 rounded-full animate-ping opacity-75" style={{ animationDelay: '1s' }}></div>
             </div>
           </div>
         </div>
