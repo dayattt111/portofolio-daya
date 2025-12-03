@@ -11,10 +11,18 @@
   }
 
   body {
-    @apply antialiased text-gray-900;
+    @apply antialiased;
     font-family: 'Inter', 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%);
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .light body {
+    @apply bg-white text-gray-900;
+  }
+
+  .dark body {
+    @apply bg-gray-900 text-gray-100;
   }
 
   html {

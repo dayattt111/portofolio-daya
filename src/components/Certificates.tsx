@@ -1,5 +1,6 @@
 import { Calendar, ExternalLink, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { useTheme } from '../contexts/ThemeContext';
 import reactImg from '/images/certificates/PsertiCy.png';
 import reactImg2 from '/images/certificates/PsertiNet.png';
 import reactImg3 from '/images/certificates/Muhammad_Amin_Hidayat.png';
@@ -88,6 +89,7 @@ const certificates: Certificate[] = [
 ];
 
 export default function Certificates() {
+  const { theme } = useTheme();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [fadeState, setFadeState] = useState('fade-in');
@@ -127,147 +129,137 @@ export default function Certificates() {
   };
 
   return (
-    <section id="certificates" className="py-12 md:py-20">
-      <div className="max-w-6xl mx-auto px-3 md:px-4">
+    <section id="certificates" className={`py-16 transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
+      <div className="max-w-6xl mx-auto px-4">
 
         {/* TITLE */}
-        <div className="mb-12">
-          <h2 className="section-title text-3xl md:text-5xl text-center">[ CERTIFICATIONS ]</h2>
-          <p className="text-center text-gray-400 mt-2">Continuous learning & development</p>
+        <div className="mb-12 text-center animate-fade-in-up">
+          <h2 className={`text-3xl md:text-4xl font-bold mb-3 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Certifications</h2>
+          <p className={`text-lg ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Continuous learning & professional development</p>
         </div>
 
-        {/* Carousel Outer Border */}
+        {/* Carousel Container */}
         <div
-          className="relative max-w-3xl mx-auto p-6 rounded-xl"
-          style={{ border: `4px solid ${currentCert.color}` }}
+          className="relative max-w-4xl mx-auto"
           onMouseEnter={() => setIsAutoPlaying(false)}
           onMouseLeave={() => setIsAutoPlaying(true)}
         >
-          {/* Buttons */}
+          {/* Navigation Buttons */}
           <button
             onClick={handlePrev}
-            className="absolute left-0 -ml-16 top-1/2 -translate-y-1/2 bg-black border p-3 text-white"
+            className={`absolute left-0 -ml-4 md:-ml-16 top-1/2 -translate-y-1/2 p-3 rounded-full shadow-lg z-10 transition-all hover:scale-110 ${theme === 'dark' ? 'bg-gray-800 hover:bg-gray-700 border-gray-700' : 'bg-white hover:bg-gray-50 border-gray-200'} border-2`}
           >
-            <ChevronLeft />
+            <ChevronLeft className={`w-6 h-6 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`} />
           </button>
 
           <button
             onClick={handleNext}
-            className="absolute right-0 -mr-16 top-1/2 -translate-y-1/2 bg-black border p-3 text-white"
+            className={`absolute right-0 -mr-4 md:-mr-16 top-1/2 -translate-y-1/2 p-3 rounded-full shadow-lg z-10 transition-all hover:scale-110 ${theme === 'dark' ? 'bg-gray-800 hover:bg-gray-700 border-gray-700' : 'bg-white hover:bg-gray-50 border-gray-200'} border-2`}
           >
-            <ChevronRight />
+            <ChevronRight className={`w-6 h-6 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`} />
           </button>
-{/* Gambar Sertifikat */}
-<div className="w-full mb-4">
-  <img
-    src={currentCert.image}
-    alt={currentCert.title}
-    className="w-full h-auto object-contain rounded-lg"
-  />
-</div>
+          {/* Certificate Card */}
+          <div className={`rounded-xl shadow-lg overflow-hidden ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}>
+            <div className={`p-8 transition-opacity duration-300 ${fadeState === 'fade-in' ? 'opacity-100' : 'opacity-0'}`}>
+              
+              {/* Certificate Image */}
+              <div className={`w-full mb-6 rounded-xl overflow-hidden ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-100'}`}>
+                <img
+                  src={currentCert.image}
+                  alt={currentCert.title}
+                  className="w-full h-auto object-contain"
+                />
+              </div>
 
+              {/* Certificate Info */}
+              <div className="text-center">
+                <div className="text-5xl mb-4">{currentCert.icon}</div>
 
-          {/* MAIN CARD (Simple) */}
-          <div className={`transition-opacity ${fadeState === 'fade-in' ? 'opacity-100' : 'opacity-0'}`}>
-            <div className="text-center pb-4">
-              {/* <div className="text-7xl mb-4">{currentCert.icon}</div> */}
+                <h3 className={`text-2xl md:text-3xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
+                  {currentCert.title}
+                </h3>
 
-              <h3
-                className="text-2xl font-bold"
-                style={{ color: currentCert.color }}
-              >
-                {currentCert.title}
-              </h3>
+                <p className={`mb-1 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Issued by {currentCert.issuer}</p>
+                <p className={`text-sm mb-6 ${theme === 'dark' ? 'text-gray-500' : 'text-gray-500'}`}>{currentCert.date}</p>
 
-              <p className="text-gray-400 mt-2">Issued by {currentCert.issuer}</p>
-
-              <button
-                onClick={() => setShowModal(true)}
-                className="mt-6 px-6 py-3 border rounded text-sm"
-                style={{
-                  color: currentCert.color,
-                  borderColor: currentCert.color,
-                }}
-              >
-                View Certificate
-              </button>
+                <button
+                  onClick={() => setShowModal(true)}
+                  className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2 rounded-lg hover:shadow-lg transition-all text-sm font-medium"
+                >
+                  <span>View Certificate</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Indicators */}
-        <div className="flex items-center justify-center gap-3 mt-6">
+        <div className="flex items-center justify-center gap-3 mt-8">
           {certificates.map((_, index) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`transition-all ${
-                index === currentIndex ? 'w-10 h-3' : 'w-3 h-3 bg-gray-600'
-              } rounded`}
-              style={{ backgroundColor: index === currentIndex ? currentCert.color : undefined }}
+              className={`transition-all rounded-full ${
+                index === currentIndex 
+                  ? 'w-10 h-3 bg-gradient-to-r from-blue-500 to-purple-500' 
+                  : 'w-3 h-3 bg-gray-300 hover:bg-gray-400'
+              }`}
             />
           ))}
         </div>
 
         {/* Auto Play Status */}
-        <p className="text-center text-gray-500 text-xs mt-3">
+        <p className="text-center text-gray-500 text-sm mt-4 font-medium">
           {isAutoPlaying ? '● Auto-playing' : '⏸ Paused'}
         </p>
       </div>
 
       {/* MODAL */}
       {showModal && (
-        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-[999]">
-          <div className="bg-[#0f1629] w-full max-w-5xl rounded-xl p-6 relative overflow-y-auto max-h-[90vh]">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-[999] animate-fade-in">
+          <div className={`w-full max-w-5xl rounded-2xl p-8 relative overflow-y-auto max-h-[90vh] shadow-2xl animate-scale-in ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}>
 
             {/* CLOSE BUTTON */}
             <button
-              className="absolute top-4 right-4 text-white"
+              className={`absolute top-4 right-4 transition-colors p-2 rounded-full ${theme === 'dark' ? 'text-gray-400 hover:text-gray-200 hover:bg-gray-700' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'}`}
               onClick={() => setShowModal(false)}
             >
               <X size={28} />
             </button>
 
             {/* MODAL CONTENT */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               
               {/* LEFT CONTENT */}
               <div>
-                <h2
-                  className="text-3xl font-bold mb-2"
-                  style={{ color: currentCert.color }}
-                >
+                <h2 className={`text-3xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
                   {currentCert.title}
                 </h2>
 
-                <p className="text-gray-300 mb-4">
-                  Issued by <span style={{ color: currentCert.color }}>{currentCert.issuer}</span>
+                <p className={`mb-6 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+                  Issued by <span className="font-semibold text-blue-500">{currentCert.issuer}</span>
                 </p>
 
-                <div className="text-gray-200 space-y-3">
+                <div className="text-gray-700 space-y-4">
                   <div>
-                    <p className="text-gray-400 text-sm mb-1">Issued Date:</p>
-                    <div className="flex items-center gap-2">
-                      <Calendar className="w-4" /> {currentCert.date}
+                    <p className="text-gray-500 text-sm mb-2 font-medium">Issued Date:</p>
+                    <div className="flex items-center gap-2 text-gray-800">
+                      <Calendar className="w-5 h-5 text-blue-500" /> {currentCert.date}
                     </div>
                   </div>
 
                   <div>
-                    <p className="text-gray-400 text-sm mb-1">Credential ID:</p>
-                    <p className="font-mono">{currentCert.credentialId}</p>
+                    <p className={`text-sm mb-2 font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>Credential ID:</p>
+                    <p className={`font-mono text-sm px-3 py-2 rounded ${theme === 'dark' ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-800'}`}>{currentCert.credentialId}</p>
                   </div>
 
                   <div>
-                    <p className="text-gray-400 text-sm mb-1">Skills:</p>
+                    <p className={`text-sm mb-2 font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>Skills:</p>
                     <div className="flex flex-wrap gap-2">
                       {currentCert.skills.map((skill, idx) => (
                         <span
                           key={idx}
-                          className="px-3 py-1 border rounded text-xs"
-                          style={{
-                            borderColor: currentCert.color,
-                            color: currentCert.color,
-                          }}
+                          className={`px-3 py-1 rounded-full text-xs font-medium ${theme === 'dark' ? 'bg-blue-900/50 text-blue-300' : 'bg-blue-100 text-blue-700'}`}
                         >
                           {skill}
                         </span>
@@ -278,30 +270,29 @@ export default function Certificates() {
                   <a
                     href={currentCert.credentialUrl}
                     target="_blank"
-                    className="inline-flex items-center mt-4 px-4 py-2 border rounded"
-                    style={{ borderColor: currentCert.color, color: currentCert.color }}
+                    className="inline-flex items-center gap-2 mt-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2 rounded-lg hover:shadow-lg transition-all text-sm font-medium"
                   >
-                    <ExternalLink className="w-4 mr-2" />
-                    Verify Certificate
+                    <ExternalLink className="w-4" />
+                    <span>Verify Certificate</span>
                   </a>
                 </div>
               </div>
 
               {/* RIGHT — IMAGE */}
-              <div className="flex items-center justify-center">
+              <div className={`flex items-center justify-center rounded-xl p-4 ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-50'}`}>
                 <img
                   src={currentCert.image}
                   alt="Certificate"
-                  className="rounded-lg shadow-lg w-full object-contain"
+                  className="rounded-lg w-full object-contain"
                 />
               </div>
             </div>
 
             {/* BACK BUTTON */}
-            <div className="text-center mt-6">
+            <div className="text-center mt-8">
               <button
                 onClick={() => setShowModal(false)}
-                className="px-6 py-3 text-white border border-gray-500 rounded"
+                className={`px-8 py-3 rounded-lg border-2 font-medium transition-all ${theme === 'dark' ? 'border-gray-600 text-gray-300 hover:bg-gray-700' : 'border-gray-300 text-gray-700 hover:bg-gray-50'}`}
               >
                 Close
               </button>

@@ -1,15 +1,15 @@
 import Hero from './components/Hero';
 import Navbar from './components/Navbar';
 import About from './components/About';
-import Experience from './components/Experience';
 import Projects from './components/Projects';
 import Certificates from './components/Certificates';
-import CommunityPartners from './components/CommunityPartners';
 import Skills from './components/Skills';
-import Contact from './components/Contact';
 import { useEffect } from 'react';
+import { useTheme } from './contexts/ThemeContext';
 
 function App() {
+  const { theme } = useTheme();
+
   useEffect(() => {
     const observerOptions = {
       threshold: 0.1,
@@ -32,17 +32,13 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-retro-darker text-white overflow-x-hidden">
+    <div className={`min-h-screen overflow-x-hidden ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
       <Navbar />
-      <div className="scanline-overlay"></div>
       <Hero />
       <About />
-      <Experience />
       <Projects />
       <Certificates />
-      <CommunityPartners />
       <Skills />
-      <Contact />
     </div>
   );
 }

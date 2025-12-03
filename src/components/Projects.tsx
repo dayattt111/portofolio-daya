@@ -1,6 +1,7 @@
-import { ChevronRight, ExternalLink } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { useState } from 'react';
 import ProjectStack from './ProjectStack';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface Project {
   id: number;
@@ -77,19 +78,20 @@ const projects: Project[] = [
 ];
 
 export default function Projects() {
+  const { theme } = useTheme();
   const [isStackOpen, setIsStackOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   return (
     <>
-      <section id="projects" className="section-modern bg-gradient-to-b from-white via-gray-50 to-white">
+      <section id="projects" className={`py-16 transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
         <div className="max-w-7xl mx-auto px-4">
-          <div className="scroll-animate mb-16 text-center animate-fade-in-up">
-            <h2 className="section-title-gradient">
-              Featured Projects
+          <div className="scroll-animate mb-12 text-center animate-fade-in-up">
+            <h2 className="section-title-gradient text-3xl md:text-4xl">
+              Projects
             </h2>
-            <p className="text-center text-gray-600 text-lg mt-4">
-              Click any project to explore the complete tech stack
+            <p className={`mt-3 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+              Selected works and applications
             </p>
           </div>
 
@@ -105,10 +107,10 @@ export default function Projects() {
                 className="scroll-animate text-left animate-fade-in-up"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="modern-card h-full group">
+                <div className={`modern-card h-full group ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}>
                   <div className="modern-card-content h-full flex flex-col">
                     {/* Project Image */}
-                    <div className="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl mb-4 flex items-center justify-center overflow-hidden relative">
+                    <div className={`aspect-video rounded-xl mb-3 flex items-center justify-center overflow-hidden relative ${theme === 'dark' ? 'bg-gray-700' : 'bg-gradient-to-br from-gray-100 to-gray-200'}`}>
                       {project.image ? (
                         <img 
                           src={project.image} 
@@ -117,85 +119,45 @@ export default function Projects() {
                         />
                       ) : (
                         <div className="flex items-center justify-center">
-                          <div className="text-4xl text-gray-400">■</div>
+                          <div className={`text-4xl ${theme === 'dark' ? 'text-gray-600' : 'text-gray-400'}`}>■</div>
                         </div>
                       )}
                     </div>
 
                     {/* Content */}
-                    <h3 className="text-xl font-bold mb-3 text-gray-800">
+                    <h3 className={`text-lg font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
                       {project.title}
                     </h3>
 
-                    <p className="text-gray-600 mb-4 leading-relaxed text-sm flex-grow">
+                    <p className={`text-sm mb-3 leading-relaxed flex-grow ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
                       {project.description}
                     </p>
 
-                    {/* Rating - Modern Stars */}
-                    <div className="flex gap-1 mb-4">
-                      {[...Array(5)].map((_, i) => (
-                        <svg
-                          key={i}
-                          className={`w-4 h-4 ${
-                            i < project.rating
-                              ? 'fill-yellow-400 text-yellow-400'
-                              : 'fill-gray-300 text-gray-300'
-                          }`}
-                          viewBox="0 0 20 20"
-                        >
-                          <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
-                        </svg>
-                      ))}
-                    </div>
-
                     {/* Stack Tags */}
-                    <div className="flex flex-wrap gap-2 mb-4">
+                    <div className="flex flex-wrap gap-2 mb-3">
                       {project.stack.slice(0, 2).map((tech) => (
                         <span
                           key={tech}
-                          className="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-700 rounded-full"
+                          className={`px-2 py-1 text-xs font-medium rounded-full ${theme === 'dark' ? 'bg-blue-900/50 text-blue-300' : 'bg-blue-100 text-blue-700'}`}
                         >
                           {tech}
                         </span>
                       ))}
                       {project.stack.length > 2 && (
-                        <span className="px-3 py-1 text-xs font-medium bg-gray-100 text-gray-600 rounded-full">
+                        <span className={`px-2 py-1 text-xs font-medium rounded-full ${theme === 'dark' ? 'bg-gray-700 text-gray-400' : 'bg-gray-100 text-gray-600'}`}>
                           +{project.stack.length - 2}
                         </span>
-                      ))}
+                      )}
                     </div>
 
                     {/* CTA */}
                     <div className="flex items-center gap-2 text-sm font-medium text-blue-600">
-                      <span>View Stack</span>
+                      <span>View Details</span>
                       <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </div>
                   </div>
                 </div>
               </button>
-            ))}
-          </div>
-
-          {/* Stats Section */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20">
-            {[
-              { label: 'Projects', value: '50+', color: 'from-blue-500 to-blue-600' },
-              { label: 'Clients', value: '100+', color: 'from-purple-500 to-purple-600' },
-              { label: 'Completion', value: '99%', color: 'from-pink-500 to-pink-600' },
-              { label: 'Satisfaction', value: '100%', color: 'from-blue-500 to-blue-600' }
-            ].map((stat, i) => (
-              <div key={i} className="scroll-animate animate-fade-in-up" style={{ animationDelay: `${0.3 + i * 0.1}s` }}>
-                <div className="modern-card text-center">
-                  <div className="modern-card-content">
-                    <div className={`text-4xl md:text-5xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-2`}>
-                      {stat.value}
-                    </div>
-                    <div className="text-sm font-medium text-gray-600">
-                      {stat.label}
-                    </div>
-                  </div>
-                </div>
-              </div>
             ))}
           </div>
         </div>
