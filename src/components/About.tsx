@@ -1,14 +1,28 @@
 import { Code, Zap, Palette } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
+import { useEffect, useRef, useState } from 'react';
 
 export default function About() {
   const { theme } = useTheme();
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setIsVisible(true);
+      },
+      { threshold: 0.15 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
   
   return (
-    <section id="about" className={`py-16 transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50'}`}>
+    <section ref={sectionRef} id="about" className={`py-16 transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50'}`}>
       <div className="max-w-6xl mx-auto px-4">
-        <div className="scroll-animate mb-12 text-center">
-          <h2 className="section-title-gradient animate-fade-in-up text-3xl md:text-4xl">
+        <div className={`mb-12 text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <h2 className="section-title-gradient text-3xl md:text-4xl">
             About Me
           </h2>
           <p className={`mt-3 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Professional skills and expertise</p>
@@ -17,7 +31,7 @@ export default function About() {
         {/* Main Content */}
         <div className="grid md:grid-cols-3 gap-6">
           {/* Card 1: Skills */}
-          <div className="scroll-animate animate-fade-in-up stagger-1">
+          <div className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.2s' }}>
             <div className={`modern-card h-full group ${theme === 'dark' ? 'bg-gray-700' : 'bg-white'}`}>
               <div className="modern-card-content">
                 <div className="w-12 h-12 mb-4 flex items-center justify-center bg-gradient-to-br from-blue-100 to-blue-200 rounded-xl group-hover:scale-110 transition-transform">
@@ -41,7 +55,7 @@ export default function About() {
           </div>
 
           {/* Card 2: Design */}
-          <div className="scroll-animate animate-fade-in-up stagger-2">
+          <div className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.4s' }}>
             <div className={`modern-card h-full group ${theme === 'dark' ? 'bg-gray-700' : 'bg-white'}`}>
               <div className="modern-card-content">
                 <div className="w-12 h-12 mb-4 flex items-center justify-center bg-gradient-to-br from-purple-100 to-purple-200 rounded-xl group-hover:scale-110 transition-transform">
@@ -65,7 +79,7 @@ export default function About() {
           </div>
 
           {/* Card 3: Performance */}
-          <div className="scroll-animate animate-fade-in-up stagger-3">
+          <div className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.6s' }}>
             <div className={`modern-card h-full group ${theme === 'dark' ? 'bg-gray-700' : 'bg-white'}`}>
               <div className="modern-card-content">
                 <div className="w-12 h-12 mb-4 flex items-center justify-center bg-gradient-to-br from-pink-100 to-pink-200 rounded-xl group-hover:scale-110 transition-transform">

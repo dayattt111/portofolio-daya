@@ -103,55 +103,98 @@ export default function Hero() {
       <div className={`absolute top-20 left-10 w-96 h-96 ${theme === 'dark' ? 'bg-blue-900' : 'bg-blue-400'} rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float`}></div>
       <div className={`absolute top-40 right-10 w-96 h-96 ${theme === 'dark' ? 'bg-purple-900' : 'bg-purple-400'} rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float`} style={{ animationDelay: '2s' }}></div>
 
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-[85vh] gap-6 px-4 py-12 text-center">
-        {/* Animated Icon */}
-        <div className="mb-4 animate-fade-in-up">
-          <div className="relative">
-            <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-soft-lg animate-float">
-              <Sparkles className="w-10 h-10 text-white" />
+      <div className="relative z-10 max-w-7xl mx-auto px-4 min-h-[85vh] flex items-center">
+        <div className="grid md:grid-cols-2 gap-12 items-center w-full">
+          {/* Left Section - Text Content */}
+          <div className="space-y-6 animate-fade-in-up">
+            {/* Animated Icon */}
+            <div className="flex gap-3">
+              <div className="relative">
+                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-soft-lg animate-float">
+                  <Sparkles className="w-8 h-8 text-white" />
+                </div>
+              </div>
+              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-soft-lg animate-float" style={{ animationDelay: '0.2s' }}>
+                <Code2 className="w-8 h-8 text-white" />
+              </div>
+              <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-rose-600 rounded-2xl flex items-center justify-center shadow-soft-lg animate-float" style={{ animationDelay: '0.4s' }}>
+                <Palette className="w-8 h-8 text-white" />
+              </div>
             </div>
-            <div className="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-br from-pink-500 to-rose-500 rounded-lg flex items-center justify-center shadow-lg">
-              <Code2 className="w-3 h-3 text-white" />
+
+            {/* Main Title */}
+            <div className="space-y-4 animate-fade-in-up stagger-2">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold">
+                <span className="gradient-text">Muh. Amin Hidayat</span>
+              </h1>
+              <h2 className={`text-xl md:text-2xl font-medium ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+                Full Stack Developer & UI/UX Enthusiast
+              </h2>
+              <p className={`text-base md:text-lg ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'} max-w-lg`}>
+                Crafting beautiful, functional web experiences with modern technologies. Passionate about clean code and intuitive design.
+              </p>
+              <div className="h-1 w-32 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full"></div>
             </div>
-            <div className="absolute -bottom-1 -left-1 w-6 h-6 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-lg flex items-center justify-center shadow-lg">
-              <Palette className="w-3 h-3 text-white" />
+
+            {/* CTA Buttons */}
+            <div className="flex flex-wrap gap-4 animate-fade-in-up stagger-3">
+              <button
+                onClick={scrollToContact}
+                className="modern-btn text-sm py-3 px-8"
+              >
+                <span>Get in Touch</span>
+              </button>
+              <a
+                href="https://wa.me/6282197855715?text=Halo%2C%20saya%20tertarik%20dengan%20portfolio%20mu!"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="modern-btn-outline text-sm py-3 px-8"
+              >
+                WhatsApp
+              </a>
             </div>
           </div>
-        </div>
 
-        {/* Main Title */}
-        <div className="space-y-4 animate-fade-in-up stagger-2">
-          <div className="text-center">
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-2">
-              <span className="gradient-text">Muh. Amin Hidayat</span>
-            </h1>
-            <h2 className={`text-xl md:text-2xl lg:text-3xl font-medium ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
-              Full Stack Developer & UI/UX Enthusiast
-            </h2>
+          {/* Right Section - Profile Image */}
+          <div className="relative animate-fade-in-up stagger-2">
+            <div className="relative w-full max-w-md mx-auto">
+              {/* Floating Decoration Elements */}
+              <div className="absolute -top-4 -left-4 w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl opacity-20 animate-float"></div>
+              <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-gradient-to-br from-pink-500 to-rose-600 rounded-2xl opacity-20 animate-float" style={{ animationDelay: '1s' }}></div>
+              
+              {/* Profile Image Container */}
+              <div className="relative z-10">
+                <div className="aspect-square rounded-3xl overflow-hidden shadow-soft-2xl border-4 border-white/10 backdrop-blur-sm bg-gradient-to-br from-blue-500/10 to-purple-600/10">
+                  <img 
+                    src="/images/profile/profile.jpg" 
+                    alt="Muh. Amin Hidayat"
+                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                    onError={(e) => {
+                      // Fallback gradient jika gambar tidak ada
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                      target.parentElement!.innerHTML = '<div class="w-full h-full bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 flex items-center justify-center"><span class="text-8xl font-bold text-white">AH</span></div>';
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* Floating Stats */}
+              <div className="absolute top-10 -left-6 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl p-4 shadow-soft-xl animate-float">
+                <div className="text-2xl font-bold gradient-text">5+</div>
+                <div className={`text-xs ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Years Exp</div>
+              </div>
+              
+              <div className="absolute bottom-10 -right-6 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl p-4 shadow-soft-xl animate-float" style={{ animationDelay: '0.5s' }}>
+                <div className="text-2xl font-bold gradient-text">50+</div>
+                <div className={`text-xs ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Projects</div>
+              </div>
+            </div>
           </div>
-          <div className="h-1 w-48 mx-auto bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full"></div>
-        </div>
-
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-3 mt-6 animate-fade-in-up stagger-3">
-          <button
-            onClick={scrollToContact}
-            className="modern-btn text-sm py-2.5 px-6"
-          >
-            <span>Get in Touch</span>
-          </button>
-          <a
-            href="https://wa.me/6282197855715?text=Halo%2C%20saya%20tertarik%20dengan%20portfolio%20mu!"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="modern-btn-outline text-sm py-2.5 px-6"
-          >
-            WhatsApp
-          </a>
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 animate-bounce">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
           <ChevronDown className={`w-6 h-6 ${theme === 'dark' ? 'text-gray-400' : 'text-blue-500'}`} />
         </div>
       </div>

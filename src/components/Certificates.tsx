@@ -1,5 +1,5 @@
 import { Calendar, ExternalLink, ChevronLeft, ChevronRight, X } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import reactImg from '/images/certificates/PsertiCy.png';
 import reactImg2 from '/images/certificates/PsertiNet.png';
@@ -94,8 +94,22 @@ export default function Certificates() {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [fadeState, setFadeState] = useState('fade-in');
   const [showModal, setShowModal] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   const currentCert = certificates[currentIndex];
+
+  // Scroll animation observer
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setIsVisible(true);
+      },
+      { threshold: 0.15 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   // Auto play
   useEffect(() => {
@@ -129,11 +143,11 @@ export default function Certificates() {
   };
 
   return (
-    <section id="certificates" className={`py-16 transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
+    <section ref={sectionRef} id="certificates" className={`py-16 transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
       <div className="max-w-6xl mx-auto px-4">
 
         {/* TITLE */}
-        <div className="mb-12 text-center animate-fade-in-up">
+        <div className={`mb-12 text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h2 className={`text-3xl md:text-4xl font-bold mb-3 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Certifications</h2>
           <p className={`text-lg ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Continuous learning & professional development</p>
         </div>

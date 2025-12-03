@@ -1,5 +1,5 @@
 import { ChevronRight } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import ProjectStack from './ProjectStack';
 import { useTheme } from '../contexts/ThemeContext';
 
@@ -81,12 +81,25 @@ export default function Projects() {
   const { theme } = useTheme();
   const [isStackOpen, setIsStackOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setIsVisible(true);
+      },
+      { threshold: 0.1 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <>
-      <section id="projects" className={`py-16 transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
+      <section ref={sectionRef} id="projects" className={`py-16 transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
         <div className="max-w-7xl mx-auto px-4">
-          <div className="scroll-animate mb-12 text-center animate-fade-in-up">
+          <div className={`mb-12 text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <h2 className="section-title-gradient text-3xl md:text-4xl">
               Projects
             </h2>
@@ -104,8 +117,8 @@ export default function Projects() {
                   setSelectedProject(project);
                   setIsStackOpen(true);
                 }}
-                className="scroll-animate text-left animate-fade-in-up"
-                style={{ animationDelay: `${index * 0.1}s` }}
+                className={`text-left transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+                style={{ transitionDelay: `${index * 0.15}s` }}
               >
                 <div className={`modern-card h-full group ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}>
                   <div className="modern-card-content h-full flex flex-col">

@@ -25,7 +25,7 @@ export default function Skills() {
       ([entry]) => {
         if (entry.isIntersecting) setIsVisible(true);
       },
-      { threshold: 0.2 }
+      { threshold: 0.1 }
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
@@ -41,13 +41,13 @@ export default function Skills() {
   return (
     <section id="skills" ref={sectionRef} className={`py-16 transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
       <div className="max-w-6xl mx-auto px-4">
-        <h2 className={`text-3xl md:text-4xl font-bold text-center mb-12 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+        <h2 className={`text-3xl md:text-4xl font-bold text-center mb-12 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
           Skills & Contact
         </h2>
 
         <div className="grid lg:grid-cols-3 gap-8 mb-12">
           {/* Skills Progress */}
-          <div className="lg:col-span-2 space-y-4">
+          <div className={`lg:col-span-2 space-y-4 transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
             {skills.map((skill, index) => (
               <div key={skill.name} className={`p-4 rounded-lg ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50'}`}>
                 <div className="flex justify-between mb-2">
@@ -74,7 +74,7 @@ export default function Skills() {
           </div>
 
           {/* Contact Quick Links */}
-          <div className="space-y-3">
+          <div className={`space-y-3 transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
             <a href="https://wa.me/6282197855715" target="_blank" rel="noopener noreferrer" 
                className={`flex items-center gap-3 p-3 rounded-lg hover:scale-105 transition-transform ${theme === 'dark' ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-50 hover:bg-gray-100'}`}>
               <MessageCircle className="w-5 h-5 text-green-500" />
@@ -114,7 +114,7 @@ export default function Skills() {
         </div>
 
         {/* Contact Form */}
-        <div id="contact" className={`max-w-2xl mx-auto p-6 rounded-xl ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50'}`}>
+        <div id="contact" className={`max-w-2xl mx-auto p-6 rounded-xl transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'} ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50'}`}>
           <h3 className="text-xl font-bold mb-4 text-center">Send Message</h3>
           <form onSubmit={handleSubmit} className="space-y-4">
             <input
