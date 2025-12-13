@@ -184,19 +184,19 @@ export default function Hero() {
               </div>
 
               {/* Floating Decoration Elements */}
-              <div className="absolute -top-4 -left-4 w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl opacity-20 animate-float blur-xl"></div>
-              <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-gradient-to-br from-pink-500 to-rose-600 rounded-2xl opacity-20 animate-float blur-xl" style={{ animationDelay: '1s' }}></div>
+              <div className="absolute -top-4 -left-4 w-24 h-24 rounded-2xl opacity-20 animate-float blur-xl"></div>
+              <div className="absolute -bottom-4 -right-4 w-32 h-32  rounded-2xl opacity-20 animate-float blur-xl" style={{ animationDelay: '1s' }}></div>
               
               {/* Profile Image Container with 3D Effect */}
               <div className="relative z-10">
                 <div 
-                  className="profile-3d aspect-square rounded-3xl overflow-hidden shadow-2xl border-4 backdrop-blur-sm bg-gradient-to-br from-blue-500/10 to-purple-600/10 transition-transform duration-300 ease-out"
+                  className="profile-3d aspect-square rounded-3xl overflow-hidden shadow-2xl transition-transform duration-300 ease-out"
                   style={{ 
                     borderColor: theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
                     transformStyle: 'preserve-3d'
                   }}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-purple-500/20 to-pink-500/20 animate-gradient-shift"></div>
+                  <div className="absolute inset-0 animate-gradient-shift"></div>
                   <img 
                     src="/images/profile/day.png" 
                     alt="Muh. Amin Hidayat"

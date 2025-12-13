@@ -50,12 +50,12 @@ export default function Navbar() {
 
   return (
     <nav className={`navbar-modern transition-all duration-300 ${isScrolled ? 'shadow-soft-lg' : 'shadow-soft'} ${theme === 'dark' ? 'bg-gray-800/95' : 'bg-white/95'}`}>
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-5 flex items-center justify-between">
         {/* Logo */}
-        <div className="flex items-center gap-3 flex-shrink-0 cursor-pointer group" onClick={() => scrollToSection('home')}>
-          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-md overflow-hidden transition-transform group-hover:scale-110">
+        <div className="flex items-center gap-5 flex-shrink-0 cursor-pointer group" onClick={() => scrollToSection('home')}>
+          <div className="w-10 h-10 flex items-center justify-center shadow-md overflow-hidden transition-transform group-hover:scale-110">
             <img 
-              src="/images/logo.svg" 
+              src="/vim.svg" 
               alt="Logo" 
               className="w-full h-full object-cover"
             />
