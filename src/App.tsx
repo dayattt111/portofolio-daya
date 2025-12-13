@@ -2,6 +2,7 @@ import Hero from './components/Hero';
 import Navbar from './components/Navbar';
 import About from './components/About';
 import Projects from './components/Projects';
+import Articles from './components/Articles';
 import Certificates from './components/Certificates';
 import Skills from './components/Skills';
 import { useEffect } from 'react';
@@ -37,6 +38,7 @@ function App() {
       <Hero />
       <About />
       <Projects />
+      <Articles />
       <Certificates />
       <Skills />
     </div>

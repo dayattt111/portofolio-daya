@@ -13,7 +13,7 @@ export default function Navbar() {
       setIsScrolled(window.scrollY > 50);
 
       // Detect active section
-      const sections = ['home', 'about', 'experience', 'projects', 'certificates', 'community', 'skills', 'contact'];
+      const sections = ['home', 'about', 'projects', 'articles', 'certificates', 'skills', 'contact'];
       const scrollPosition = window.scrollY + 100;
 
       sections.forEach(sectionId => {
@@ -44,6 +44,7 @@ export default function Navbar() {
     { id: 'home', label: 'Home' },
     { id: 'about', label: 'About' },
     { id: 'projects', label: 'Projects' },
+    { id: 'articles', label: 'Articles' },
     { id: 'skills', label: 'Skills' },
     { id: 'contact', label: 'Contact' },
   ];
