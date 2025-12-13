@@ -35,12 +35,14 @@ function App() {
   return (
     <div className={`min-h-screen overflow-x-hidden ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
       <Navbar />
-      <Hero />
-      <About />
-      <Projects />
-      <Articles />
-      <Certificates />
-      <Skills />
+      <div className="pt-0">
+        <Hero />
+        <About />
+        <Projects />
+        <Articles />
+        <Certificates />
+        <Skills />
+      </div>
     </div>
   );
 }
