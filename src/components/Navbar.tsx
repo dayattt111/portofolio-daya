@@ -8,10 +8,19 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState('home');
   const [isScrolled, setIsScrolled] = useState(false);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
+
+      // Calculate scroll progress percentage
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      const scrollTop = window.scrollY;
+      const scrollableHeight = documentHeight - windowHeight;
+      const progress = (scrollTop / scrollableHeight) * 100;
+      setScrollProgress(Math.min(100, Math.max(0, progress)));
 
       // Detect active section with better viewport detection
       const sections = ['home', 'about', 'projects', 'articles', 'certificates', 'skills', 'contact'];
@@ -29,6 +38,7 @@ export default function Navbar() {
     };
 
     window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial call
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -65,10 +75,72 @@ export default function Navbar() {
           : 'bg-white/80 backdrop-blur-xl shadow-2xl border-b border-gray-200/50'
         : 'bg-transparent'
     }`}>
-      {/* Animated gradient line */}
-      <div className={`absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 transition-opacity duration-500 ${
-        isScrolled ? 'opacity-100 animate-gradient-shift' : 'opacity-0'
-      }`}></div>
+      {/* Scroll Progress Bar */}
+      <div className="absolute bottom-0 left-0 right-0 h-1 overflow-hidden">
+        {/* Background track */}
+        <div className={`absolute inset-0 transition-colors duration-300 ${
+          theme === 'dark' ? 'bg-gray-800/50' : 'bg-gray-200/50'
+        }`}></div>
+        
+        {/* Milestone markers */}
+        <div className="absolute inset-0 flex items-center">
+          {[0, 25, 50, 75, 100].map((milestone) => (
+            <div
+              key={milestone}
+              className={`absolute h-full w-[2px] transition-colors duration-300 ${
+                scrollProgress >= milestone
+                  ? theme === 'dark' ? 'bg-blue-400/80' : 'bg-blue-500/80'
+                  : theme === 'dark' ? 'bg-gray-700/30' : 'bg-gray-300/30'
+              }`}
+              style={{ left: `${milestone}%` }}
+            >
+              {milestone > 0 && milestone < 100 && (
+                <div className={`absolute -top-1.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full transition-all duration-300 ${
+                  scrollProgress >= milestone
+                    ? 'bg-gradient-to-r from-blue-500 to-purple-500 scale-150'
+                    : theme === 'dark' ? 'bg-gray-600' : 'bg-gray-400'
+                }`}></div>
+              )}
+            </div>
+          ))}
+        </div>
+        
+        {/* Progress fill with gradient */}
+        <div 
+          className="absolute inset-y-0 left-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 transition-all duration-300 ease-out relative overflow-hidden"
+          style={{ width: `${scrollProgress}%` }}
+        >
+          {/* Animated shimmer effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-shimmer"></div>
+          
+          {/* Glow effect at the end */}
+          <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white/50 to-transparent"></div>
+          
+          {/* Percentage badge */}
+          {scrollProgress > 5 && (
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-full">
+              <div className="relative ml-3 group">
+                {/* Glow effect */}
+                <div className={`absolute inset-0 rounded-full blur-md transition-opacity duration-300 ${
+                  theme === 'dark' ? 'bg-blue-500/50' : 'bg-blue-400/50'
+                } group-hover:opacity-100 opacity-70`}></div>
+                
+                {/* Badge */}
+                <div className={`relative px-2.5 py-1 rounded-full text-[11px] font-bold backdrop-blur-sm transition-all duration-300 border ${
+                  theme === 'dark' 
+                    ? 'bg-gray-900/95 text-blue-400 border-blue-500/30' 
+                    : 'bg-white/95 text-blue-600 border-blue-400/30'
+                } shadow-lg group-hover:scale-110`}>
+                  <span className="flex items-center gap-1">
+                    <span className="w-1 h-1 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 animate-pulse"></span>
+                    {Math.round(scrollProgress)}%
+                  </span>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
 
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
         {/* Logo with animated glow */}
