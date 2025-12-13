@@ -83,100 +83,14 @@ export default function Navbar() {
   ];
 
   return (
-    <>
-      {/* Scroll Progress Bar - Outside navbar to avoid overlap */}
-      <div className="fixed top-0 left-0 right-0 h-2 sm:h-3 z-[100] pointer-events-none">
-        {/* Background track - Very visible with border */}
-        <div className={`absolute inset-0 transition-colors duration-300 border-t ${
-          theme === 'dark' 
-            ? 'bg-gray-800 border-gray-700' 
-            : 'bg-gray-200 border-gray-300'
-        }`}></div>
-        
-        {/* Milestone markers - Highly visible */}
-        <div className="absolute inset-0 flex items-center">
-          {[0, 25, 50, 75, 100].map((milestone) => (
-            <div
-              key={milestone}
-              className={`absolute h-full transition-all duration-300 ${
-                scrollProgress >= milestone
-                  ? 'w-1 z-20'
-                  : 'w-[2px] z-10'
-              }`}
-              style={{ left: `${milestone}%` }}
-            >
-              <div className={`h-full transition-colors duration-300 ${
-                scrollProgress >= milestone
-                  ? theme === 'dark' 
-                    ? 'bg-gradient-to-b from-blue-400 to-purple-400 shadow-lg shadow-blue-500/50' 
-                    : 'bg-gradient-to-b from-blue-600 to-purple-600 shadow-lg shadow-blue-600/50'
-                  : theme === 'dark' ? 'bg-gray-600' : 'bg-gray-400'
-              }`}></div>
-              {milestone > 0 && milestone < 100 && (
-                <div className={`absolute -top-2.5 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full transition-all duration-300 border-2 ${
-                  scrollProgress >= milestone
-                    ? 'bg-gradient-to-r from-blue-500 to-purple-500 scale-150 shadow-xl shadow-blue-500/70 border-white animate-pulse'
-                    : theme === 'dark' ? 'bg-gray-600 border-gray-500' : 'bg-gray-400 border-gray-300'
-                }`}></div>
-              )}
-            </div>
-          ))}
-        </div>
-        
-        {/* Progress fill with gradient - Highly visible */}
-        <div 
-          className="absolute inset-0 left-0 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 transition-all duration-300 ease-out relative overflow-hidden"
-          style={{ 
-            width: `${scrollProgress}%`,
-            boxShadow: '0 2px 15px rgba(59, 130, 246, 0.8), 0 0 30px rgba(147, 51, 234, 0.5)'
-          }}
-        >
-          {/* Animated shimmer effect - More visible */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent animate-shimmer"></div>
-          
-          {/* Glow effect at the end - Stronger */}
-          <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-white/70 to-transparent"></div>
-          
-          {/* Pulsing edge indicator - More visible */}
-          <div className="absolute -right-0.5 top-0 bottom-0 w-1.5 bg-white animate-pulse shadow-lg shadow-white/50"></div>
-          
-          {/* Top highlight for 3D effect */}
-          <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-white/0 via-white/40 to-white/0"></div>
-          
-          {/* Percentage badge - More visible and responsive */}
-          {scrollProgress > 1 && (
-            <div className="absolute right-1 sm:right-0 top-1/2 -translate-y-1/2 sm:translate-x-full z-10">
-              <div className="relative sm:ml-3 group">
-                {/* Stronger glow effect */}
-                <div className={`absolute inset-0 rounded-full blur-lg transition-opacity duration-300 ${
-                  theme === 'dark' ? 'bg-blue-500/60' : 'bg-blue-400/60'
-                } group-hover:opacity-100 opacity-80`}></div>
-                
-                {/* Badge - Larger and more visible */}
-                <div className={`relative px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-[12px] font-bold backdrop-blur-md transition-all duration-300 border-2 pointer-events-auto ${
-                  theme === 'dark' 
-                    ? 'bg-gray-900 text-blue-400 border-blue-500/60' 
-                    : 'bg-white text-blue-600 border-blue-400/60'
-                } shadow-2xl group-hover:scale-110`}>
-                  <span className="flex items-center gap-1.5">
-                    <span className="hidden sm:inline-block w-1.5 h-1.5 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 animate-pulse"></span>
-                    <span className="font-mono font-extrabold tracking-tight">{scrollProgress}%</span>
-                  </span>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 pt-2 sm:pt-3 ${
-        isScrolled 
-          ? theme === 'dark' 
-            ? 'bg-gray-900/80 backdrop-blur-xl shadow-2xl' 
-            : 'bg-white/80 backdrop-blur-xl shadow-2xl'
-          : 'bg-transparent'
-      }`}>
-        <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      isScrolled 
+        ? theme === 'dark' 
+          ? 'bg-gray-900/80 backdrop-blur-xl shadow-2xl' 
+          : 'bg-white/80 backdrop-blur-xl shadow-2xl'
+        : 'bg-transparent'
+    }`}>
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
         {/* Logo with animated glow */}
         <div 
           className="flex items-center gap-3 flex-shrink-0 cursor-pointer group relative" 
@@ -370,7 +284,27 @@ export default function Navbar() {
           </a>
         </div>
       </div>
-      </nav>
-    </>
+
+      {/* Progress Bar at Bottom of Navbar */}
+      <div className={`absolute bottom-0 left-0 right-0 h-1 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-200'}`}>
+        <div 
+          className="h-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 relative transition-all duration-300 ease-out"
+          style={{ 
+            width: `${scrollProgress}%`,
+            boxShadow: '0 0 20px rgba(59, 130, 246, 0.8)'
+          }}
+        >
+          {/* Shimmer effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent animate-shimmer"></div>
+          
+          {/* Percentage Badge */}
+          {scrollProgress > 1 && (
+            <div className="absolute -top-8 right-2 bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+              {scrollProgress}%
+            </div>
+          )}
+        </div>
+      </div>
+    </nav>
   );
 }
