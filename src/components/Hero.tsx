@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { ChevronDown, Sparkles, Code2, Palette } from 'lucide-react';
+import { ChevronDown, Sparkles, Code2, Palette, MessageCircle } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 
 export default function Hero() {
@@ -103,44 +103,47 @@ export default function Hero() {
       <div className={`absolute top-20 left-10 w-96 h-96 ${theme === 'dark' ? 'bg-blue-900' : 'bg-blue-400'} rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float`}></div>
       <div className={`absolute top-40 right-10 w-96 h-96 ${theme === 'dark' ? 'bg-purple-900' : 'bg-purple-400'} rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float`} style={{ animationDelay: '2s' }}></div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 min-h-[85vh] flex items-center">
-        <div className="grid md:grid-cols-2 gap-12 items-center w-full">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[85vh] flex items-center">
+        <div className="grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center w-full">
           {/* Left Section - Text Content */}
-          <div className="space-y-6 animate-fade-in-up">
+          <div className="space-y-4 sm:space-y-6 animate-fade-in-up text-center lg:text-left">
             {/* Animated Icon */}
-            <div className="flex gap-3">
-              <div className="relative">
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-soft-lg animate-float">
-                  <Sparkles className="w-8 h-8 text-white" />
+            <div className="flex gap-2 sm:gap-3 justify-center lg:justify-start">
+              <div className="relative group">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-soft-lg animate-float cursor-pointer hover:scale-110 transition-transform">
+                  <Sparkles className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white" />
                 </div>
+                <div className={`absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 rounded text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-900 text-white'}`}>Creative</div>
               </div>
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-soft-lg animate-float" style={{ animationDelay: '0.2s' }}>
-                <Code2 className="w-8 h-8 text-white" />
+              <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-soft-lg animate-float cursor-pointer hover:scale-110 transition-transform group" style={{ animationDelay: '0.2s' }}>
+                <Code2 className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white" />
+                <div className={`absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 rounded text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-900 text-white'}`}>Developer</div>
               </div>
-              <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-rose-600 rounded-2xl flex items-center justify-center shadow-soft-lg animate-float" style={{ animationDelay: '0.4s' }}>
-                <Palette className="w-8 h-8 text-white" />
+              <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-pink-500 to-rose-600 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-soft-lg animate-float cursor-pointer hover:scale-110 transition-transform group" style={{ animationDelay: '0.4s' }}>
+                <Palette className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white" />
+                <div className={`absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-1 rounded text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-900 text-white'}`}>Designer</div>
               </div>
             </div>
 
             {/* Main Title */}
-            <div className="space-y-4 animate-fade-in-up stagger-2">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold">
+            <div className="space-y-3 sm:space-y-4 animate-fade-in-up stagger-2">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
                 <span className="gradient-text">Muh. Amin Hidayat</span>
               </h1>
-              <h2 className={`text-xl md:text-2xl font-medium ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+              <h2 className={`text-lg sm:text-xl md:text-2xl font-medium ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
                 Full Stack Developer & UI/UX Enthusiast
               </h2>
-              <p className={`text-base md:text-lg ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'} max-w-lg`}>
+              <p className={`text-sm sm:text-base md:text-lg leading-relaxed ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'} max-w-lg mx-auto lg:mx-0`}>
                 Crafting beautiful, functional web experiences with modern technologies. Passionate about clean code and intuitive design.
               </p>
-              <div className="h-1 w-32 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full"></div>
+              <div className="h-1 w-24 sm:w-32 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full mx-auto lg:mx-0"></div>
             </div>
 
             {/* CTA Buttons */}
-            <div className="flex flex-wrap gap-4 animate-fade-in-up stagger-3">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 animate-fade-in-up stagger-3 justify-center lg:justify-start">
               <button
                 onClick={scrollToContact}
-                className="modern-btn text-sm py-3 px-8"
+                className="modern-btn text-sm sm:text-base py-3 sm:py-3 px-6 sm:px-8 w-full sm:w-auto touch-manipulation"
               >
                 <span>Get in Touch</span>
               </button>
@@ -148,16 +151,17 @@ export default function Hero() {
                 href="https://wa.me/6282197855715?text=Halo%2C%20saya%20tertarik%20dengan%20portfolio%20mu!"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="modern-btn-outline text-sm py-3 px-8"
+                className="modern-btn-outline text-sm sm:text-base py-3 sm:py-3 px-6 sm:px-8 w-full sm:w-auto touch-manipulation flex items-center justify-center gap-2"
               >
-                WhatsApp
+                <MessageCircle className="w-4 h-4" />
+                <span>WhatsApp</span>
               </a>
             </div>
           </div>
 
           {/* Right Section - Profile Image with 3D Animation */}
           <div 
-            className="relative animate-fade-in-up stagger-2 perspective-1000"
+            className="relative animate-fade-in-up stagger-2 perspective-1000 order-first lg:order-last mt-8 lg:mt-0"
             onMouseMove={(e) => {
               const rect = e.currentTarget.getBoundingClientRect();
               const x = ((e.clientX - rect.left) / rect.width - 0.5) * 20;
@@ -174,18 +178,18 @@ export default function Hero() {
               }
             }}
           >
-            <div className="relative w-full max-w-md mx-auto">
-              {/* Animated Rings */}
-              <div className="absolute inset-0 animate-spin-slow">
+            <div className="relative w-full max-w-sm sm:max-w-md mx-auto">
+              {/* Animated Rings - Hidden on mobile */}
+              <div className="hidden sm:block absolute inset-0 animate-spin-slow">
                 <div className="absolute inset-8 rounded-full border-2 border-dashed border-blue-500/30"></div>
               </div>
-              <div className="absolute inset-0 animate-spin-reverse">
+              <div className="hidden sm:block absolute inset-0 animate-spin-reverse">
                 <div className="absolute inset-12 rounded-full border-2 border-dotted border-purple-500/30"></div>
               </div>
 
               {/* Floating Decoration Elements */}
-              <div className="absolute -top-4 -left-4 w-24 h-24 rounded-2xl opacity-20 animate-float blur-xl"></div>
-              <div className="absolute -bottom-4 -right-4 w-32 h-32  rounded-2xl opacity-20 animate-float blur-xl" style={{ animationDelay: '1s' }}></div>
+              <div className="absolute -top-4 -left-4 w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl opacity-20 animate-float blur-xl"></div>
+              <div className="absolute -bottom-4 -right-4 w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-br from-pink-500 to-rose-600 rounded-2xl opacity-20 animate-float blur-xl" style={{ animationDelay: '1s' }}></div>
               
               {/* Profile Image Container with 3D Effect */}
               <div className="relative z-10">
@@ -216,24 +220,24 @@ export default function Hero() {
 
               {/* Floating Stats with Animation */}
               <div 
-                className={`absolute top-10 -left-6 backdrop-blur-md rounded-2xl p-4 shadow-2xl animate-float border ${theme === 'dark' ? 'bg-gray-800/90 border-gray-700' : 'bg-white/90 border-gray-200'}`}
+                className={`absolute top-8 sm:top-10 -left-4 sm:-left-6 backdrop-blur-md rounded-xl sm:rounded-2xl p-3 sm:p-4 shadow-2xl animate-float border ${theme === 'dark' ? 'bg-gray-800/90 border-gray-700' : 'bg-white/90 border-gray-200'}`}
                 style={{ transform: 'translateZ(50px)' }}
               >
-                <div className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">5+</div>
-                <div className={`text-xs ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Years Exp</div>
+                <div className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">5+</div>
+                <div className={`text-xs ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Years</div>
               </div>
               
               <div 
-                className={`absolute bottom-10 -right-6 backdrop-blur-md rounded-2xl p-4 shadow-2xl animate-float border ${theme === 'dark' ? 'bg-gray-800/90 border-gray-700' : 'bg-white/90 border-gray-200'}`}
+                className={`absolute bottom-8 sm:bottom-10 -right-4 sm:-right-6 backdrop-blur-md rounded-xl sm:rounded-2xl p-3 sm:p-4 shadow-2xl animate-float border ${theme === 'dark' ? 'bg-gray-800/90 border-gray-700' : 'bg-white/90 border-gray-200'}`}
                 style={{ animationDelay: '0.5s', transform: 'translateZ(50px)' }}
               >
-                <div className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-rose-600 bg-clip-text text-transparent">50+</div>
+                <div className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-pink-500 to-rose-600 bg-clip-text text-transparent">50+</div>
                 <div className={`text-xs ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Projects</div>
               </div>
 
-              {/* Particle Effects */}
-              <div className="absolute top-1/4 left-0 w-2 h-2 bg-blue-500 rounded-full animate-ping opacity-75"></div>
-              <div className="absolute bottom-1/4 right-0 w-2 h-2 bg-purple-500 rounded-full animate-ping opacity-75" style={{ animationDelay: '1s' }}></div>
+              {/* Particle Effects - Hidden on small mobile */}
+              <div className="hidden xs:block absolute top-1/4 left-0 w-2 h-2 bg-blue-500 rounded-full animate-ping opacity-75"></div>
+              <div className="hidden xs:block absolute bottom-1/4 right-0 w-2 h-2 bg-purple-500 rounded-full animate-ping opacity-75" style={{ animationDelay: '1s' }}></div>
             </div>
           </div>
         </div>

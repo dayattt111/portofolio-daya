@@ -27,6 +27,14 @@
 
   html {
     scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Improve Touch Scrolling on Mobile */
+  * {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
   }
 
   /* Modern Scrollbar Styling */
@@ -583,6 +591,46 @@
 }
 
 @layer utilities {
+  /* Touch Optimization */
+  .touch-manipulation {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .touch-pan-x {
+    touch-action: pan-x;
+  }
+
+  /* Responsive Text Sizes */
+  @media (max-width: 640px) {
+    .responsive-text-xs {
+      font-size: 0.75rem;
+    }
+    .responsive-text-sm {
+      font-size: 0.875rem;
+    }
+  }
+
+  /* Smooth Scrolling */
+  .smooth-scroll {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Prevent Text Selection on Interactive Elements */
+  .no-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  /* Hardware Acceleration */
+  .gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
   .text-shadow-soft {
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   }

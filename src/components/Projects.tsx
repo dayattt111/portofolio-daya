@@ -106,18 +106,18 @@ export default function Projects() {
             backgroundSize: '40px 40px'
           }} />
         </div>
-        <div className="max-w-7xl mx-auto px-4">
-          <div className={`mb-12 text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <h2 className="section-title-gradient text-3xl md:text-4xl">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className={`mb-10 sm:mb-12 text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <h2 className="section-title-gradient text-3xl sm:text-4xl md:text-5xl">
               Projects
             </h2>
-            <p className={`mt-3 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+            <p className={`mt-2 sm:mt-3 text-sm sm:text-base ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
               Selected works and applications
             </p>
           </div>
 
           {/* Grid Layout */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
             {projects.map((project, index) => (
               <button
                 key={project.id}

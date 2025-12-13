@@ -143,13 +143,13 @@ export default function Certificates() {
   };
 
   return (
-    <section ref={sectionRef} id="certificates" className={`py-16 transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
-      <div className="max-w-6xl mx-auto px-4">
+    <section ref={sectionRef} id="certificates" className={`py-12 sm:py-16 transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* TITLE */}
-        <div className={`mb-12 text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <h2 className={`text-3xl md:text-4xl font-bold mb-3 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Certifications</h2>
-          <p className={`text-lg ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Continuous learning & professional development</p>
+        <div className={`mb-8 sm:mb-12 text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <h2 className={`text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-3 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Certifications</h2>
+          <p className={`text-sm sm:text-base md:text-lg ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Continuous learning & professional development</p>
         </div>
 
         {/* 3-Item Carousel Container */}
@@ -174,7 +174,7 @@ export default function Certificates() {
           </button>
 
           {/* 3 Certificates Grid with Carousel Effect */}
-          <div className="grid md:grid-cols-3 gap-6 px-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 px-2 sm:px-4">
             {[-1, 0, 1].map((offset) => {
               const index = (currentIndex + offset + certificates.length) % certificates.length;
               const cert = certificates[index];
@@ -186,7 +186,7 @@ export default function Certificates() {
                   className={`transition-all duration-500 ${
                     isCenter 
                       ? 'scale-100 opacity-100 z-10' 
-                      : 'scale-90 opacity-60 blur-[2px]'
+                      : 'scale-90 opacity-60 blur-[2px] hidden md:block'
                   } ${fadeState === 'fade-in' ? 'translate-y-0' : 'translate-y-4'}`}
                 >
                   <div 
@@ -286,11 +286,11 @@ export default function Certificates() {
       {/* MODAL with Enhanced Animation */}
       {showModal && (
         <div 
-          className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center p-4 z-[999] animate-fade-in"
+          className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center p-2 sm:p-4 z-[999] animate-fade-in"
           onClick={() => setShowModal(false)}
         >
           <div 
-            className={`w-full max-w-5xl rounded-2xl p-8 relative overflow-y-auto max-h-[90vh] shadow-2xl animate-scale-in ${theme === 'dark' ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'}`}
+            className={`w-full max-w-5xl rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 relative overflow-y-auto max-h-[95vh] sm:max-h-[90vh] shadow-2xl animate-scale-in ${theme === 'dark' ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'}`}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Animated Background Gradient */}
@@ -305,7 +305,7 @@ export default function Certificates() {
             </button>
 
             {/* MODAL CONTENT */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 relative z-10">
               
               {/* LEFT CONTENT */}
               <div>

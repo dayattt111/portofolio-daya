@@ -52,40 +52,40 @@ export default function About() {
         />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Title with Subtitle */}
-        <div className={`mb-16 text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <div className="inline-block mb-4">
-            <span className={`text-sm font-semibold px-4 py-2 rounded-full ${theme === 'dark' ? 'bg-blue-500/10 text-blue-400' : 'bg-blue-100 text-blue-600'}`}>
+        <div className={`mb-12 sm:mb-16 text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className="inline-block mb-3 sm:mb-4">
+            <span className={`text-xs sm:text-sm font-semibold px-3 sm:px-4 py-1.5 sm:py-2 rounded-full ${theme === 'dark' ? 'bg-blue-500/10 text-blue-400' : 'bg-blue-100 text-blue-600'}`}>
               WHO I AM
             </span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
             About Me
           </h2>
-          <p className={`text-lg max-w-2xl mx-auto ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+          <p className={`text-base sm:text-lg max-w-2xl mx-auto leading-relaxed px-4 sm:px-0 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
             Passionate developer with expertise in building scalable web applications and creating memorable user experiences
           </p>
         </div>
 
         {/* Stats Grid - Animated */}
-        <div className={`grid grid-cols-2 md:grid-cols-4 gap-4 mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+        <div className={`grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mb-12 sm:mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
           {achievements.map((item, index) => (
             <div
               key={index}
-              className={`relative p-6 rounded-2xl transition-all duration-500 hover:scale-105 ${theme === 'dark' ? 'bg-gray-800/50 backdrop-blur-sm' : 'bg-gray-50'}`}
+              className={`group relative p-4 sm:p-6 rounded-xl sm:rounded-2xl transition-all duration-500 hover:scale-105 cursor-pointer touch-manipulation ${theme === 'dark' ? 'bg-gray-800/50 backdrop-blur-sm hover:bg-gray-800/70' : 'bg-gray-50 hover:bg-gray-100'}`}
               style={{ 
                 transitionDelay: `${index * 0.1}s`,
                 transform: isVisible ? 'translateY(0)' : 'translateY(20px)'
               }}
             >
-              <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${item.color} flex items-center justify-center text-white mb-4 transform transition-transform group-hover:rotate-12`}>
+              <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br ${item.color} flex items-center justify-center text-white mb-3 sm:mb-4 transform transition-transform group-hover:rotate-12`}>
                 {item.icon}
               </div>
-              <div className={`text-3xl font-bold mb-1 bg-gradient-to-r ${item.color} bg-clip-text text-transparent`}>
+              <div className={`text-2xl sm:text-3xl font-bold mb-1 bg-gradient-to-r ${item.color} bg-clip-text text-transparent`}>
                 {item.value}
               </div>
-              <div className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+              <div className={`text-xs sm:text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
                 {item.label}
               </div>
             </div>
@@ -93,7 +93,7 @@ export default function About() {
         </div>
 
         {/* Main Content - Enhanced Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           {/* Card 1: Development - Enhanced */}
           <div 
             className={`transition-all duration-700 hover:scale-105 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} 

@@ -70,13 +70,13 @@ export default function Skills() {
   };
 
   return (
-    <section id="skills" ref={sectionRef} className={`py-16 transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
-      <div className="max-w-6xl mx-auto px-4">
-        <h2 className={`text-3xl md:text-4xl font-bold text-center mb-12 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+    <section id="skills" ref={sectionRef} className={`py-12 sm:py-16 transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 className={`text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-12 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
           Skills & Contact
         </h2>
 
-        <div className="grid lg:grid-cols-3 gap-8 mb-12">
+        <div className="grid lg:grid-cols-3 gap-6 sm:gap-8 mb-10 sm:mb-12">
           {/* Skills Progress */}
           <div className={`lg:col-span-2 space-y-4 transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
             {skills.map((skill, index) => (
@@ -95,14 +95,14 @@ export default function Skills() {
             ))}
             
             {/* Tech Stack Carousel */}
-            <div className="pt-6">
-              <h3 className={`text-lg font-semibold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+            <div className="pt-4 sm:pt-6">
+              <h3 className={`text-base sm:text-lg font-semibold mb-3 sm:mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
                 Tech Stack
               </h3>
-              <div className="relative overflow-hidden rounded-xl">
+              <div className="relative overflow-hidden rounded-xl touch-pan-x">
                 {/* Gradient Overlays */}
-                <div className={`absolute left-0 top-0 bottom-0 w-20 z-10 pointer-events-none ${theme === 'dark' ? 'bg-gradient-to-r from-gray-900 to-transparent' : 'bg-gradient-to-r from-white to-transparent'}`} />
-                <div className={`absolute right-0 top-0 bottom-0 w-20 z-10 pointer-events-none ${theme === 'dark' ? 'bg-gradient-to-l from-gray-900 to-transparent' : 'bg-gradient-to-l from-white to-transparent'}`} />
+                <div className={`absolute left-0 top-0 bottom-0 w-12 sm:w-20 z-10 pointer-events-none ${theme === 'dark' ? 'bg-gradient-to-r from-gray-900 to-transparent' : 'bg-gradient-to-r from-white to-transparent'}`} />
+                <div className={`absolute right-0 top-0 bottom-0 w-12 sm:w-20 z-10 pointer-events-none ${theme === 'dark' ? 'bg-gradient-to-l from-gray-900 to-transparent' : 'bg-gradient-to-l from-white to-transparent'}`} />
                 
                 {/* Scrolling Container */}
                 <div 
@@ -113,15 +113,15 @@ export default function Skills() {
                   {[...technologies, ...technologies].map((tech, index) => (
                     <div
                       key={`${tech.name}-${index}`}
-                      className={`flex-shrink-0 w-32 p-4 rounded-xl transition-all duration-300 hover:scale-110 cursor-pointer ${theme === 'dark' ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-100 hover:bg-gray-200'}`}
+                      className={`flex-shrink-0 w-24 sm:w-32 p-3 sm:p-4 rounded-lg sm:rounded-xl transition-all duration-300 hover:scale-110 cursor-pointer touch-manipulation ${theme === 'dark' ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-100 hover:bg-gray-200'}`}
                       style={{
                         animation: `slide 30s linear infinite`,
                         animationDelay: `${index * 0.1}s`
                       }}
                     >
                       <div className="text-center">
-                        <div className="text-3xl mb-2">{tech.icon}</div>
-                        <div className={`text-xs font-medium bg-gradient-to-r ${tech.color} bg-clip-text text-transparent`}>
+                        <div className="text-2xl sm:text-3xl mb-1 sm:mb-2">{tech.icon}</div>
+                        <div className={`text-[10px] sm:text-xs font-medium bg-gradient-to-r ${tech.color} bg-clip-text text-transparent`}>
                           {tech.name}
                         </div>
                       </div>
@@ -173,15 +173,15 @@ export default function Skills() {
         </div>
 
         {/* Contact Form */}
-        <div id="contact" className={`max-w-2xl mx-auto p-6 rounded-xl transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'} ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50'}`}>
-          <h3 className="text-xl font-bold mb-4 text-center">Send Message</h3>
-          <form onSubmit={handleSubmit} className="space-y-4">
+        <div id="contact" className={`max-w-2xl mx-auto p-4 sm:p-6 rounded-xl transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'} ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50'}`}>
+          <h3 className="text-lg sm:text-xl font-bold mb-4 text-center">Send Message</h3>
+          <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
             <input
               type="text"
               placeholder="Your Name"
               value={formData.name}
               onChange={(e) => setFormData({...formData, name: e.target.value})}
-              className={`w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-blue-500 outline-none transition ${theme === 'dark' ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
+              className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border focus:ring-2 focus:ring-blue-500 outline-none transition text-sm sm:text-base touch-manipulation ${theme === 'dark' ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'}`}
               required
             />
             <input
@@ -189,7 +189,7 @@ export default function Skills() {
               placeholder="Your Email"
               value={formData.email}
               onChange={(e) => setFormData({...formData, email: e.target.value})}
-              className={`w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-blue-500 outline-none transition ${theme === 'dark' ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
+              className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border focus:ring-2 focus:ring-blue-500 outline-none transition text-sm sm:text-base touch-manipulation ${theme === 'dark' ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'}`}
               required
             />
             <textarea
@@ -197,10 +197,10 @@ export default function Skills() {
               value={formData.message}
               onChange={(e) => setFormData({...formData, message: e.target.value})}
               rows={3}
-              className={`w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-blue-500 outline-none resize-none transition ${theme === 'dark' ? 'bg-gray-700 border-gray-600 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
+              className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border focus:ring-2 focus:ring-blue-500 outline-none resize-none transition text-sm sm:text-base touch-manipulation ${theme === 'dark' ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'}`}
               required
             />
-            <button type="submit" className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-lg font-medium hover:shadow-lg transition-all">
+            <button type="submit" className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 sm:py-3.5 rounded-lg font-medium hover:shadow-lg transition-all text-sm sm:text-base touch-manipulation hover:scale-105 active:scale-95">
               Send via WhatsApp
             </button>
           </form>
