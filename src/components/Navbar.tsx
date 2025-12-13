@@ -14,13 +14,19 @@ export default function Navbar() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
 
-      // Calculate scroll progress percentage
+      // Calculate scroll progress percentage with better accuracy
       const windowHeight = window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight;
-      const scrollTop = window.scrollY;
+      const scrollTop = window.scrollY || window.pageYOffset;
       const scrollableHeight = documentHeight - windowHeight;
-      const progress = (scrollTop / scrollableHeight) * 100;
-      setScrollProgress(Math.min(100, Math.max(0, progress)));
+      
+      // Ensure we reach 100% when at bottom (with small threshold for browser differences)
+      const rawProgress = scrollableHeight > 0 ? (scrollTop / scrollableHeight) * 100 : 0;
+      const progress = Math.round(Math.min(100, Math.max(0, rawProgress)));
+      
+      // Check if we're at the very bottom
+      const isAtBottom = (windowHeight + scrollTop) >= documentHeight - 5;
+      setScrollProgress(isAtBottom ? 100 : progress);
 
       // Detect active section with better viewport detection
       const sections = ['home', 'about', 'projects', 'articles', 'certificates', 'skills', 'contact'];
@@ -37,9 +43,18 @@ export default function Navbar() {
       });
     };
 
-    window.addEventListener('scroll', handleScroll);
+    const handleResize = () => {
+      handleScroll(); // Recalculate on resize
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleResize, { passive: true });
     handleScroll(); // Initial call
-    return () => window.removeEventListener('scroll', handleScroll);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   const scrollToSection = (sectionId: string) => {
@@ -76,7 +91,7 @@ export default function Navbar() {
         : 'bg-transparent'
     }`}>
       {/* Scroll Progress Bar */}
-      <div className="absolute bottom-0 left-0 right-0 h-1 overflow-hidden">
+      <div className="absolute bottom-0 left-0 right-0 h-1 overflow-visible">
         {/* Background track */}
         <div className={`absolute inset-0 transition-colors duration-300 ${
           theme === 'dark' ? 'bg-gray-800/50' : 'bg-gray-200/50'
@@ -116,24 +131,24 @@ export default function Navbar() {
           {/* Glow effect at the end */}
           <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white/50 to-transparent"></div>
           
-          {/* Percentage badge */}
-          {scrollProgress > 5 && (
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-full">
-              <div className="relative ml-3 group">
+          {/* Percentage badge - Responsive positioning */}
+          {scrollProgress > 2 && (
+            <div className="absolute right-1 sm:right-0 top-1/2 -translate-y-1/2 sm:translate-x-full z-10">
+              <div className="relative sm:ml-3 group">
                 {/* Glow effect */}
                 <div className={`absolute inset-0 rounded-full blur-md transition-opacity duration-300 ${
                   theme === 'dark' ? 'bg-blue-500/50' : 'bg-blue-400/50'
                 } group-hover:opacity-100 opacity-70`}></div>
                 
                 {/* Badge */}
-                <div className={`relative px-2.5 py-1 rounded-full text-[11px] font-bold backdrop-blur-sm transition-all duration-300 border ${
+                <div className={`relative px-2 sm:px-2.5 py-1 rounded-full text-[10px] sm:text-[11px] font-bold backdrop-blur-md transition-all duration-300 border ${
                   theme === 'dark' 
-                    ? 'bg-gray-900/95 text-blue-400 border-blue-500/30' 
-                    : 'bg-white/95 text-blue-600 border-blue-400/30'
-                } shadow-lg group-hover:scale-110`}>
+                    ? 'bg-gray-900/98 text-blue-400 border-blue-500/40' 
+                    : 'bg-white/98 text-blue-600 border-blue-400/40'
+                } shadow-xl group-hover:scale-110`}>
                   <span className="flex items-center gap-1">
-                    <span className="w-1 h-1 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 animate-pulse"></span>
-                    {Math.round(scrollProgress)}%
+                    <span className="hidden sm:inline-block w-1 h-1 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 animate-pulse"></span>
+                    <span className="font-mono tracking-tight">{scrollProgress}%</span>
                   </span>
                 </div>
               </div>
