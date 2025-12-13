@@ -90,65 +90,71 @@ export default function Navbar() {
           : 'bg-white/80 backdrop-blur-xl shadow-2xl border-b border-gray-200/50'
         : 'bg-transparent'
     }`}>
-      {/* Scroll Progress Bar */}
-      <div className="absolute bottom-0 left-0 right-0 h-1 overflow-visible">
-        {/* Background track */}
+      {/* Scroll Progress Bar - Made more visible */}
+      <div className="absolute bottom-0 left-0 right-0 h-1.5 sm:h-2 overflow-visible z-50">
+        {/* Background track - More visible */}
         <div className={`absolute inset-0 transition-colors duration-300 ${
-          theme === 'dark' ? 'bg-gray-800/50' : 'bg-gray-200/50'
+          theme === 'dark' ? 'bg-gray-700/70' : 'bg-gray-300/70'
         }`}></div>
         
-        {/* Milestone markers */}
+        {/* Milestone markers - Larger and more visible */}
         <div className="absolute inset-0 flex items-center">
           {[0, 25, 50, 75, 100].map((milestone) => (
             <div
               key={milestone}
-              className={`absolute h-full w-[2px] transition-colors duration-300 ${
+              className={`absolute h-full w-[3px] transition-colors duration-300 ${
                 scrollProgress >= milestone
-                  ? theme === 'dark' ? 'bg-blue-400/80' : 'bg-blue-500/80'
-                  : theme === 'dark' ? 'bg-gray-700/30' : 'bg-gray-300/30'
+                  ? theme === 'dark' ? 'bg-blue-400' : 'bg-blue-600'
+                  : theme === 'dark' ? 'bg-gray-600/40' : 'bg-gray-400/40'
               }`}
               style={{ left: `${milestone}%` }}
             >
               {milestone > 0 && milestone < 100 && (
-                <div className={`absolute -top-1.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full transition-all duration-300 ${
+                <div className={`absolute -top-2 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full transition-all duration-300 ${
                   scrollProgress >= milestone
-                    ? 'bg-gradient-to-r from-blue-500 to-purple-500 scale-150'
-                    : theme === 'dark' ? 'bg-gray-600' : 'bg-gray-400'
+                    ? 'bg-gradient-to-r from-blue-500 to-purple-500 scale-150 shadow-lg shadow-blue-500/50'
+                    : theme === 'dark' ? 'bg-gray-500' : 'bg-gray-400'
                 }`}></div>
               )}
             </div>
           ))}
         </div>
         
-        {/* Progress fill with gradient */}
+        {/* Progress fill with gradient - More vibrant */}
         <div 
-          className="absolute inset-y-0 left-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 transition-all duration-300 ease-out relative overflow-hidden"
-          style={{ width: `${scrollProgress}%` }}
+          className="absolute inset-y-0 left-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 transition-all duration-300 ease-out relative overflow-hidden shadow-lg"
+          style={{ 
+            width: `${scrollProgress}%`,
+            boxShadow: '0 0 10px rgba(59, 130, 246, 0.5)'
+          }}
         >
-          {/* Animated shimmer effect */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-shimmer"></div>
+          {/* Animated shimmer effect - More visible */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent animate-shimmer"></div>
           
-          {/* Glow effect at the end */}
-          <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white/50 to-transparent"></div>
+          {/* Glow effect at the end - Stronger */}
+          <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-white/60 to-transparent"></div>
           
-          {/* Percentage badge - Responsive positioning */}
-          {scrollProgress > 2 && (
+          {/* Pulsing edge indicator */}
+          <div className="absolute -right-0.5 top-0 bottom-0 w-1 bg-white/80 animate-pulse"></div>
+          
+          {/* Percentage badge - More visible and responsive */}
+          {scrollProgress > 1 && (
             <div className="absolute right-1 sm:right-0 top-1/2 -translate-y-1/2 sm:translate-x-full z-10">
               <div className="relative sm:ml-3 group">
-                {/* Glow effect */}
-                <div className={`absolute inset-0 rounded-full blur-md transition-opacity duration-300 ${
-                  theme === 'dark' ? 'bg-blue-500/50' : 'bg-blue-400/50'
-                } group-hover:opacity-100 opacity-70`}></div>
+                {/* Stronger glow effect */}
+                <div className={`absolute inset-0 rounded-full blur-lg transition-opacity duration-300 ${
+                  theme === 'dark' ? 'bg-blue-500/60' : 'bg-blue-400/60'
+                } group-hover:opacity-100 opacity-80`}></div>
                 
-                {/* Badge */}
-                <div className={`relative px-2 sm:px-2.5 py-1 rounded-full text-[10px] sm:text-[11px] font-bold backdrop-blur-md transition-all duration-300 border ${
+                {/* Badge - Larger and more visible */}
+                <div className={`relative px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-[12px] font-bold backdrop-blur-md transition-all duration-300 border-2 ${
                   theme === 'dark' 
-                    ? 'bg-gray-900/98 text-blue-400 border-blue-500/40' 
-                    : 'bg-white/98 text-blue-600 border-blue-400/40'
-                } shadow-xl group-hover:scale-110`}>
-                  <span className="flex items-center gap-1">
-                    <span className="hidden sm:inline-block w-1 h-1 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 animate-pulse"></span>
-                    <span className="font-mono tracking-tight">{scrollProgress}%</span>
+                    ? 'bg-gray-900 text-blue-400 border-blue-500/60' 
+                    : 'bg-white text-blue-600 border-blue-400/60'
+                } shadow-2xl group-hover:scale-110`}>
+                  <span className="flex items-center gap-1.5">
+                    <span className="hidden sm:inline-block w-1.5 h-1.5 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 animate-pulse"></span>
+                    <span className="font-mono font-extrabold tracking-tight">{scrollProgress}%</span>
                   </span>
                 </div>
               </div>
