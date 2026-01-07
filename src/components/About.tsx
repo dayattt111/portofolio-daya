@@ -11,6 +11,27 @@ export default function About() {
   const [isVisible, setIsVisible] = useState(false);
   const [scrollY, setScrollY] = useState(0);
 
+  // Apply color animation to nodes after they're rendered
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const nodes = document.querySelectorAll('.github-node');
+      nodes.forEach((node) => {
+        const rect = node as SVGRectElement;
+        const finalColor = rect.getAttribute('data-final-color');
+        if (finalColor) {
+          const animationDelay = rect.style.animationDelay;
+          const delay = parseFloat(animationDelay) || 0;
+          
+          setTimeout(() => {
+            rect.style.fill = finalColor;
+          }, delay);
+        }
+      });
+    }, 100);
+    
+    return () => clearTimeout(timer);
+  }, [isVisible]);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -112,20 +133,8 @@ export default function About() {
                 loading={false}
                 errorMessage="Unable to load contribution data"
                 renderBlock={(block, activity) => {
-                  // Calculate position from center for outside-in animation
-                  const date = new Date(activity.date);
-                  const yearStart = new Date(date.getFullYear(), 0, 1);
-                  const dayOfYear = Math.floor((date.getTime() - yearStart.getTime()) / (1000 * 60 * 60 * 24));
-                  
-                  // Calculate distance from center (middle of the year ~182 days)
-                  const centerDay = 182;
-                  const distanceFromCenter = Math.abs(dayOfYear - centerDay);
-                  
-                  // Nodes farther from center appear first (outside-in effect)
-                  // Add randomness for more natural, tech-like animation
-                  const randomFactor = Math.random() * 100;
-                  const baseDelay = (182 - distanceFromCenter) * 3; // Inverted: farther = less delay
-                  const animationDelay = baseDelay + randomFactor;
+                  // Random delay for each node (tech-like random filling effect)
+                  const randomDelay = Math.random() * 2000; // 0-2 seconds random
                   
                   return (
                     <rect
@@ -140,13 +149,13 @@ export default function About() {
                         month: 'long', 
                         day: 'numeric' 
                       })}`}
-                      className="cursor-pointer transition-all duration-300 hover:opacity-80"
+                      className="cursor-pointer transition-all duration-300 hover:opacity-80 github-node"
                       style={{ 
-                        animation: `fadeInScale 0.6s cubic-bezier(0.4, 0, 0.2, 1) ${animationDelay}ms forwards`,
-                        opacity: 0,
-                        transform: 'scale(0)',
+                        animation: `fillNode 0.5s ease-out ${randomDelay}ms forwards`,
+                        fill: theme === 'dark' ? '#161b22' : '#ebedf0',
                         transformOrigin: 'center'
                       }}
+                      data-final-color={block.props.fill}
                     />
                   );
                 }}
