@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ChevronDown, Sparkles, Code2, Palette, MessageCircle, Award, Users, Rocket, Github } from 'lucide-react';
+import { ChevronDown, Sparkles, Code2, Palette, MessageCircle, Award, Users, Rocket, Github, GitCommit, TrendingUp, Calendar, Flame } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
@@ -7,11 +7,30 @@ import { GitHubCalendar } from 'react-github-calendar';
 import { Tooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
 
+interface GitHubStats {
+  totalContributions: number;
+  averagePerDay: number;
+  currentStreak: number;
+  longestStreak: number;
+}
+
 export default function Home() {
   const { theme } = useTheme();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const [githubStats, setGithubStats] = useState<GitHubStats>({
+    totalContributions: 0,
+    averagePerDay: 0,
+    currentStreak: 0,
+    longestStreak: 0
+  });
+  const [animatedStats, setAnimatedStats] = useState<GitHubStats>({
+    totalContributions: 0,
+    averagePerDay: 0,
+    currentStreak: 0,
+    longestStreak: 0
+  });
 
   // Apply color animation to GitHub nodes
   useEffect(() => {
@@ -33,6 +52,35 @@ export default function Home() {
     
     return () => clearTimeout(timer);
   }, [isVisible]);
+
+  // Animate statistics counters
+  useEffect(() => {
+    if (!isVisible) return;
+
+    const duration = 2000; // 2 seconds
+    const steps = 60;
+    const interval = duration / steps;
+
+    let currentStep = 0;
+    const timer = setInterval(() => {
+      currentStep++;
+      const progress = currentStep / steps;
+
+      setAnimatedStats({
+        totalContributions: Math.floor(githubStats.totalContributions * progress),
+        averagePerDay: parseFloat((githubStats.averagePerDay * progress).toFixed(1)),
+        currentStreak: Math.floor(githubStats.currentStreak * progress),
+        longestStreak: Math.floor(githubStats.longestStreak * progress)
+      });
+
+      if (currentStep >= steps) {
+        clearInterval(timer);
+        setAnimatedStats(githubStats);
+      }
+    }, interval);
+
+    return () => clearInterval(timer);
+  }, [isVisible, githubStats]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -288,6 +336,69 @@ export default function Home() {
                 ? 'bg-gradient-to-br from-gray-800/80 via-gray-800/50 to-gray-900/80 backdrop-blur-xl border-gray-700/50 shadow-2xl' 
                 : 'bg-gradient-to-br from-white via-gray-50 to-white border-gray-200 shadow-xl'
             }`}>
+              {/* GitHub Statistics Cards */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div className={`p-4 rounded-xl border transition-all duration-300 hover:scale-105 ${
+                  theme === 'dark'
+                    ? 'bg-gray-800/50 border-gray-700/50'
+                    : 'bg-white border-gray-200'
+                }`}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <GitCommit className="w-5 h-5 text-blue-500" />
+                    <span className={`text-xs font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Total</span>
+                  </div>
+                  <div className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent">
+                    {animatedStats.totalContributions.toLocaleString()}
+                  </div>
+                  <div className={`text-xs ${theme === 'dark' ? 'text-gray-500' : 'text-gray-500'}`}>Contributions</div>
+                </div>
+
+                <div className={`p-4 rounded-xl border transition-all duration-300 hover:scale-105 ${
+                  theme === 'dark'
+                    ? 'bg-gray-800/50 border-gray-700/50'
+                    : 'bg-white border-gray-200'
+                }`}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <TrendingUp className="w-5 h-5 text-green-500" />
+                    <span className={`text-xs font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Average</span>
+                  </div>
+                  <div className="text-2xl font-bold bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent">
+                    {animatedStats.averagePerDay.toFixed(1)}
+                  </div>
+                  <div className={`text-xs ${theme === 'dark' ? 'text-gray-500' : 'text-gray-500'}`}>Per Day</div>
+                </div>
+
+                <div className={`p-4 rounded-xl border transition-all duration-300 hover:scale-105 ${
+                  theme === 'dark'
+                    ? 'bg-gray-800/50 border-gray-700/50'
+                    : 'bg-white border-gray-200'
+                }`}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Flame className="w-5 h-5 text-orange-500" />
+                    <span className={`text-xs font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Current</span>
+                  </div>
+                  <div className="text-2xl font-bold bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
+                    {animatedStats.currentStreak}
+                  </div>
+                  <div className={`text-xs ${theme === 'dark' ? 'text-gray-500' : 'text-gray-500'}`}>Day Streak</div>
+                </div>
+
+                <div className={`p-4 rounded-xl border transition-all duration-300 hover:scale-105 ${
+                  theme === 'dark'
+                    ? 'bg-gray-800/50 border-gray-700/50'
+                    : 'bg-white border-gray-200'
+                }`}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Calendar className="w-5 h-5 text-purple-500" />
+                    <span className={`text-xs font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Longest</span>
+                  </div>
+                  <div className="text-2xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
+                    {animatedStats.longestStreak}
+                  </div>
+                  <div className={`text-xs ${theme === 'dark' ? 'text-gray-500' : 'text-gray-500'}`}>Day Streak</div>
+                </div>
+              </div>
+
               <div className="relative flex justify-center items-center">
                 <GitHubCalendar 
                   username="dayattt111"
@@ -306,6 +417,45 @@ export default function Home() {
                   showMonthLabels={true}
                   loading={false}
                   errorMessage="Unable to load contribution data"
+                  transformData={(contributions) => {
+                    // Calculate statistics from contribution data
+                    const total = contributions.reduce((sum, day) => sum + day.count, 0);
+                    const days = contributions.length;
+                    const average = days > 0 ? total / days : 0;
+
+                    // Calculate current streak
+                    let currentStreak = 0;
+                    const today = new Date();
+                    for (let i = contributions.length - 1; i >= 0; i--) {
+                      const date = new Date(contributions[i].date);
+                      if (contributions[i].count > 0) {
+                        currentStreak++;
+                      } else if (date < today) {
+                        break;
+                      }
+                    }
+
+                    // Calculate longest streak
+                    let longestStreak = 0;
+                    let tempStreak = 0;
+                    contributions.forEach((day) => {
+                      if (day.count > 0) {
+                        tempStreak++;
+                        longestStreak = Math.max(longestStreak, tempStreak);
+                      } else {
+                        tempStreak = 0;
+                      }
+                    });
+
+                    setGithubStats({
+                      totalContributions: total,
+                      averagePerDay: parseFloat(average.toFixed(1)),
+                      currentStreak,
+                      longestStreak
+                    });
+
+                    return contributions;
+                  }}
                   renderBlock={(block, activity) => {
                     // Random delay for each node (tech-like random filling effect)
                     const randomDelay = Math.random() * 2000; // 0-2 seconds random
