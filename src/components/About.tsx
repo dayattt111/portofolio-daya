@@ -21,6 +21,9 @@ export default function About() {
   const [contributions, setContributions] = useState<ContributionDay[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Calculate total contributions
+  const totalContributions = contributions.reduce((sum, day) => sum + day.count, 0);
+
   // Fetch GitHub contributions dengan cache
   useEffect(() => {
     const fetchContributions = async () => {
@@ -159,6 +162,13 @@ export default function About() {
               ? 'bg-gradient-to-br from-gray-800/80 via-gray-800/50 to-gray-900/80 backdrop-blur-xl border-gray-700/50 shadow-2xl' 
               : 'bg-gradient-to-br from-white via-gray-50 to-white border-gray-200 shadow-xl'
           }`}>
+            {/* Total Contributions */}
+            {!loading && (
+              <div className={`mb-4 text-sm font-medium ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                {totalContributions.toLocaleString()} contributions in the last year
+              </div>
+            )}
+
             {/* Activity Grid - Custom Fast Implementation */}
             <div className="w-full overflow-x-auto">
               {loading ? (
@@ -174,56 +184,72 @@ export default function About() {
                 </div>
               ) : (
                 <div className="inline-block min-w-full">
-                  {/* Month Labels */}
-                  <div className="flex gap-1 mb-2 ml-8">
-                    {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map((month) => (
-                      <div key={month} className="text-xs text-gray-500 dark:text-gray-400" style={{ width: `${100/12}%`, minWidth: '50px' }}>
-                        {month}
-                      </div>
-                    ))}
-                  </div>
-                  
                   <div className="flex gap-1">
-                    {/* Day Labels */}
-                    <div className="flex flex-col gap-1 justify-around pr-2">
-                      <div className={`text-xs h-3 ${theme === 'dark' ? 'text-gray-500' : 'text-gray-600'}`}>Mon</div>
-                      <div className="h-3"></div>
-                      <div className={`text-xs h-3 ${theme === 'dark' ? 'text-gray-500' : 'text-gray-600'}`}>Wed</div>
-                      <div className="h-3"></div>
-                      <div className={`text-xs h-3 ${theme === 'dark' ? 'text-gray-500' : 'text-gray-600'}`}>Fri</div>
-                      <div className="h-3"></div>
+                    {/* Day Labels Column */}
+                    <div className="flex flex-col gap-1 pr-2" style={{ paddingTop: '20px' }}>
+                      <div className={`text-xs leading-3 ${theme === 'dark' ? 'text-gray-500' : 'text-gray-600'}`}>Mon</div>
+                      <div style={{ height: '12px' }}></div>
+                      <div className={`text-xs leading-3 ${theme === 'dark' ? 'text-gray-500' : 'text-gray-600'}`}>Wed</div>
+                      <div style={{ height: '12px' }}></div>
+                      <div className={`text-xs leading-3 ${theme === 'dark' ? 'text-gray-500' : 'text-gray-600'}`}>Fri</div>
+                      <div style={{ height: '12px' }}></div>
                     </div>
                     
-                    {/* Contribution Grid */}
-                    <div className="flex gap-1 flex-1">
-                      {Array.from({ length: 53 }).map((_, weekIndex) => (
-                        <div key={weekIndex} className="flex flex-col gap-1">
-                          {Array.from({ length: 7 }).map((_, dayIndex) => {
-                            const dataIndex = weekIndex * 7 + dayIndex;
-                            const contribution = contributions[dataIndex] || { level: 0, count: 0, date: '' };
-                            // Animasi dari bawah ke atas - simplified untuk performa
-                            const delay = (6 - dayIndex) * 30 + weekIndex * 1.5;
-                            
-                            const colors = theme === 'dark' 
-                              ? ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353']
-                              : ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'];
-                            
-                            return (
-                              <div
-                                key={dayIndex}
-                                className="w-3 h-3 rounded-sm transition-all duration-200 hover:scale-125 hover:opacity-80 cursor-pointer"
-                                style={{
-                                  backgroundColor: colors[contribution.level] || colors[0],
-                                  animation: graphVisible ? `nodeSlideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) ${delay}ms forwards` : 'none',
-                                  opacity: 0,
-                                  transform: 'translateY(10px)'
-                                }}
-                                title={`${contribution.count} contributions${contribution.date ? ` on ${new Date(contribution.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}` : ''}`}
-                              />
-                            );
-                          })}
-                        </div>
-                      ))}
+                    {/* Grid with Month Labels */}
+                    <div className="flex-1">
+                      {/* Month Labels Row */}
+                      <div className="flex mb-1">
+                        {Array.from({ length: 53 }).map((_, weekIndex) => {
+                          // Determine which month this week belongs to
+                          const weekDate = new Date(Date.now() - (52 - weekIndex) * 7 * 24 * 60 * 60 * 1000);
+                          const month = weekDate.getMonth();
+                          const prevWeekDate = weekIndex > 0 ? new Date(Date.now() - (52 - (weekIndex - 1)) * 7 * 24 * 60 * 60 * 1000) : null;
+                          const prevMonth = prevWeekDate ? prevWeekDate.getMonth() : -1;
+                          const isNewMonth = month !== prevMonth;
+                          
+                          return (
+                            <div key={weekIndex} className="flex-1" style={{ minWidth: '11px', height: '15px' }}>
+                              {isNewMonth && (
+                                <div className={`text-xs ${theme === 'dark' ? 'text-gray-500' : 'text-gray-600'}`}>
+                                  {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][month]}
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                      
+                      {/* Contribution Grid */}
+                      <div className="flex gap-1">
+                        {Array.from({ length: 53 }).map((_, weekIndex) => (
+                          <div key={weekIndex} className="flex flex-col gap-1">
+                            {Array.from({ length: 7 }).map((_, dayIndex) => {
+                              const dataIndex = weekIndex * 7 + dayIndex;
+                              const contribution = contributions[dataIndex] || { level: 0, count: 0, date: '' };
+                              // Animasi dari bawah ke atas
+                              const delay = (6 - dayIndex) * 30 + weekIndex * 1.5;
+                              
+                              const colors = theme === 'dark' 
+                                ? ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353']
+                                : ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'];
+                              
+                              return (
+                                <div
+                                  key={dayIndex}
+                                  className="w-3 h-3 rounded-sm transition-all duration-200 hover:scale-125 hover:opacity-80 cursor-pointer"
+                                  style={{
+                                    backgroundColor: colors[contribution.level] || colors[0],
+                                    animation: graphVisible ? `nodeSlideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) ${delay}ms forwards` : 'none',
+                                    opacity: 0,
+                                    transform: 'translateY(10px)'
+                                  }}
+                                  title={`${contribution.count} contributions${contribution.date ? ` on ${new Date(contribution.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}` : ''}`}
+                                />
+                              );
+                            })}
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
