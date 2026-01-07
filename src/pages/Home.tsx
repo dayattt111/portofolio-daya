@@ -359,7 +359,7 @@ export default function Home() {
                     </div>
                   </div>
                 ) : (
-                  <div className="inline-block min-w-full">
+                  <div className="inline-block" style={{ minWidth: '800px' }}>
                     <div className="flex gap-1">
                       {/* Day Labels Column */}
                       <div className="flex flex-col gap-1 pr-2" style={{ paddingTop: '20px' }}>
@@ -372,7 +372,7 @@ export default function Home() {
                       </div>
                       
                       {/* Grid with Month Labels */}
-                      <div className="flex-1">
+                      <div className="flex-1" style={{ minWidth: '750px' }}>
                         {/* Month Labels Row */}
                         <div className="flex mb-1">
                           {Array.from({ length: 53 }).map((_, weekIndex) => {
@@ -384,7 +384,7 @@ export default function Home() {
                             const isNewMonth = month !== prevMonth;
                             
                             return (
-                              <div key={weekIndex} className="flex-1" style={{ minWidth: '11px', height: '15px' }}>
+                              <div key={weekIndex} style={{ width: '14px', height: '15px', flexShrink: 0 }}>
                                 {isNewMonth && (
                                   <div className={`text-xs ${theme === 'dark' ? 'text-gray-500' : 'text-gray-600'}`}>
                                     {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][month]}
