@@ -69,6 +69,91 @@ export default function About() {
           </p>
         </div>
 
+        {/* GitHub Contribution Graph - Moved to Top */}
+        <div className={`mb-12 sm:mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+          <div className="text-center mb-6 sm:mb-8">
+            <div className="flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+              <div className={`p-2 sm:p-3 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 shadow-lg ${theme === 'dark' ? 'shadow-purple-500/20' : 'shadow-purple-500/30'}`}>
+                <Github className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+              </div>
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
+                GitHub Activity
+              </h3>
+            </div>
+            <p className={`text-sm sm:text-base ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+              Real-time contribution graph from <a href="https://github.com/dayattt111" target="_blank" rel="noopener noreferrer" className="font-semibold text-blue-500 hover:text-blue-600 transition-colors">@dayattt111</a>
+            </p>
+          </div>
+
+          <div className={`group relative p-4 sm:p-6 md:p-8 rounded-2xl border-2 overflow-hidden transition-all duration-500 hover:scale-[1.02] ${
+            theme === 'dark' 
+              ? 'bg-gradient-to-br from-gray-800/80 via-gray-800/50 to-gray-900/80 backdrop-blur-xl border-gray-700/50 hover:border-purple-500/50 shadow-2xl' 
+              : 'bg-gradient-to-br from-white via-gray-50 to-white border-gray-200 hover:border-purple-400/50 shadow-xl hover:shadow-2xl'
+          }`}>
+            {/* Glow effect on hover */}
+            <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${theme === 'dark' ? 'bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-blue-500/10' : 'bg-gradient-to-r from-purple-500/5 via-pink-500/5 to-blue-500/5'}`}></div>
+            
+            <div className="relative flex justify-center items-center">
+              <GitHubCalendar 
+                username="dayattt111"
+                blockSize={14}
+                blockMargin={5}
+                fontSize={14}
+                colorScheme={theme === 'dark' ? 'dark' : 'light'}
+                theme={{
+                  light: ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'],
+                  dark: ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353']
+                }}
+                labels={{
+                  totalCount: '{{count}} contributions in the last year',
+                }}
+                showWeekdayLabels
+                hideColorLegend
+                hideMonthLabels={false}
+                hideTotalCount={false}
+                loading={false}
+                errorMessage="Unable to load contribution data"
+                transformData={(contributions) => {
+                  // Data akan menampilkan tooltip asli dari GitHub saat hover
+                  return contributions;
+                }}
+              />
+            </div>
+            
+            {/* Enhanced Legend */}
+            <div className="mt-6 sm:mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+              <div className="flex flex-wrap gap-3 sm:gap-4 justify-center items-center text-xs sm:text-sm">
+                <span className={`font-semibold ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>Less</span>
+                <div className="flex items-center gap-2">
+                  <div className={`w-4 h-4 rounded transition-transform hover:scale-125 cursor-pointer ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-200'}`} title="0 contributions"></div>
+                  <div className="w-4 h-4 rounded bg-green-300 transition-transform hover:scale-125 cursor-pointer" title="1-3 contributions"></div>
+                  <div className="w-4 h-4 rounded bg-green-500 transition-transform hover:scale-125 cursor-pointer" title="4-6 contributions"></div>
+                  <div className="w-4 h-4 rounded bg-green-600 transition-transform hover:scale-125 cursor-pointer" title="7-9 contributions"></div>
+                  <div className="w-4 h-4 rounded bg-green-700 transition-transform hover:scale-125 cursor-pointer" title="10+ contributions"></div>
+                </div>
+                <span className={`font-semibold ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>More</span>
+              </div>
+              
+              {/* GitHub Stats */}
+              <div className="mt-6 flex flex-wrap gap-4 justify-center">
+                <a 
+                  href="https://github.com/dayattt111" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
+                    theme === 'dark' 
+                      ? 'bg-gray-700/50 hover:bg-gray-700 text-gray-300' 
+                      : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                  }`}
+                >
+                  <Github className="w-4 h-4" />
+                  <span className="text-sm font-medium">View Profile</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Stats Grid - Animated */}
         <div className={`grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mb-12 sm:mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
           {achievements.map((item, index) => (
@@ -238,64 +323,6 @@ export default function About() {
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* GitHub Contribution Graph */}
-        <div className={`mt-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <div className="text-center mb-8">
-            <div className="flex items-center justify-center gap-2 mb-3">
-              <Github className="w-6 h-6 text-gray-400" />
-              <h3 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-                Contribution Activity
-              </h3>
-            </div>
-            <p className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
-              My coding journey throughout the year
-            </p>
-          </div>
-
-          <div className={`relative p-6 md:p-8 rounded-2xl border overflow-x-auto ${
-            theme === 'dark' 
-              ? 'bg-gray-800/50 backdrop-blur-sm border-gray-700/50' 
-              : 'bg-white border-gray-200'
-          }`}>
-            <div className="min-w-[700px]">
-              <GitHubCalendar 
-                username="dayattt111"
-                blockSize={12}
-                blockMargin={4}
-                fontSize={14}
-                colorScheme={theme === 'dark' ? 'dark' : 'light'}
-                theme={{
-                  light: ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'],
-                  dark: ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353']
-                }}
-              />
-            </div>
-            
-            <div className="mt-6 flex flex-wrap gap-4 justify-center text-xs">
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-sm bg-gray-200 dark:bg-gray-700"></div>
-                <span className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>Less</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-sm bg-green-300"></div>
-                <span className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>Low</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-sm bg-green-500"></div>
-                <span className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>Medium</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-sm bg-green-600"></div>
-                <span className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>High</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-sm bg-green-700"></div>
-                <span className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>More</span>
               </div>
             </div>
           </div>
