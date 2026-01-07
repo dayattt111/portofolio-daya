@@ -1,6 +1,9 @@
 import { Code, Zap, Palette, Award, Users, Rocket, Star, Activity } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, lazy, Suspense } from 'react';
+
+// Lazy load GitHubCalendar untuk performa lebih baik
+const GitHubCalendar = lazy(() => import('react-github-calendar').then(module => ({ default: module.GitHubCalendar })));
 
 export default function About() {
   const { theme } = useTheme();
@@ -33,11 +36,6 @@ export default function About() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  // Generate random activity data for the graph
-  const activityData = Array.from({ length: 52 * 7 }, () => ({
-    level: Math.floor(Math.random() * 5) // 0-4 levels
-  }));
   
   const achievements = [
     { icon: <Award className="w-6 h-6" />, value: '5+', label: 'Years Experience', color: 'from-blue-500 to-cyan-500' },
@@ -97,36 +95,66 @@ export default function About() {
               ? 'bg-gradient-to-br from-gray-800/80 via-gray-800/50 to-gray-900/80 backdrop-blur-xl border-gray-700/50 shadow-2xl' 
               : 'bg-gradient-to-br from-white via-gray-50 to-white border-gray-200 shadow-xl'
           }`}>
-            {/* Activity Grid - Centered */}
+            {/* Activity Grid - Centered with Real GitHub Data */}
             <div className="flex justify-center">
-              <div className="flex gap-1">
-                {Array.from({ length: 52 }).map((_, weekIndex) => (
-                  <div key={weekIndex} className="flex flex-col gap-1">
-                    {Array.from({ length: 7 }).map((_, dayIndex) => {
-                      const level = activityData[weekIndex * 7 + dayIndex]?.level || 0;
-                      // Animasi dari bawah ke atas: dayIndex 6 (bottom) dimulai duluan
-                      const delay = (6 - dayIndex) * 50 + weekIndex * 2; // Bottom to top animation
-                      
-                      const colors = theme === 'dark' 
-                        ? ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353']
-                        : ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'];
-                      
-                      return (
-                        <div
-                          key={dayIndex}
-                          className="w-3 h-3 rounded-sm transition-all duration-300 hover:scale-125 cursor-pointer"
-                          style={{
-                            backgroundColor: graphVisible ? colors[level] : (theme === 'dark' ? '#161b22' : '#ebedf0'),
-                            animation: graphVisible ? `nodePopIn 0.3s ease-out ${delay}ms forwards` : 'none',
-                            transform: 'scale(0)',
-                          }}
-                          title={`Activity level: ${level}`}
-                        />
-                      );
-                    })}
+              <Suspense fallback={
+                <div className="flex justify-center items-center py-20">
+                  <div className="flex flex-col items-center gap-4">
+                    <div className={`w-12 h-12 border-4 border-t-transparent rounded-full animate-spin ${
+                      theme === 'dark' ? 'border-purple-500' : 'border-purple-600'
+                    }`}></div>
+                    <p className={`text-sm font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+                      Loading GitHub activity...
+                    </p>
                   </div>
-                ))}
-              </div>
+                </div>
+              }>
+                <GitHubCalendar 
+                  username="dayattt111"
+                  blockSize={12}
+                  blockMargin={4}
+                  fontSize={14}
+                  colorScheme={theme === 'dark' ? 'dark' : 'light'}
+                  theme={{
+                    light: ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'],
+                    dark: ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353']
+                  }}
+                  showWeekdayLabels
+                  loading={false}
+                  errorMessage="Unable to load contribution data"
+                  renderBlock={(block: any, activity: any) => {
+                    // Get day of week (0-6) from the activity date
+                    const dayOfWeek = new Date(activity.date).getDay();
+                    // Animasi dari bawah ke atas: Sunday (0) at bottom gets animated first
+                    const weekNumber = Math.floor((new Date(activity.date).getTime() - new Date(new Date().getFullYear(), 0, 1).getTime()) / (7 * 24 * 60 * 60 * 1000));
+                    const delay = (6 - dayOfWeek) * 50 + weekNumber * 2;
+                    
+                    return (
+                      <rect
+                        x={block.props.x}
+                        y={block.props.y}
+                        width={block.props.width}
+                        height={block.props.height}
+                        fill={block.props.fill}
+                        rx="2"
+                        className="cursor-pointer transition-all duration-300 hover:opacity-80"
+                        style={{
+                          animation: graphVisible ? `nodePopIn 0.3s ease-out ${delay}ms forwards` : 'none',
+                          transform: 'scale(0)',
+                          transformOrigin: 'center'
+                        }}
+                        data-final-color={block.props.fill}
+                      >
+                        <title>{`${activity.count} contributions on ${new Date(activity.date).toLocaleDateString('en-US', { 
+                          year: 'numeric', 
+                          month: 'long', 
+                          day: 'numeric' 
+                        })}`}</title>
+                      </rect>
+                    );
+                  }}
+                />
+              </Suspense>
             </div>
             
             {/* Legend */}
