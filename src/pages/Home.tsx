@@ -130,25 +130,27 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 z-0" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-20 xl:gap-24 items-center">
             
             {/* Left Column - Profile Image */}
             <div className="flex justify-center lg:justify-end order-1 lg:order-1">
-              <div className="relative group w-full max-w-md">
+              <div className="relative group w-full flex justify-center lg:justify-end">
                 <div className={`absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-3xl blur-3xl opacity-40 group-hover:opacity-60 transition-opacity animate-pulse`} />
-                <div className="relative flex justify-center">
+                <div className="relative flex justify-center max-w-sm lg:max-w-md xl:max-w-lg">
                   <img 
                     src="/images/profile/day.png" 
+                    // src="/images/profile/dayat.png" 
                     alt="Daya Sakti Profile" 
-                    className="relative w-72 h-72 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-500"
+                    className="relative w-full h-auto object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-500"
+                    style={{ aspectRatio: '2048/3070' }}
                   />
                 </div>
               </div>
             </div>
 
             {/* Right Column - Profile Info & About */}
-            <div className="flex flex-col justify-center order-2 lg:order-2 text-center lg:text-left space-y-6">
-              <div className="animate-fade-in-up space-y-6">
+            <div className="flex flex-col justify-center order-2 lg:order-2 text-center lg:text-left space-y-5 lg:space-y-6 lg:pl-4 xl:pl-8">
+              <div className="animate-fade-in-up space-y-5 lg:space-y-6">
                 <div className="flex items-center justify-center lg:justify-start gap-2">
                   <Sparkles className="w-5 h-5 text-yellow-400 animate-pulse" />
                   <span className={`text-sm md:text-base font-semibold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent`}>
