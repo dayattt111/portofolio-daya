@@ -1,6 +1,7 @@
-import { Code, Zap, Palette, Award, Users, Rocket, Star } from 'lucide-react';
+import { Code, Zap, Palette, Award, Users, Rocket, Star, Github } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useEffect, useRef, useState } from 'react';
+import { GitHubCalendar } from 'react-github-calendar';
 
 export default function About() {
   const { theme } = useTheme();
@@ -242,6 +243,63 @@ export default function About() {
           </div>
         </div>
 
+        {/* GitHub Contribution Graph */}
+        <div className={`mt-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className="text-center mb-8">
+            <div className="flex items-center justify-center gap-2 mb-3">
+              <Github className="w-6 h-6 text-gray-400" />
+              <h3 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                Contribution Activity
+              </h3>
+            </div>
+            <p className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+              My coding journey throughout the year
+            </p>
+          </div>
+
+          <div className={`relative p-6 md:p-8 rounded-2xl border overflow-x-auto ${
+            theme === 'dark' 
+              ? 'bg-gray-800/50 backdrop-blur-sm border-gray-700/50' 
+              : 'bg-white border-gray-200'
+          }`}>
+            <div className="min-w-[700px]">
+              <GitHubCalendar 
+                username="dayattt111"
+                blockSize={12}
+                blockMargin={4}
+                fontSize={14}
+                colorScheme={theme === 'dark' ? 'dark' : 'light'}
+                theme={{
+                  light: ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'],
+                  dark: ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353']
+                }}
+              />
+            </div>
+            
+            <div className="mt-6 flex flex-wrap gap-4 justify-center text-xs">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-sm bg-gray-200 dark:bg-gray-700"></div>
+                <span className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>Less</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-sm bg-green-300"></div>
+                <span className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>Low</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-sm bg-green-500"></div>
+                <span className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>Medium</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-sm bg-green-600"></div>
+                <span className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>High</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded-sm bg-green-700"></div>
+                <span className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>More</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
       </div>
     </section>
