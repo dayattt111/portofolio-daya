@@ -138,8 +138,8 @@ export default function Home() {
                 <div className={`absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-3xl blur-3xl opacity-40 group-hover:opacity-60 transition-opacity animate-pulse`} />
                 <div className="relative flex justify-center max-w-sm lg:max-w-md xl:max-w-lg">
                   <img 
-                    src="/images/profile/day.png" 
-                    // src="/images/profile/dayat.png" 
+                    src="/images/profile/pp.png" 
+                    // src="/images/profile/dayat1.jpg" 
                     alt="Daya Sakti Profile" 
                     className="relative w-full h-auto object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-500"
                     style={{ aspectRatio: '2048/3070' }}
