@@ -140,9 +140,11 @@ export default function About() {
                         month: 'long', 
                         day: 'numeric' 
                       })}`}
-                      className="cursor-pointer transition-all duration-300 hover:opacity-80 animate-fadeInScale"
+                      className="cursor-pointer transition-all duration-300 hover:opacity-80"
                       style={{ 
-                        animationDelay: `${animationDelay}ms`,
+                        animation: `fadeInScale 0.6s cubic-bezier(0.4, 0, 0.2, 1) ${animationDelay}ms forwards`,
+                        opacity: 0,
+                        transform: 'scale(0)',
                         transformOrigin: 'center'
                       }}
                     />
