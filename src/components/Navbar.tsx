@@ -8,39 +8,18 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
   const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
-
-      // Calculate scroll progress percentage with better accuracy
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight;
-      const scrollTop = window.scrollY || window.pageYOffset;
-      const scrollableHeight = documentHeight - windowHeight;
-      
-      // Ensure we reach 100% when at bottom (with small threshold for browser differences)
-      const rawProgress = scrollableHeight > 0 ? (scrollTop / scrollableHeight) * 100 : 0;
-      const progress = Math.round(Math.min(100, Math.max(0, rawProgress)));
-      
-      // Check if we're at the very bottom
-      const isAtBottom = (windowHeight + scrollTop) >= documentHeight - 5;
-      setScrollProgress(isAtBottom ? 100 : progress);
-    };
-
-    const handleResize = () => {
-      handleScroll(); // Recalculate on resize
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleResize, { passive: true });
     handleScroll(); // Initial call
     
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
@@ -257,27 +236,6 @@ export default function Navbar() {
               Let's Talk
             </div>
           </a>
-        </div>
-      </div>
-
-      {/* Progress Bar at Bottom of Navbar */}
-      <div className={`absolute bottom-0 left-0 right-0 h-1 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-200'}`}>
-        <div 
-          className="h-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 relative transition-all duration-300 ease-out"
-          style={{ 
-            width: `${scrollProgress}%`,
-            boxShadow: '0 0 20px rgba(59, 130, 246, 0.8)'
-          }}
-        >
-          {/* Shimmer effect */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent animate-shimmer"></div>
-          
-          {/* Percentage Badge */}
-          {scrollProgress > 1 && (
-            <div className="absolute -top-8 right-2 bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
-              {scrollProgress}%
-            </div>
-          )}
         </div>
       </div>
     </nav>
