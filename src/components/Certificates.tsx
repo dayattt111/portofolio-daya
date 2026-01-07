@@ -99,7 +99,6 @@ export default function Certificates() {
 
   const currentCert = certificates[currentIndex];
 
-  // Scroll animation observer
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -111,7 +110,6 @@ export default function Certificates() {
     return () => observer.disconnect();
   }, []);
 
-  // Auto play
   useEffect(() => {
     if (!isAutoPlaying) return;
     const interval = setInterval(() => handleNext(), 5000);
