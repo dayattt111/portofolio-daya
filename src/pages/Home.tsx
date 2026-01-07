@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ChevronDown, Sparkles, Code2, Palette, MessageCircle, Award, Users, Rocket } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { Link } from 'react-router-dom';
+import Footer from '../components/Footer';
 
 export default function Home() {
   const { theme } = useTheme();
@@ -123,99 +124,100 @@ export default function Home() {
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
       {/* Hero Section - 2 Columns Layout */}
-      <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+      <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 pb-16">
         <canvas ref={canvasRef} className="absolute inset-0 z-0" />
         
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 z-0" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             
             {/* Left Column - Profile Image */}
-            <div className="flex justify-center md:justify-end order-1 md:order-1">
-              <div className="relative group">
-                <div className={`absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-3xl blur-2xl opacity-50 group-hover:opacity-75 transition-opacity animate-pulse`} />
-                <div className="relative">
+            <div className="flex justify-center lg:justify-end order-1 lg:order-1">
+              <div className="relative group w-full max-w-md">
+                <div className={`absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-3xl blur-3xl opacity-40 group-hover:opacity-60 transition-opacity animate-pulse`} />
+                <div className="relative flex justify-center">
                   <img 
                     src="/images/profile/day.png" 
                     alt="Daya Sakti Profile" 
-                    className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-300"
+                    className="relative w-72 h-72 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
               </div>
             </div>
 
             {/* Right Column - Profile Info & About */}
-            <div className="flex flex-col justify-center order-2 md:order-2 text-center md:text-left">
-              <div className="animate-fade-in-up">
-                <div className="flex items-center justify-center md:justify-start gap-2 mb-4">
-                  <Sparkles className="w-6 h-6 text-yellow-400 animate-pulse" />
-                  <span className={`text-lg font-semibold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent`}>
+            <div className="flex flex-col justify-center order-2 lg:order-2 text-center lg:text-left space-y-6">
+              <div className="animate-fade-in-up space-y-6">
+                <div className="flex items-center justify-center lg:justify-start gap-2">
+                  <Sparkles className="w-5 h-5 text-yellow-400 animate-pulse" />
+                  <span className={`text-sm md:text-base font-semibold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent`}>
                     Welcome to my portfolio
                   </span>
                 </div>
 
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-gradient">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-gradient leading-tight">
                   Hi, I'm Daya Sakti
                 </h1>
 
-                <div className="flex items-center justify-center md:justify-start gap-3 mb-6 flex-wrap">
-                  <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/20 backdrop-blur-sm border border-blue-500/30">
-                    <Code2 className="w-5 h-5 text-blue-400" />
-                    <span className="font-medium text-sm md:text-base">Full Stack Developer</span>
+                <div className="flex items-center justify-center lg:justify-start gap-3 flex-wrap">
+                  <div className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-blue-500/20 backdrop-blur-sm border border-blue-500/30">
+                    <Code2 className="w-4 h-4 md:w-5 md:h-5 text-blue-400" />
+                    <span className="font-medium text-sm">Full Stack Developer</span>
                   </div>
-                  <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/20 backdrop-blur-sm border border-purple-500/30">
-                    <Palette className="w-5 h-5 text-purple-400" />
-                    <span className="font-medium text-sm md:text-base">UI/UX Enthusiast</span>
+                  <div className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-purple-500/20 backdrop-blur-sm border border-purple-500/30">
+                    <Palette className="w-4 h-4 md:w-5 md:h-5 text-purple-400" />
+                    <span className="font-medium text-sm">UI/UX Enthusiast</span>
                   </div>
                 </div>
 
-                <p className={`text-base md:text-lg lg:text-xl mb-8 leading-relaxed ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+                <p className={`text-base md:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
                   Passionate developer crafting modern web experiences with clean code and beautiful design. 
                   Specializing in React, TypeScript, and full-stack development.
                 </p>
 
                 {/* Stats */}
-                <div className="grid grid-cols-2 gap-4 mb-8">
+                <div className="grid grid-cols-2 gap-3 md:gap-4 max-w-xl mx-auto lg:mx-0">
                   {[
-                    { icon: <Award className="w-5 h-5" />, value: '5+', label: 'Years Exp' },
-                    { icon: <Users className="w-5 h-5" />, value: '50+', label: 'Clients' },
-                    { icon: <Rocket className="w-5 h-5" />, value: '100+', label: 'Projects' },
-                    { icon: <Sparkles className="w-5 h-5" />, value: '15+', label: 'Certificates' }
+                    { icon: <Award className="w-4 h-4 md:w-5 md:h-5" />, value: '5+', label: 'Years Exp', color: 'from-blue-500 to-cyan-500' },
+                    { icon: <Users className="w-4 h-4 md:w-5 md:h-5" />, value: '50+', label: 'Clients', color: 'from-purple-500 to-pink-500' },
+                    { icon: <Rocket className="w-4 h-4 md:w-5 md:h-5" />, value: '100+', label: 'Projects', color: 'from-orange-500 to-red-500' },
+                    { icon: <Sparkles className="w-4 h-4 md:w-5 md:h-5" />, value: '15+', label: 'Certificates', color: 'from-yellow-500 to-orange-500' }
                   ].map((stat, idx) => (
                     <div
                       key={idx}
-                      className={`p-4 rounded-xl backdrop-blur-sm border transition-all duration-300 hover:scale-105 ${
+                      className={`p-4 md:p-5 rounded-xl backdrop-blur-sm border transition-all duration-300 hover:scale-105 ${
                         theme === 'dark' 
-                          ? 'bg-gray-800/50 border-gray-700/50' 
-                          : 'bg-white/50 border-gray-200'
+                          ? 'bg-gray-800/50 border-gray-700/50 hover:bg-gray-800/70' 
+                          : 'bg-white/80 border-gray-200 hover:bg-white'
                       }`}
                     >
-                      <div className="flex items-center gap-2 mb-1 text-blue-400">
+                      <div className={`flex items-center gap-2 mb-2 text-transparent bg-gradient-to-r ${stat.color} bg-clip-text`}>
                         {stat.icon}
                       </div>
-                      <div className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                      <div className={`text-2xl md:text-3xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent`}>
                         {stat.value}
                       </div>
-                      <div className={`text-xs ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+                      <div className={`text-xs md:text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
                         {stat.label}
                       </div>
                     </div>
                   ))}
                 </div>
 
-                <div className="flex gap-4 justify-center md:justify-start flex-wrap">
+                {/* Buttons - 2 columns on mobile */}
+                <div className="grid grid-cols-2 lg:flex gap-3 md:gap-4 justify-center lg:justify-start max-w-xl mx-auto lg:mx-0">
                   <Link 
                     to="/projects"
-                    className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold rounded-full hover:shadow-2xl hover:scale-105 transition-all duration-300"
+                    className="col-span-2 lg:col-span-1 px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold rounded-full hover:shadow-2xl hover:scale-105 transition-all duration-300 text-center text-sm md:text-base"
                   >
                     View My Work
                   </Link>
                   <a 
                     href="mailto:dayagani17@gmail.com"
-                    className={`px-8 py-4 border-2 ${theme === 'dark' ? 'border-white/30 hover:bg-white/10' : 'border-gray-900/30 hover:bg-gray-900/10'} font-semibold rounded-full hover:scale-105 transition-all duration-300 flex items-center gap-2`}
+                    className={`col-span-2 lg:col-span-1 px-6 md:px-8 py-3 md:py-4 border-2 ${theme === 'dark' ? 'border-white/30 hover:bg-white/10' : 'border-gray-900/30 hover:bg-gray-900/10'} font-semibold rounded-full hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 text-sm md:text-base`}
                   >
-                    <MessageCircle className="w-5 h-5" />
+                    <MessageCircle className="w-4 h-4 md:w-5 md:h-5" />
                     Contact Me
                   </a>
                 </div>
@@ -225,7 +227,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hidden md:block">
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hidden lg:block">
           <ChevronDown className="w-8 h-8 text-gray-400" />
         </div>
       </section>
@@ -327,6 +329,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }
