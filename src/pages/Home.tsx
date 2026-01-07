@@ -141,7 +141,7 @@ export default function Home() {
                     src="/images/profile/pp.png" 
                     // src="/images/profile/dayat1.jpg" 
                     alt="Daya Sakti Profile" 
-                    className="relative w-full h-auto object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-500"
+                    className="relative w-full max-w-full h-auto object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-300 mx-auto block"
                     style={{ aspectRatio: '2048/3070' }}
                   />
                 </div>
@@ -149,17 +149,17 @@ export default function Home() {
             </div>
 
             {/* Right Column - Profile Info & About */}
-            <div className="flex flex-col justify-center order-2 lg:order-2 text-center lg:text-left space-y-5 lg:space-y-6 lg:pl-4 xl:pl-8">
+            <div className="mt-0 md:mt-5 lg:mt-8 flex flex-col justify-center order-2 lg:order-2 text-center lg:text-left space-y-5 lg:space-y-6 lg:pl-4 xl:pl-8">
               <div className="animate-fade-in-up space-y-5 lg:space-y-6">
-                <div className="flex items-center justify-center lg:justify-start gap-2">
+                {/* <div className="flex items-center justify-center lg:justify-start gap-2">
                   <Sparkles className="w-5 h-5 text-yellow-400 animate-pulse" />
                   <span className={`text-sm md:text-base font-semibold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent`}>
                     Welcome to my portfolio
                   </span>
-                </div>
+                </div> */}
 
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-gradient leading-tight">
-                  Hi, I'm Daya Sakti
+                  Hi, I'm Muhammad Amin Hidayat
                 </h1>
 
                 <div className="flex items-center justify-center lg:justify-start gap-3 flex-wrap">
