@@ -152,7 +152,7 @@ export default function Home() {
             <div className="flex flex-col justify-center order-2 lg:order-2 text-center lg:text-left space-y-3">
               <div className="animate-fade-in-up space-y-3">
                 <div className="space-y-1"> {/* Container untuk mengatur jarak antar baris */}
-                    <span className="block text-lg md:text-xl font-medium text-gray-400 ">
+                    <span className="block text-lg md:text-xl font-medium text-gray-600 dark:text-gray-400 transition-colors duration-300">
                         Hi, I'm
                     </span>
                     <h1 className="text-2xl sm:text-3xl lg:text-3xl xl:text-4xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-gradient leading-tight">
