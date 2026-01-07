@@ -1,4 +1,4 @@
-import { Code, Zap, Palette, Award, Users, Rocket, Star, Github, GitCommit, TrendingUp, Calendar, Flame } from 'lucide-react';
+import { Code, Zap, Palette, Award, Users, Rocket, Star, Github } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useEffect, useRef, useState } from 'react';
 import { GitHubCalendar } from 'react-github-calendar';
@@ -163,64 +163,48 @@ export default function About() {
           }`}>
                           {/* GitHub Statistics Cards */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                <div className={`p-4 rounded-xl border transition-all duration-300 hover:scale-105 ${
+                <div className={`p-4 rounded-lg border transition-all duration-300 ${
                   theme === 'dark'
                     ? 'bg-gray-800/50 border-gray-700/50'
                     : 'bg-white border-gray-200'
                 }`}>
-                  <div className="flex items-center gap-2 mb-2">
-                    <GitCommit className="w-5 h-5 text-blue-500" />
-                    <span className={`text-xs font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Total</span>
-                  </div>
-                  <div className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent">
+                  <div className={`text-xs font-medium mb-2 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Total Contributions</div>
+                  <div className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
                     {animatedStats.totalContributions.toLocaleString()}
                   </div>
-                  <div className={`text-xs ${theme === 'dark' ? 'text-gray-500' : 'text-gray-500'}`}>Contributions</div>
                 </div>
 
-                <div className={`p-4 rounded-xl border transition-all duration-300 hover:scale-105 ${
+                <div className={`p-4 rounded-lg border transition-all duration-300 ${
                   theme === 'dark'
                     ? 'bg-gray-800/50 border-gray-700/50'
                     : 'bg-white border-gray-200'
                 }`}>
-                  <div className="flex items-center gap-2 mb-2">
-                    <TrendingUp className="w-5 h-5 text-green-500" />
-                    <span className={`text-xs font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Average</span>
-                  </div>
-                  <div className="text-2xl font-bold bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent">
+                  <div className={`text-xs font-medium mb-2 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Average Per Day</div>
+                  <div className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
                     {animatedStats.averagePerDay.toFixed(1)}
                   </div>
-                  <div className={`text-xs ${theme === 'dark' ? 'text-gray-500' : 'text-gray-500'}`}>Per Day</div>
                 </div>
 
-                <div className={`p-4 rounded-xl border transition-all duration-300 hover:scale-105 ${
+                <div className={`p-4 rounded-lg border transition-all duration-300 ${
                   theme === 'dark'
                     ? 'bg-gray-800/50 border-gray-700/50'
                     : 'bg-white border-gray-200'
                 }`}>
-                  <div className="flex items-center gap-2 mb-2">
-                    <Flame className="w-5 h-5 text-orange-500" />
-                    <span className={`text-xs font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Current</span>
+                  <div className={`text-xs font-medium mb-2 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Current Streak</div>
+                  <div className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                    {animatedStats.currentStreak} days
                   </div>
-                  <div className="text-2xl font-bold bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
-                    {animatedStats.currentStreak}
-                  </div>
-                  <div className={`text-xs ${theme === 'dark' ? 'text-gray-500' : 'text-gray-500'}`}>Day Streak</div>
                 </div>
 
-                <div className={`p-4 rounded-xl border transition-all duration-300 hover:scale-105 ${
+                <div className={`p-4 rounded-lg border transition-all duration-300 ${
                   theme === 'dark'
                     ? 'bg-gray-800/50 border-gray-700/50'
                     : 'bg-white border-gray-200'
                 }`}>
-                  <div className="flex items-center gap-2 mb-2">
-                    <Calendar className="w-5 h-5 text-purple-500" />
-                    <span className={`text-xs font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Longest</span>
+                  <div className={`text-xs font-medium mb-2 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Longest Streak</div>
+                  <div className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                    {animatedStats.longestStreak} days
                   </div>
-                  <div className="text-2xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
-                    {animatedStats.longestStreak}
-                  </div>
-                  <div className={`text-xs ${theme === 'dark' ? 'text-gray-500' : 'text-gray-500'}`}>Day Streak</div>
                 </div>
               </div>
             <div className="relative flex justify-center items-center">
