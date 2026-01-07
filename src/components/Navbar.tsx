@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, Sun, Moon, Sparkles } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
+import { Link, useLocation } from 'react-router-dom';
 
 export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
   const [isScrolled, setIsScrolled] = useState(false);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,20 +28,6 @@ export default function Navbar() {
       // Check if we're at the very bottom
       const isAtBottom = (windowHeight + scrollTop) >= documentHeight - 5;
       setScrollProgress(isAtBottom ? 100 : progress);
-
-      // Detect active section with better viewport detection
-      const sections = ['home', 'about', 'projects', 'articles', 'certificates', 'skills', 'contact'];
-      const scrollPosition = window.scrollY + window.innerHeight / 2;
-
-      sections.forEach(sectionId => {
-        const element = document.getElementById(sectionId);
-        if (element) {
-          const { offsetTop, offsetHeight } = element;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(sectionId);
-          }
-        }
-      });
     };
 
     const handleResize = () => {
@@ -57,30 +44,16 @@ export default function Navbar() {
     };
   }, []);
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      const headerOffset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-      setActiveSection(sectionId);
-      setIsOpen(false);
-    }
-  };
-
   const navItems = [
-    { id: 'home', label: 'Home' },
-    { id: 'about', label: 'About' },
-    { id: 'projects', label: 'Projects' },
-    { id: 'articles', label: 'Articles' },
-    { id: 'skills', label: 'Skills' },
-    { id: 'contact', label: 'Contact' },
+    { path: '/', label: 'Home' },
+    { path: '/about', label: 'About' },
+    { path: '/projects', label: 'Projects' },
+    { path: '/articles', label: 'Articles' },
+    { path: '/certificates', label: 'Certificates' },
+    { path: '/skills', label: 'Skills' },
   ];
+
+  const isActive = (path: string) => location.pathname === path;
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
@@ -92,9 +65,9 @@ export default function Navbar() {
     }`}>
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 flex items-center justify-between">
         {/* Logo with animated glow */}
-        <div 
-          className="flex items-center gap-3 flex-shrink-0 cursor-pointer group relative" 
-          onClick={() => scrollToSection('home')}
+        <Link 
+          to="/"
+          className="flex items-center gap-3 flex-shrink-0 cursor-pointer group relative"
         >
           <div className="relative">
             <div className={`absolute inset-0 rounded-lg blur-lg transition-opacity duration-300 ${
@@ -121,7 +94,7 @@ export default function Navbar() {
               </span>
             </div>
           </div>
-        </div>
+        </Link>
 
         {/* Desktop Navigation with modern design */}
         <div className="hidden lg:flex items-center gap-2 bg-opacity-50 backdrop-blur-sm rounded-full px-2 py-2" style={{
@@ -131,21 +104,22 @@ export default function Navbar() {
           border: `1px solid ${theme === 'dark' ? 'rgba(75, 85, 99, 0.3)' : 'rgba(209, 213, 219, 0.3)'}`
         }}>
           {navItems.map((item, index) => (
-            <button
-              key={item.id}
-              onClick={() => scrollToSection(item.id)}
-              onMouseEnter={() => setHoveredItem(item.id)}
+            <Link
+              key={item.path}
+              to={item.path}
+              onMouseEnter={() => setHoveredItem(item.path)}
               onMouseLeave={() => setHoveredItem(null)}
+              onClick={() => setIsOpen(false)}
               className="relative px-5 py-2.5 rounded-full font-medium text-sm transition-all duration-300 group"
               style={{
-                color: activeSection === item.id 
+                color: isActive(item.path)
                   ? theme === 'dark' ? '#60a5fa' : '#2563eb'
                   : theme === 'dark' ? '#d1d5db' : '#4b5563',
                 transitionDelay: `${index * 30}ms`
               }}
             >
               {/* Active indicator */}
-              {activeSection === item.id && (
+              {isActive(item.path) && (
                 <span 
                   className="absolute inset-0 rounded-full transition-all duration-300"
                   style={{
@@ -160,7 +134,7 @@ export default function Navbar() {
               )}
               
               {/* Hover indicator */}
-              {hoveredItem === item.id && activeSection !== item.id && (
+              {hoveredItem === item.path && !isActive(item.path) && (
                 <span 
                   className="absolute inset-0 rounded-full transition-all duration-300"
                   style={{
@@ -173,11 +147,11 @@ export default function Navbar() {
               
               <span className="relative z-10 flex items-center gap-2">
                 {item.label}
-                {activeSection === item.id && (
+                {isActive(item.path) && (
                   <span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 animate-pulse"></span>
                 )}
               </span>
-            </button>
+            </Link>
           ))}
         </div>
 
@@ -242,11 +216,12 @@ export default function Navbar() {
       >
         <div className="flex flex-col gap-2 p-4">
           {navItems.map((item, index) => (
-            <button
-              key={item.id}
-              onClick={() => scrollToSection(item.id)}
+            <Link
+              key={item.path}
+              to={item.path}
+              onClick={() => setIsOpen(false)}
               className={`relative text-left px-5 py-3.5 rounded-xl transition-all duration-300 text-sm font-medium overflow-hidden group ${
-                activeSection === item.id
+                isActive(item.path)
                   ? theme === 'dark' 
                     ? 'bg-gradient-to-r from-blue-600/20 to-purple-600/20 text-blue-400' 
                     : 'bg-gradient-to-r from-blue-500/10 to-purple-500/10 text-blue-600'
@@ -257,16 +232,16 @@ export default function Navbar() {
                 animation: isOpen ? `slideInLeft 0.5s ease-out ${index * 0.05}s both` : 'none'
               }}
             >
-              {activeSection === item.id && (
+              {isActive(item.path) && (
                 <span className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-500 to-purple-500 rounded-r-full"></span>
               )}
               <span className="flex items-center justify-between">
                 {item.label}
-                {activeSection === item.id && (
+                {isActive(item.path) && (
                   <span className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 animate-pulse"></span>
                 )}
               </span>
-            </button>
+            </Link>
           ))}
           <a
             href="https://wa.me/6282197855715?text=Halo%2C%20saya%20tertarik%20dengan%20portfolio%20mu!"
