@@ -2,6 +2,8 @@ import { Code, Zap, Palette, Award, Users, Rocket, Star, Github } from 'lucide-r
 import { useTheme } from '../contexts/ThemeContext';
 import { useEffect, useRef, useState } from 'react';
 import { GitHubCalendar } from 'react-github-calendar';
+import { Tooltip } from 'react-tooltip';
+import 'react-tooltip/dist/react-tooltip.css';
 
 export default function About() {
   const { theme } = useTheme();
@@ -108,15 +110,34 @@ export default function About() {
                   totalCount: '{{count}} contributions in the last year',
                 }}
                 showWeekdayLabels
-                hideColorLegend
-                hideMonthLabels={false}
-                hideTotalCount={false}
+                showMonthLabels={true}
                 loading={false}
                 errorMessage="Unable to load contribution data"
-                transformData={(contributions) => {
-                  // Data akan menampilkan tooltip asli dari GitHub saat hover
-                  return contributions;
-                }}
+                renderBlock={(block, activity) => (
+                  <rect
+                    x={block.props.x}
+                    y={block.props.y}
+                    width={block.props.width}
+                    height={block.props.height}
+                    fill={block.props.fill}
+                    data-tooltip-id="github-tooltip"
+                    data-tooltip-content={`${activity.count} contributions on ${new Date(activity.date).toLocaleDateString('en-US', { 
+                      year: 'numeric', 
+                      month: 'long', 
+                      day: 'numeric' 
+                    })}`}
+                    className="cursor-pointer transition-opacity hover:opacity-80"
+                  />
+                )}
+              />
+              <Tooltip 
+                id="github-tooltip" 
+                place="top"
+                className={`z-50 !px-3 !py-2 !rounded-lg ${
+                  theme === 'dark' 
+                    ? '!bg-gray-800 !text-white border !border-gray-700' 
+                    : '!bg-white !text-gray-900 border !border-gray-200 shadow-xl'
+                }`}
               />
             </div>
             
