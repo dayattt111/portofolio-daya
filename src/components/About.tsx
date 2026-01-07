@@ -53,10 +53,10 @@ export default function About() {
 
   // Animate statistics counters
   useEffect(() => {
-    if (!isVisible) return;
+    if (!isVisible || githubStats.totalContributions === 0) return;
 
-    const duration = 2000; // 2 seconds
-    const steps = 60;
+    const duration = 1500; // 1.5 seconds - faster
+    const steps = 50;
     const interval = duration / steps;
 
     let currentStep = 0;
@@ -207,7 +207,8 @@ export default function About() {
                   </div>
                 </div>
               </div>
-            <div className="relative flex justify-center items-center">
+
+              <div className="relative flex justify-center items-center">
               <GitHubCalendar 
                 username="dayattt111"
                 blockSize={14}
@@ -266,7 +267,7 @@ export default function About() {
                 }}
                 renderBlock={(block, activity) => {
                   // Random delay for each node (tech-like random filling effect)
-                  const randomDelay = Math.random() * 2000; // 0-2 seconds random
+                  const randomDelay = Math.random() * 800; // 0-800ms - faster
                   
                   return (
                     <rect
@@ -283,7 +284,7 @@ export default function About() {
                       })}`}
                       className="cursor-pointer transition-all duration-300 hover:opacity-80 github-node"
                       style={{ 
-                        animation: `fillNode 0.5s ease-out ${randomDelay}ms forwards`,
+                        animation: `fillNode 0.3s ease-out ${randomDelay}ms forwards`,
                         fill: theme === 'dark' ? '#161b22' : '#ebedf0',
                         transformOrigin: 'center'
                       }}
