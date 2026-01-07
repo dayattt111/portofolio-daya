@@ -124,33 +124,33 @@ export default function Home() {
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
       {/* Hero Section - 2 Columns Layout */}
-      <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 pb-16">
+      <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden py-20 lg:py-24">
         <canvas ref={canvasRef} className="absolute inset-0 z-0" />
         
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 z-0" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-20 xl:gap-24 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 xl:gap-12 items-start lg:items-center">
             
             {/* Left Column - Profile Image */}
             <div className="flex justify-center lg:justify-end order-1 lg:order-1">
-              <div className="relative group w-full flex justify-center lg:justify-end">
+              <div className="relative group w-full flex justify-center lg:justify-end max-w-[280px] sm:max-w-[320px] lg:max-w-[350px]">
                 <div className={`absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-3xl blur-3xl opacity-40 group-hover:opacity-60 transition-opacity animate-pulse`} />
-                <div className="relative flex justify-center max-w-sm lg:max-w-md xl:max-w-lg">
+                <div className="relative flex justify-center w-full">
                   <img 
                     src="/images/profile/pp.png" 
                     // src="/images/profile/dayat1.jpg" 
                     alt="Daya Sakti Profile" 
-                    className="relative w-full max-w-full h-auto object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-300 mx-auto block"
-                    style={{ aspectRatio: '2048/3070' }}
+                    className="relative w-full h-auto object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-300"
+                    style={{ aspectRatio: '2048/3070', maxHeight: '450px' }}
                   />
                 </div>
               </div>
             </div>
 
             {/* Right Column - Profile Info & About */}
-            <div className="mt-0 md:mt-5 lg:mt-8 flex flex-col justify-center order-2 lg:order-2 text-center lg:text-left space-y-5 lg:space-y-6 lg:pl-4 xl:pl-8">
-              <div className="animate-fade-in-up space-y-5 lg:space-y-6">
+            <div className="flex flex-col justify-center order-2 lg:order-2 text-center lg:text-left space-y-4">
+              <div className="animate-fade-in-up space-y-4">
                 {/* <div className="flex items-center justify-center lg:justify-start gap-2">
                   <Sparkles className="w-5 h-5 text-yellow-400 animate-pulse" />
                   <span className={`text-sm md:text-base font-semibold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent`}>
@@ -158,7 +158,7 @@ export default function Home() {
                   </span>
                 </div> */}
 
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-gradient leading-tight">
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-gradient leading-tight">
                   Hi, I'm Muhammad Amin Hidayat
                 </h1>
 
@@ -173,34 +173,34 @@ export default function Home() {
                   </div>
                 </div>
 
-                <p className={`text-base md:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+                <p className={`text-sm md:text-base lg:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
                   Passionate developer crafting modern web experiences with clean code and beautiful design. 
                   Specializing in React, TypeScript, and full-stack development.
                 </p>
 
                 {/* Stats */}
-                <div className="grid grid-cols-2 gap-3 md:gap-4 max-w-xl mx-auto lg:mx-0">
+                <div className="grid grid-cols-2 gap-3 max-w-xl mx-auto lg:mx-0">
                   {[
-                    { icon: <Award className="w-4 h-4 md:w-5 md:h-5" />, value: '5+', label: 'Years Exp', color: 'from-blue-500 to-cyan-500' },
-                    { icon: <Users className="w-4 h-4 md:w-5 md:h-5" />, value: '50+', label: 'Clients', color: 'from-purple-500 to-pink-500' },
-                    { icon: <Rocket className="w-4 h-4 md:w-5 md:h-5" />, value: '100+', label: 'Projects', color: 'from-orange-500 to-red-500' },
-                    { icon: <Sparkles className="w-4 h-4 md:w-5 md:h-5" />, value: '15+', label: 'Certificates', color: 'from-yellow-500 to-orange-500' }
+                    { icon: <Award className="w-4 h-4" />, value: '5+', label: 'Years Exp', color: 'from-blue-500 to-cyan-500' },
+                    { icon: <Users className="w-4 h-4" />, value: '50+', label: 'Clients', color: 'from-purple-500 to-pink-500' },
+                    { icon: <Rocket className="w-4 h-4" />, value: '100+', label: 'Projects', color: 'from-orange-500 to-red-500' },
+                    { icon: <Sparkles className="w-4 h-4" />, value: '15+', label: 'Certificates', color: 'from-yellow-500 to-orange-500' }
                   ].map((stat, idx) => (
                     <div
                       key={idx}
-                      className={`p-4 md:p-5 rounded-xl backdrop-blur-sm border transition-all duration-300 hover:scale-105 ${
+                      className={`p-3 md:p-4 rounded-xl backdrop-blur-sm border transition-all duration-300 hover:scale-105 ${
                         theme === 'dark' 
                           ? 'bg-gray-800/50 border-gray-700/50 hover:bg-gray-800/70' 
                           : 'bg-white/80 border-gray-200 hover:bg-white'
                       }`}
                     >
-                      <div className={`flex items-center gap-2 mb-2 text-transparent bg-gradient-to-r ${stat.color} bg-clip-text`}>
+                      <div className={`flex items-center gap-2 mb-1.5 text-transparent bg-gradient-to-r ${stat.color} bg-clip-text`}>
                         {stat.icon}
                       </div>
-                      <div className={`text-2xl md:text-3xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent`}>
+                      <div className={`text-xl md:text-2xl lg:text-3xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent`}>
                         {stat.value}
                       </div>
-                      <div className={`text-xs md:text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+                      <div className={`text-xs ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
                         {stat.label}
                       </div>
                     </div>
