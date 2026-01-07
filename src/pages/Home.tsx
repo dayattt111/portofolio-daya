@@ -1,14 +1,38 @@
 import { useEffect, useRef, useState } from 'react';
-import { ChevronDown, Sparkles, Code2, Palette, MessageCircle, Award, Users, Rocket } from 'lucide-react';
+import { ChevronDown, Sparkles, Code2, Palette, MessageCircle, Award, Users, Rocket, Github } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
+import { GitHubCalendar } from 'react-github-calendar';
+import { Tooltip } from 'react-tooltip';
+import 'react-tooltip/dist/react-tooltip.css';
 
 export default function Home() {
   const { theme } = useTheme();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
+
+  // Apply color animation to GitHub nodes
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const nodes = document.querySelectorAll('.github-node-home');
+      nodes.forEach((node) => {
+        const rect = node as SVGRectElement;
+        const finalColor = rect.getAttribute('data-final-color');
+        if (finalColor) {
+          const animationDelay = rect.style.animationDelay;
+          const delay = parseFloat(animationDelay) || 0;
+          
+          setTimeout(() => {
+            rect.style.fill = finalColor;
+          }, delay);
+        }
+      });
+    }, 100);
+    
+    return () => clearTimeout(timer);
+  }, [isVisible]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -241,6 +265,101 @@ export default function Home() {
             <p className={`text-base md:text-lg ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} max-w-2xl mx-auto`}>
               A glimpse into my journey and achievements
             </p>
+          </div>
+
+          {/* GitHub Contribution Graph */}
+          <div className={`mb-12 transition-all duration-700 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+            <div className="text-center mb-6">
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <div className={`p-3 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 shadow-lg ${theme === 'dark' ? 'shadow-purple-500/20' : 'shadow-purple-500/30'}`}>
+                  <Github className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
+                  GitHub Activity
+                </h3>
+              </div>
+              <p className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+                Real-time contribution graph from <a href="https://github.com/dayattt111" target="_blank" rel="noopener noreferrer" className="font-semibold text-blue-500 hover:text-blue-600 transition-colors">@dayattt111</a>
+              </p>
+            </div>
+
+            <div className={`relative p-6 md:p-8 rounded-2xl border-2 overflow-hidden transition-all duration-500 ${
+              theme === 'dark' 
+                ? 'bg-gradient-to-br from-gray-800/80 via-gray-800/50 to-gray-900/80 backdrop-blur-xl border-gray-700/50 shadow-2xl' 
+                : 'bg-gradient-to-br from-white via-gray-50 to-white border-gray-200 shadow-xl'
+            }`}>
+              <div className="relative flex justify-center items-center">
+                <GitHubCalendar 
+                  username="dayattt111"
+                  blockSize={14}
+                  blockMargin={5}
+                  fontSize={14}
+                  colorScheme={theme === 'dark' ? 'dark' : 'light'}
+                  theme={{
+                    light: ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'],
+                    dark: ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353']
+                  }}
+                  labels={{
+                    totalCount: '{{count}} contributions in the last year',
+                  }}
+                  showWeekdayLabels
+                  showMonthLabels={true}
+                  loading={false}
+                  errorMessage="Unable to load contribution data"
+                  renderBlock={(block, activity) => {
+                    // Random delay for each node (tech-like random filling effect)
+                    const randomDelay = Math.random() * 2000; // 0-2 seconds random
+                    
+                    return (
+                      <rect
+                        x={block.props.x}
+                        y={block.props.y}
+                        width={block.props.width}
+                        height={block.props.height}
+                        fill={block.props.fill}
+                        data-tooltip-id="github-tooltip-home"
+                        data-tooltip-content={`${activity.count} contributions on ${new Date(activity.date).toLocaleDateString('en-US', { 
+                          year: 'numeric', 
+                          month: 'long', 
+                          day: 'numeric' 
+                        })}`}
+                        className="cursor-pointer transition-all duration-300 hover:opacity-80 github-node-home"
+                        style={{ 
+                          animation: `fillNode 0.5s ease-out ${randomDelay}ms forwards`,
+                          fill: theme === 'dark' ? '#161b22' : '#ebedf0',
+                          transformOrigin: 'center'
+                        }}
+                        data-final-color={block.props.fill}
+                      />
+                    );
+                  }}
+                />
+                <Tooltip 
+                  id="github-tooltip-home" 
+                  place="top"
+                  className={`z-50 !px-3 !py-2 !rounded-lg ${
+                    theme === 'dark' 
+                      ? '!bg-gray-800 !text-white border !border-gray-700' 
+                      : '!bg-white !text-gray-900 border !border-gray-200 shadow-xl'
+                  }`}
+                />
+              </div>
+              
+              {/* Enhanced Legend */}
+              <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+                <div className="flex flex-wrap gap-3 justify-center items-center text-xs sm:text-sm">
+                  <span className={`font-semibold ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>Less</span>
+                  <div className="flex items-center gap-2">
+                    <div className={`w-4 h-4 rounded transition-transform hover:scale-125 cursor-pointer ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-200'}`} title="0 contributions"></div>
+                    <div className="w-4 h-4 rounded bg-green-300 transition-transform hover:scale-125 cursor-pointer" title="1-3 contributions"></div>
+                    <div className="w-4 h-4 rounded bg-green-500 transition-transform hover:scale-125 cursor-pointer" title="4-6 contributions"></div>
+                    <div className="w-4 h-4 rounded bg-green-600 transition-transform hover:scale-125 cursor-pointer" title="7-9 contributions"></div>
+                    <div className="w-4 h-4 rounded bg-green-700 transition-transform hover:scale-125 cursor-pointer" title="10+ contributions"></div>
+                  </div>
+                  <span className={`font-semibold ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>More</span>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="text-center">
