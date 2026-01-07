@@ -112,9 +112,20 @@ export default function About() {
                 loading={false}
                 errorMessage="Unable to load contribution data"
                 renderBlock={(block, activity) => {
-                  // Calculate animation delay based on the date
-                  const dayIndex = new Date(activity.date).getTime();
-                  const animationDelay = (dayIndex % 365) * 5; // Stagger animation
+                  // Calculate position from center for outside-in animation
+                  const date = new Date(activity.date);
+                  const yearStart = new Date(date.getFullYear(), 0, 1);
+                  const dayOfYear = Math.floor((date.getTime() - yearStart.getTime()) / (1000 * 60 * 60 * 24));
+                  
+                  // Calculate distance from center (middle of the year ~182 days)
+                  const centerDay = 182;
+                  const distanceFromCenter = Math.abs(dayOfYear - centerDay);
+                  
+                  // Nodes farther from center appear first (outside-in effect)
+                  // Add randomness for more natural, tech-like animation
+                  const randomFactor = Math.random() * 100;
+                  const baseDelay = (182 - distanceFromCenter) * 3; // Inverted: farther = less delay
+                  const animationDelay = baseDelay + randomFactor;
                   
                   return (
                     <rect
