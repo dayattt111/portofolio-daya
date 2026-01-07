@@ -97,14 +97,15 @@ export default function About() {
               ? 'bg-gradient-to-br from-gray-800/80 via-gray-800/50 to-gray-900/80 backdrop-blur-xl border-gray-700/50 shadow-2xl' 
               : 'bg-gradient-to-br from-white via-gray-50 to-white border-gray-200 shadow-xl'
           }`}>
-            {/* Activity Grid */}
-            <div className="min-w-[700px]">
+            {/* Activity Grid - Centered */}
+            <div className="flex justify-center">
               <div className="flex gap-1">
                 {Array.from({ length: 52 }).map((_, weekIndex) => (
                   <div key={weekIndex} className="flex flex-col gap-1">
                     {Array.from({ length: 7 }).map((_, dayIndex) => {
                       const level = activityData[weekIndex * 7 + dayIndex]?.level || 0;
-                      const delay = (weekIndex * 7 + dayIndex) * 3; // Fast sequential animation
+                      // Animasi dari bawah ke atas: dayIndex 6 (bottom) dimulai duluan
+                      const delay = (6 - dayIndex) * 50 + weekIndex * 2; // Bottom to top animation
                       
                       const colors = theme === 'dark' 
                         ? ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353']
