@@ -151,17 +151,14 @@ export default function Home() {
             {/* Right Column - Profile Info & About */}
             <div className="flex flex-col justify-center order-2 lg:order-2 text-center lg:text-left space-y-3">
               <div className="animate-fade-in-up space-y-3">
-                {/* <div className="flex items-center justify-center lg:justify-start gap-2">
-                  <Sparkles className="w-5 h-5 text-yellow-400 animate-pulse" />
-                  <span className={`text-sm md:text-base font-semibold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent`}>
-                    Welcome to my portfolio
-                  </span>
-                </div> */}
-
-                <h1 className="text-2xl sm:text-3xl lg:text-3xl xl:text-4xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-gradient leading-tight">
-                  Hi, I'm Muhammad Amin Hidayat
-                </h1>
-
+                <div className="space-y-1"> {/* Container untuk mengatur jarak antar baris */}
+                    <span className="block text-lg md:text-xl font-medium text-gray-400 ">
+                        Hi, I'm
+                    </span>
+                    <h1 className="text-2xl sm:text-3xl lg:text-3xl xl:text-4xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-gradient leading-tight">
+                        Muhammad Amin Hidayat
+                    </h1>
+                </div>
                 <div className="flex items-center justify-center lg:justify-start gap-2 flex-wrap">
                   <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-blue-500/20 backdrop-blur-sm border border-blue-500/30">
                     <Code2 className="w-4 h-4 text-blue-400" />
