@@ -129,8 +129,8 @@ export default function Home() {
         
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 z-0" />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 xl:gap-12 items-start lg:items-center">
+        <div className="relative z-10 max-w-7xl mt-5 px-4 sm:px-6 lg:px-8 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-8 lg:gap-10 xl:gap-12 items-start lg:items-center">
             
             {/* Left Column - Profile Image */}
             <div className="flex justify-center lg:justify-end order-1 lg:order-1">
@@ -149,8 +149,8 @@ export default function Home() {
             </div>
 
             {/* Right Column - Profile Info & About */}
-            <div className="flex flex-col justify-center order-2 lg:order-2 text-center lg:text-left space-y-4">
-              <div className="animate-fade-in-up space-y-4">
+            <div className="flex flex-col justify-center order-2 lg:order-2 text-center lg:text-left space-y-3">
+              <div className="animate-fade-in-up space-y-3">
                 {/* <div className="flex items-center justify-center lg:justify-start gap-2">
                   <Sparkles className="w-5 h-5 text-yellow-400 animate-pulse" />
                   <span className={`text-sm md:text-base font-semibold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent`}>
@@ -158,46 +158,46 @@ export default function Home() {
                   </span>
                 </div> */}
 
-                <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-gradient leading-tight">
+                <h1 className="text-2xl sm:text-3xl lg:text-3xl xl:text-4xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-gradient leading-tight">
                   Hi, I'm Muhammad Amin Hidayat
                 </h1>
 
-                <div className="flex items-center justify-center lg:justify-start gap-3 flex-wrap">
-                  <div className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-blue-500/20 backdrop-blur-sm border border-blue-500/30">
-                    <Code2 className="w-4 h-4 md:w-5 md:h-5 text-blue-400" />
-                    <span className="font-medium text-sm">Full Stack Developer</span>
+                <div className="flex items-center justify-center lg:justify-start gap-2 flex-wrap">
+                  <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-blue-500/20 backdrop-blur-sm border border-blue-500/30">
+                    <Code2 className="w-4 h-4 text-blue-400" />
+                    <span className="font-medium text-xs">Full Stack Developer</span>
                   </div>
-                  <div className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-purple-500/20 backdrop-blur-sm border border-purple-500/30">
-                    <Palette className="w-4 h-4 md:w-5 md:h-5 text-purple-400" />
-                    <span className="font-medium text-sm">UI/UX Enthusiast</span>
+                  <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-purple-500/20 backdrop-blur-sm border border-purple-500/30">
+                    <Palette className="w-4 h-4 text-purple-400" />
+                    <span className="font-medium text-xs">UI/UX Enthusiast</span>
                   </div>
                 </div>
 
-                <p className={`text-sm md:text-base lg:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+                <p className={`text-xs md:text-sm lg:text-base leading-relaxed max-w-xl mx-auto lg:mx-0 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
                   Passionate developer crafting modern web experiences with clean code and beautiful design. 
                   Specializing in React, TypeScript, and full-stack development.
                 </p>
 
                 {/* Stats */}
-                <div className="grid grid-cols-2 gap-3 max-w-xl mx-auto lg:mx-0">
+                <div className="grid grid-cols-2 gap-2 max-w-xl mx-auto lg:mx-0">
                   {[
-                    { icon: <Award className="w-4 h-4" />, value: '5+', label: 'Years Exp', color: 'from-blue-500 to-cyan-500' },
-                    { icon: <Users className="w-4 h-4" />, value: '50+', label: 'Clients', color: 'from-purple-500 to-pink-500' },
-                    { icon: <Rocket className="w-4 h-4" />, value: '100+', label: 'Projects', color: 'from-orange-500 to-red-500' },
-                    { icon: <Sparkles className="w-4 h-4" />, value: '15+', label: 'Certificates', color: 'from-yellow-500 to-orange-500' }
+                    { icon: <Award className="w-3 h-3" />, value: '5+', label: 'Years Exp', color: 'from-blue-500 to-cyan-500' },
+                    { icon: <Users className="w-3 h-3" />, value: '50+', label: 'Clients', color: 'from-purple-500 to-pink-500' },
+                    { icon: <Rocket className="w-3 h-3" />, value: '100+', label: 'Projects', color: 'from-orange-500 to-red-500' },
+                    { icon: <Sparkles className="w-3 h-3" />, value: '15+', label: 'Certificates', color: 'from-yellow-500 to-orange-500' }
                   ].map((stat, idx) => (
                     <div
                       key={idx}
-                      className={`p-3 md:p-4 rounded-xl backdrop-blur-sm border transition-all duration-300 hover:scale-105 ${
+                      className={`p-2.5 md:p-3 rounded-lg backdrop-blur-sm border transition-all duration-300 hover:scale-105 ${
                         theme === 'dark' 
                           ? 'bg-gray-800/50 border-gray-700/50 hover:bg-gray-800/70' 
                           : 'bg-white/80 border-gray-200 hover:bg-white'
                       }`}
                     >
-                      <div className={`flex items-center gap-2 mb-1.5 text-transparent bg-gradient-to-r ${stat.color} bg-clip-text`}>
+                      <div className={`flex items-center gap-1.5 mb-1 text-transparent bg-gradient-to-r ${stat.color} bg-clip-text`}>
                         {stat.icon}
                       </div>
-                      <div className={`text-xl md:text-2xl lg:text-3xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent`}>
+                      <div className={`text-lg md:text-xl lg:text-2xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent`}>
                         {stat.value}
                       </div>
                       <div className={`text-xs ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
@@ -208,18 +208,18 @@ export default function Home() {
                 </div>
 
                 {/* Buttons - 2 columns on mobile */}
-                <div className="grid grid-cols-2 lg:flex gap-3 md:gap-4 justify-center lg:justify-start max-w-xl mx-auto lg:mx-0">
+                <div className="grid grid-cols-2 lg:flex gap-2 justify-center lg:justify-start max-w-xl mx-auto lg:mx-0">
                   <Link 
                     to="/projects"
-                    className="col-span-2 lg:col-span-1 px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold rounded-full hover:shadow-2xl hover:scale-105 transition-all duration-300 text-center text-sm md:text-base"
+                    className="col-span-2 lg:col-span-1 px-5 py-2.5 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold rounded-full hover:shadow-2xl hover:scale-105 transition-all duration-300 text-center text-xs md:text-sm"
                   >
                     View My Work
                   </Link>
                   <a 
                     href="mailto:dayagani17@gmail.com"
-                    className={`col-span-2 lg:col-span-1 px-6 md:px-8 py-3 md:py-4 border-2 ${theme === 'dark' ? 'border-white/30 hover:bg-white/10' : 'border-gray-900/30 hover:bg-gray-900/10'} font-semibold rounded-full hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 text-sm md:text-base`}
+                    className={`col-span-2 lg:col-span-1 px-5 py-2.5 border-2 ${theme === 'dark' ? 'border-white/30 hover:bg-white/10' : 'border-gray-900/30 hover:bg-gray-900/10'} font-semibold rounded-full hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 text-xs md:text-sm`}
                   >
-                    <MessageCircle className="w-4 h-4 md:w-5 md:h-5" />
+                    <MessageCircle className="w-4 h-4" />
                     Contact Me
                   </a>
                 </div>
