@@ -87,13 +87,11 @@ export default function About() {
             </p>
           </div>
 
-          <div className={`group relative p-4 sm:p-6 md:p-8 rounded-2xl border-2 overflow-hidden transition-all duration-500 hover:scale-[1.02] ${
+          <div className={`relative p-4 sm:p-6 md:p-8 rounded-2xl border-2 overflow-hidden transition-all duration-500 ${
             theme === 'dark' 
-              ? 'bg-gradient-to-br from-gray-800/80 via-gray-800/50 to-gray-900/80 backdrop-blur-xl border-gray-700/50 hover:border-purple-500/50 shadow-2xl' 
-              : 'bg-gradient-to-br from-white via-gray-50 to-white border-gray-200 hover:border-purple-400/50 shadow-xl hover:shadow-2xl'
+              ? 'bg-gradient-to-br from-gray-800/80 via-gray-800/50 to-gray-900/80 backdrop-blur-xl border-gray-700/50 shadow-2xl' 
+              : 'bg-gradient-to-br from-white via-gray-50 to-white border-gray-200 shadow-xl'
           }`}>
-            {/* Glow effect on hover */}
-            <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${theme === 'dark' ? 'bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-blue-500/10' : 'bg-gradient-to-r from-purple-500/5 via-pink-500/5 to-blue-500/5'}`}></div>
             
             <div className="relative flex justify-center items-center">
               <GitHubCalendar 
@@ -113,22 +111,32 @@ export default function About() {
                 showMonthLabels={true}
                 loading={false}
                 errorMessage="Unable to load contribution data"
-                renderBlock={(block, activity) => (
-                  <rect
-                    x={block.props.x}
-                    y={block.props.y}
-                    width={block.props.width}
-                    height={block.props.height}
-                    fill={block.props.fill}
-                    data-tooltip-id="github-tooltip"
-                    data-tooltip-content={`${activity.count} contributions on ${new Date(activity.date).toLocaleDateString('en-US', { 
-                      year: 'numeric', 
-                      month: 'long', 
-                      day: 'numeric' 
-                    })}`}
-                    className="cursor-pointer transition-opacity hover:opacity-80"
-                  />
-                )}
+                renderBlock={(block, activity) => {
+                  // Calculate animation delay based on the date
+                  const dayIndex = new Date(activity.date).getTime();
+                  const animationDelay = (dayIndex % 365) * 5; // Stagger animation
+                  
+                  return (
+                    <rect
+                      x={block.props.x}
+                      y={block.props.y}
+                      width={block.props.width}
+                      height={block.props.height}
+                      fill={block.props.fill}
+                      data-tooltip-id="github-tooltip"
+                      data-tooltip-content={`${activity.count} contributions on ${new Date(activity.date).toLocaleDateString('en-US', { 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric' 
+                      })}`}
+                      className="cursor-pointer transition-all duration-300 hover:opacity-80 animate-fadeInScale"
+                      style={{ 
+                        animationDelay: `${animationDelay}ms`,
+                        transformOrigin: 'center'
+                      }}
+                    />
+                  );
+                }}
               />
               <Tooltip 
                 id="github-tooltip" 
