@@ -3,84 +3,12 @@ import { ChevronDown, Sparkles, Code2, Palette, MessageCircle, Award, Users, Roc
 import { useTheme } from '../contexts/ThemeContext';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
-import { GitHubCalendar } from 'react-github-calendar';
-import { Tooltip } from 'react-tooltip';
-import 'react-tooltip/dist/react-tooltip.css';
-
-interface GitHubStats {
-  totalContributions: number;
-  averagePerDay: number;
-  currentStreak: number;
-  longestStreak: number;
-}
 
 export default function Home() {
   const { theme } = useTheme();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [githubStats, setGithubStats] = useState<GitHubStats>({
-    totalContributions: 0,
-    averagePerDay: 0,
-    currentStreak: 0,
-    longestStreak: 0
-  });
-  const [animatedStats, setAnimatedStats] = useState<GitHubStats>({
-    totalContributions: 0,
-    averagePerDay: 0,
-    currentStreak: 0,
-    longestStreak: 0
-  });
-
-  // Apply color animation to GitHub nodes
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      const nodes = document.querySelectorAll('.github-node-home');
-      nodes.forEach((node) => {
-        const rect = node as SVGRectElement;
-        const finalColor = rect.getAttribute('data-final-color');
-        if (finalColor) {
-          const animationDelay = rect.style.animationDelay;
-          const delay = parseFloat(animationDelay) || 0;
-          
-          setTimeout(() => {
-            rect.style.fill = finalColor;
-          }, delay);
-        }
-      });
-    }, 100);
-    
-    return () => clearTimeout(timer);
-  }, [isVisible]);
-
-  // Animate statistics counters
-  useEffect(() => {
-    if (!isVisible || githubStats.totalContributions === 0) return;
-
-    const duration = 1500; // 1.5 seconds - faster
-    const steps = 50;
-    const interval = duration / steps;
-
-    let currentStep = 0;
-    const timer = setInterval(() => {
-      currentStep++;
-      const progress = currentStep / steps;
-
-      setAnimatedStats({
-        totalContributions: Math.floor(githubStats.totalContributions * progress),
-        averagePerDay: parseFloat((githubStats.averagePerDay * progress).toFixed(1)),
-        currentStreak: Math.floor(githubStats.currentStreak * progress),
-        longestStreak: Math.floor(githubStats.longestStreak * progress)
-      });
-
-      if (currentStep >= steps) {
-        clearInterval(timer);
-        setAnimatedStats(githubStats);
-      }
-    }, interval);
-
-    return () => clearInterval(timer);
-  }, [isVisible, githubStats]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -116,7 +44,7 @@ export default function Home() {
     const particles: Particle[] = [];
     const colors = ['rgba(59, 130, 246, 0.6)', 'rgba(139, 92, 246, 0.6)', 'rgba(236, 72, 153, 0.6)'];
 
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 15; i++) {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
@@ -329,170 +257,6 @@ export default function Home() {
               <p className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
                 Real-time contribution graph from <a href="https://github.com/dayattt111" target="_blank" rel="noopener noreferrer" className="font-semibold text-blue-500 hover:text-blue-600 transition-colors">@dayattt111</a>
               </p>
-            </div>
-
-            <div className={`relative p-6 md:p-8 rounded-2xl border-2 overflow-hidden transition-all duration-500 ${
-              theme === 'dark' 
-                ? 'bg-gradient-to-br from-gray-800/80 via-gray-800/50 to-gray-900/80 backdrop-blur-xl border-gray-700/50 shadow-2xl' 
-                : 'bg-gradient-to-br from-white via-gray-50 to-white border-gray-200 shadow-xl'
-            }`}>
-              {/* GitHub Statistics Cards */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                <div className={`p-4 rounded-lg border transition-all duration-300 ${
-                  theme === 'dark'
-                    ? 'bg-gray-800/50 border-gray-700/50'
-                    : 'bg-white border-gray-200'
-                }`}>
-                  <div className={`text-xs font-medium mb-2 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Total Contributions</div>
-                  <div className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                    {animatedStats.totalContributions.toLocaleString()}
-                  </div>
-                </div>
-
-                <div className={`p-4 rounded-lg border transition-all duration-300 ${
-                  theme === 'dark'
-                    ? 'bg-gray-800/50 border-gray-700/50'
-                    : 'bg-white border-gray-200'
-                }`}>
-                  <div className={`text-xs font-medium mb-2 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Average Per Day</div>
-                  <div className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                    {animatedStats.averagePerDay.toFixed(1)}
-                  </div>
-                </div>
-
-                <div className={`p-4 rounded-lg border transition-all duration-300 ${
-                  theme === 'dark'
-                    ? 'bg-gray-800/50 border-gray-700/50'
-                    : 'bg-white border-gray-200'
-                }`}>
-                  <div className={`text-xs font-medium mb-2 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Current Streak</div>
-                  <div className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                    {animatedStats.currentStreak} days
-                  </div>
-                </div>
-
-                <div className={`p-4 rounded-lg border transition-all duration-300 ${
-                  theme === 'dark'
-                    ? 'bg-gray-800/50 border-gray-700/50'
-                    : 'bg-white border-gray-200'
-                }`}>
-                  <div className={`text-xs font-medium mb-2 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Longest Streak</div>
-                  <div className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                    {animatedStats.longestStreak} days
-                  </div>
-                </div>
-              </div>
-
-              <div className="relative flex justify-center items-center">
-                <GitHubCalendar 
-                  username="dayattt111"
-                  blockSize={14}
-                  blockMargin={5}
-                  fontSize={14}
-                  colorScheme={theme === 'dark' ? 'dark' : 'light'}
-                  theme={{
-                    light: ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'],
-                    dark: ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353']
-                  }}
-                  labels={{
-                    totalCount: '{{count}} contributions in the last year',
-                  }}
-                  showWeekdayLabels
-                  showMonthLabels={true}
-                  loading={false}
-                  errorMessage="Unable to load contribution data"
-                  transformData={(contributions) => {
-                    // Calculate statistics from contribution data
-                    const total = contributions.reduce((sum, day) => sum + day.count, 0);
-                    const days = contributions.length;
-                    const average = days > 0 ? total / days : 0;
-
-                    // Calculate current streak
-                    let currentStreak = 0;
-                    const today = new Date();
-                    for (let i = contributions.length - 1; i >= 0; i--) {
-                      const date = new Date(contributions[i].date);
-                      if (contributions[i].count > 0) {
-                        currentStreak++;
-                      } else if (date < today) {
-                        break;
-                      }
-                    }
-
-                    // Calculate longest streak
-                    let longestStreak = 0;
-                    let tempStreak = 0;
-                    contributions.forEach((day) => {
-                      if (day.count > 0) {
-                        tempStreak++;
-                        longestStreak = Math.max(longestStreak, tempStreak);
-                      } else {
-                        tempStreak = 0;
-                      }
-                    });
-
-                    setGithubStats({
-                      totalContributions: total,
-                      averagePerDay: parseFloat(average.toFixed(1)),
-                      currentStreak,
-                      longestStreak
-                    });
-
-                    return contributions;
-                  }}
-                  renderBlock={(block, activity) => {
-                    // Random delay for each node (tech-like random filling effect)
-                    const randomDelay = Math.random() * 800; // 0-800ms - faster
-                    
-                    return (
-                      <rect
-                        x={block.props.x}
-                        y={block.props.y}
-                        width={block.props.width}
-                        height={block.props.height}
-                        fill={block.props.fill}
-                        data-tooltip-id="github-tooltip-home"
-                        data-tooltip-content={`${activity.count} contributions on ${new Date(activity.date).toLocaleDateString('en-US', { 
-                          year: 'numeric', 
-                          month: 'long', 
-                          day: 'numeric' 
-                        })}`}
-                        className="cursor-pointer transition-all duration-300 hover:opacity-80 github-node-home"
-                        style={{ 
-                          animation: `fillNode 0.3s ease-out ${randomDelay}ms forwards`,
-                          fill: theme === 'dark' ? '#161b22' : '#ebedf0',
-                          transformOrigin: 'center'
-                        }}
-                        data-final-color={block.props.fill}
-                      />
-                    );
-                  }}
-                />
-                <Tooltip 
-                  id="github-tooltip-home" 
-                  place="top"
-                  className={`z-50 !px-3 !py-2 !rounded-lg ${
-                    theme === 'dark' 
-                      ? '!bg-gray-800 !text-white border !border-gray-700' 
-                      : '!bg-white !text-gray-900 border !border-gray-200 shadow-xl'
-                  }`}
-                />
-              </div>
-              
-              {/* Enhanced Legend */}
-              <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
-                <div className="flex flex-wrap gap-3 justify-center items-center text-xs sm:text-sm">
-                  <span className={`font-semibold ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>Less</span>
-                  <div className="flex items-center gap-2">
-                    <div className={`w-4 h-4 rounded transition-transform hover:scale-125 cursor-pointer ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-200'}`} title="0 contributions"></div>
-                    <div className="w-4 h-4 rounded bg-green-300 transition-transform hover:scale-125 cursor-pointer" title="1-3 contributions"></div>
-                    <div className="w-4 h-4 rounded bg-green-500 transition-transform hover:scale-125 cursor-pointer" title="4-6 contributions"></div>
-                    <div className="w-4 h-4 rounded bg-green-600 transition-transform hover:scale-125 cursor-pointer" title="7-9 contributions"></div>
-                    <div className="w-4 h-4 rounded bg-green-700 transition-transform hover:scale-125 cursor-pointer" title="10+ contributions"></div>
-                  </div>
-                  <span className={`font-semibold ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>More</span>
-                </div>
-              </div>
             </div>
           </div>
 
