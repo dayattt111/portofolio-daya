@@ -56,20 +56,20 @@ export default function Navbar() {
               theme === 'dark' ? 'bg-gradient-to-br from-blue-600 to-purple-600' : 'bg-gradient-to-br from-blue-500 to-purple-500'
             } shadow-lg`}>
               <img 
-                src="/vim.svg" 
+                src="/profil.svg" 
                 alt="Logo" 
-                className="w-7 h-7 object-cover brightness-0 invert"
+                className="w-11 h-11 object-cover"
               />
             </div>
           </div>
           <div className="hidden sm:block">
             <span className={`font-bold text-lg block ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-              Portfolio
+              Muhammad Amin Hidayat
             </span>
             <div className="flex items-center gap-1">
-              <Sparkles size={10} className="text-yellow-400 animate-pulse" />
-              <span className="text-[10px] font-medium bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
-                Creative Developer
+              {/* <Sparkles size={10} className="text-yellow-400 animate-pulse" /> */}
+              <span className="text-[15px] italic font-medium bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
+                Tech Enthusiast
               </span>
             </div>
           </div>

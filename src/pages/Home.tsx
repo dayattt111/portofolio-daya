@@ -214,7 +214,7 @@ export default function Home() {
                   <img 
                     src="/images/profile/pp.png" 
                     // src="/images/profile/dayat1.jpg" 
-                    alt="Daya Sakti Profile" 
+                    alt="Muhammad Amin Hidayat Profile" 
                     className="relative w-full h-auto object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-300"
                     style={{ aspectRatio: '2048/3070', maxHeight: '450px' }}
                   />
@@ -240,13 +240,12 @@ export default function Home() {
                   </div>
                   <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-purple-500/20 backdrop-blur-sm border border-purple-500/30">
                     <Palette className="w-4 h-4 text-purple-400" />
-                    <span className="font-medium text-xs">UI/UX Enthusiast</span>
+                    <span className="font-medium text-xs">Cloud Eunthiast</span>
                   </div>
                 </div>
 
                 <p className={`text-xs md:text-sm lg:text-base leading-relaxed max-w-xl mx-auto lg:mx-0 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
-                  Passionate developer crafting modern web experiences with clean code and beautiful design. 
-                  Specializing in React, TypeScript, and full-stack development.
+                  Undergraduate student at <b><i>Universitas Dipa Makassar</i></b> and a passionate programmer with a strong focus on <b>Full-Stack Web Development</b>, <b>Computer Networking</b>, and <b>Technical communication</b>. I actively build <i>web-based applications</i>, explore modern <i>technologies</i>, and develop problem-solving skills through real projects and collaborative environments. I am also a member of <b><i>Dipanegara Computer Club</i></b>, where I engage in IT discussions, knowledge sharing, and continuous skill development in <b>programming</b> and <b>networking</b>.
                 </p>
 
                 {/* Stats */}
@@ -281,13 +280,13 @@ export default function Home() {
                 {/* Buttons - 2 columns on mobile */}
                 <div className="grid grid-cols-2 lg:flex gap-2 justify-center lg:justify-start max-w-xl mx-auto lg:mx-0">
                   <Link 
-                    to="/projects"
+                    to="public\cv\CV-Muhammad-Amin-Hidayat.pdf"
                     className="col-span-2 lg:col-span-1 px-5 py-2.5 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold rounded-full hover:shadow-2xl hover:scale-105 transition-all duration-300 text-center text-xs md:text-sm"
                   >
-                    View My Work
+                    Download CV
                   </Link>
                   <a 
-                    href="mailto:dayagani17@gmail.com"
+                    href="mailto:hidayatbaru0304@gmail.com"
                     className={`col-span-2 lg:col-span-1 px-5 py-2.5 border-2 ${theme === 'dark' ? 'border-white/30 hover:bg-white/10' : 'border-gray-900/30 hover:bg-gray-900/10'} font-semibold rounded-full hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 text-xs md:text-sm`}
                   >
                     <MessageCircle className="w-4 h-4" />

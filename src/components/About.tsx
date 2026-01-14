@@ -170,106 +170,106 @@ export default function About() {
             )}
 
             {/* Activity Grid - Custom Fast Implementation */}
-<div className="w-full">
-  {loading ? (
-    <div className="flex justify-center items-center py-20">
-      <div className="flex flex-col items-center gap-4">
-        <div className={`w-12 h-12 border-4 border-t-transparent rounded-full animate-spin ${
-          theme === 'dark' ? 'border-purple-500' : 'border-purple-600'
-        }`}></div>
-        <p className={`text-sm font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
-          Loading activity...
-        </p>
-      </div>
-    </div>
-  ) : (
-    /* Container Utama yang Full Width */
-    <div className="w-full overflow-x-auto custom-scrollbar pb-4">
-      <div className="flex flex-col w-full min-w-[800px]">
-        
-        {/* Row 1: Label Bulan */}
-        <div className="flex mb-2 ml-8"> {/* ml-8 untuk memberi ruang bagi label hari di kiri */}
-          {Array.from({ length: 53 }).map((_, weekIndex) => {
-            const weekDate = new Date(Date.now() - (52 - weekIndex) * 7 * 24 * 60 * 60 * 1000);
-            const month = weekDate.getMonth();
-            const prevWeekDate = weekIndex > 0 ? new Date(Date.now() - (52 - (weekIndex - 1)) * 7 * 24 * 60 * 60 * 1000) : null;
-            const isNewMonth = !prevWeekDate || month !== prevWeekDate.getMonth();
-
-            return (
-              <div key={weekIndex} className="flex-1 text-[10px]">
-                {isNewMonth && (
-                  <span className={theme === 'dark' ? 'text-gray-500' : 'text-gray-600'}>
-                    {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][month]}
-                  </span>
-                )}
+          <div className="w-full">
+            {loading ? (
+              <div className="flex justify-center items-center py-20">
+                <div className="flex flex-col items-center gap-4">
+                  <div className={`w-12 h-12 border-4 border-t-transparent rounded-full animate-spin ${
+                    theme === 'dark' ? 'border-purple-500' : 'border-purple-600'
+                  }`}></div>
+                  <p className={`text-sm font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+                    Loading activity...
+                  </p>
+                </div>
               </div>
-            );
-          })}
-        </div>
-
-        {/* Row 2: Label Hari + Grid Utama */}
-        <div className="flex w-full gap-2">
-          
-          {/* Kolom Label Hari */}
-          <div className="flex flex-col justify-between text-[10px] w-6 py-1 h-[100px]">
-            <div className={theme === 'dark' ? 'text-gray-500' : 'text-gray-600'}>Mon</div>
-            <div className={theme === 'dark' ? 'text-gray-500' : 'text-gray-600'}>Wed</div>
-            <div className={theme === 'dark' ? 'text-gray-500' : 'text-gray-600'}>Fri</div>
-          </div>
-
-          {/* Grid Kontribusi - Full Width */}
-          <div className="flex flex-1 justify-between gap-[3px]">
-            {Array.from({ length: 53 }).map((_, weekIndex) => (
-              <div key={weekIndex} className="flex flex-col gap-[3px] flex-1">
-                {Array.from({ length: 7 }).map((_, dayIndex) => {
-                  const dataIndex = weekIndex * 7 + dayIndex;
-                  const contribution = contributions[dataIndex] || { level: 0, count: 0, date: '' };
-                  const delay = (6 - dayIndex) * 30 + weekIndex * 1.5;
+            ) : (
+              /* Container Utama yang Full Width */
+              <div className="w-full overflow-x-auto custom-scrollbar pb-4">
+                <div className="flex flex-col w-full min-w-[800px]">
                   
-                  const colors = theme === 'dark' 
-                    ? ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353']
-                    : ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'];
-                  
-                  return (
-                    <div
-                      key={dayIndex}
-                      className="aspect-square w-full rounded-[2px] transition-all duration-200 hover:scale-125 cursor-pointer origin-center"
-                      style={{
-                        backgroundColor: colors[contribution.level] || colors[0],
-                        animation: graphVisible ? `nodeSlideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) ${delay}ms forwards` : 'none',
-                        opacity: 0,
-                        transform: 'translateY(10px)'
-                      }}
-                      title={`${contribution.count} contributions on ${contribution.date}`}
-                    />
-                  );
-                })}
+                  {/* Row 1: Label Bulan */}
+                  <div className="flex mb-2 ml-8"> {/* ml-8 untuk memberi ruang bagi label hari di kiri */}
+                    {Array.from({ length: 53 }).map((_, weekIndex) => {
+                      const weekDate = new Date(Date.now() - (52 - weekIndex) * 7 * 24 * 60 * 60 * 1000);
+                      const month = weekDate.getMonth();
+                      const prevWeekDate = weekIndex > 0 ? new Date(Date.now() - (52 - (weekIndex - 1)) * 7 * 24 * 60 * 60 * 1000) : null;
+                      const isNewMonth = !prevWeekDate || month !== prevWeekDate.getMonth();
+
+                      return (
+                        <div key={weekIndex} className="flex-1 text-[10px]">
+                          {isNewMonth && (
+                            <span className={theme === 'dark' ? 'text-gray-500' : 'text-gray-600'}>
+                              {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][month]}
+                            </span>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* Row 2: Label Hari + Grid Utama */}
+                  <div className="flex w-full gap-2">
+                    
+                    {/* Kolom Label Hari */}
+                    <div className="flex flex-col justify-between text-[10px] w-6 py-1 h-[100px]">
+                      <div className={theme === 'dark' ? 'text-gray-500' : 'text-gray-600'}>Mon</div>
+                      <div className={theme === 'dark' ? 'text-gray-500' : 'text-gray-600'}>Wed</div>
+                      <div className={theme === 'dark' ? 'text-gray-500' : 'text-gray-600'}>Fri</div>
+                    </div>
+
+                    {/* Grid Kontribusi - Full Width */}
+                    <div className="flex flex-1 justify-between gap-[3px]">
+                      {Array.from({ length: 53 }).map((_, weekIndex) => (
+                        <div key={weekIndex} className="flex flex-col gap-[3px] flex-1">
+                          {Array.from({ length: 7 }).map((_, dayIndex) => {
+                            const dataIndex = weekIndex * 7 + dayIndex;
+                            const contribution = contributions[dataIndex] || { level: 0, count: 0, date: '' };
+                            const delay = (6 - dayIndex) * 30 + weekIndex * 1.5;
+                            
+                            const colors = theme === 'dark' 
+                              ? ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353']
+                              : ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'];
+                            
+                            return (
+                              <div
+                                key={dayIndex}
+                                className="aspect-square w-full rounded-[2px] transition-all duration-200 hover:scale-125 cursor-pointer origin-center"
+                                style={{
+                                  backgroundColor: colors[contribution.level] || colors[0],
+                                  animation: graphVisible ? `nodeSlideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) ${delay}ms forwards` : 'none',
+                                  opacity: 0,
+                                  transform: 'translateY(10px)'
+                                }}
+                                title={`${contribution.count} contributions on ${contribution.date}`}
+                              />
+                            );
+                          })}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Row 3: Legend (Opsional) */}
+                  <div className="flex items-center justify-end gap-1 mt-3 text-[10px]">
+                    <span className={theme === 'dark' ? 'text-gray-500' : 'text-gray-600'}>Less</span>
+                    {[0, 1, 2, 3, 4].map(lvl => (
+                      <div 
+                        key={lvl} 
+                        className="w-3 h-3 rounded-[2px]" 
+                        style={{ 
+                          backgroundColor: (theme === 'dark' 
+                            ? ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353']
+                            : ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'])[lvl] 
+                        }} 
+                      />
+                    ))}
+                    <span className={theme === 'dark' ? 'text-gray-500' : 'text-gray-600'}>More</span>
+                  </div>
+
+                </div>
               </div>
-            ))}
+            )}
           </div>
-        </div>
-
-        {/* Row 3: Legend (Opsional) */}
-        <div className="flex items-center justify-end gap-1 mt-3 text-[10px]">
-          <span className={theme === 'dark' ? 'text-gray-500' : 'text-gray-600'}>Less</span>
-          {[0, 1, 2, 3, 4].map(lvl => (
-            <div 
-              key={lvl} 
-              className="w-3 h-3 rounded-[2px]" 
-              style={{ 
-                backgroundColor: (theme === 'dark' 
-                  ? ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353']
-                  : ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'])[lvl] 
-              }} 
-            />
-          ))}
-          <span className={theme === 'dark' ? 'text-gray-500' : 'text-gray-600'}>More</span>
-        </div>
-
-      </div>
-    </div>
-  )}
-</div>
             
             {/* Legend */}
             <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">

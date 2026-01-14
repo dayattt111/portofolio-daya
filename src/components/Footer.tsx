@@ -12,8 +12,8 @@ export default function Footer() {
 
   const socialLinks = [
     { icon: <Github className="w-5 h-5" />, href: 'https://github.com/dayattt111', label: 'GitHub' },
-    { icon: <Linkedin className="w-5 h-5" />, href: 'https://www.linkedin.com/in/daya-sakti-5a4ba1290/', label: 'LinkedIn' },
-    { icon: <Mail className="w-5 h-5" />, href: 'mailto:dayagani17@gmail.com', label: 'Email' },
+    { icon: <Linkedin className="w-5 h-5" />, href: 'https://www.linkedin.com/in/muhammad-amin-hidayat', label: 'LinkedIn' },
+    { icon: <Mail className="w-5 h-5" />, href: 'mailto:hidayatbaru0304@gmail.com', label: 'Email' },
   ];
 
   const quickLinks = [
@@ -38,14 +38,14 @@ export default function Footer() {
                 theme === 'dark' ? 'bg-gradient-to-br from-blue-600 to-purple-600' : 'bg-gradient-to-br from-blue-500 to-purple-500'
               }`}>
                 <img 
-                  src="/vim.svg" 
+                  src="/profil.svg" 
                   alt="Logo" 
                   className="w-6 h-6 brightness-0 invert"
                 />
               </div>
               <div>
                 <h3 className={`font-bold text-lg ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                  Daya Sakti
+                  Muhammad Amin Hidayat
                 </h3>
                 <p className="text-xs bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent font-medium">
                   Full Stack Developer
@@ -110,7 +110,7 @@ export default function Footer() {
             </h4>
             <div className="space-y-3">
               <a 
-                href="mailto:dayagani17@gmail.com"
+                href="mailto:hidayatbaru0304@gmail.com"
                 className={`text-sm flex items-center gap-2 transition-colors duration-300 ${
                   theme === 'dark' 
                     ? 'text-gray-400 hover:text-blue-400' 
@@ -118,7 +118,7 @@ export default function Footer() {
                 }`}
               >
                 <Mail className="w-4 h-4" />
-                dayagani17@gmail.com
+                hidayatbaru0304@gmail.com
               </a>
               <a 
                 href="https://wa.me/6282197855715"
