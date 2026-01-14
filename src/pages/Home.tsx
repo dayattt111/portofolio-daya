@@ -279,12 +279,27 @@ export default function Home() {
 
                 {/* Buttons - 2 columns on mobile */}
                 <div className="grid grid-cols-2 lg:flex gap-2 justify-center lg:justify-start max-w-xl mx-auto lg:mx-0">
-                  <Link 
-                    to="public\cv\CV-Muhammad-Amin-Hidayat.pdf"
-                    className="col-span-2 lg:col-span-1 px-5 py-2.5 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold rounded-full hover:shadow-2xl hover:scale-105 transition-all duration-300 text-center text-xs md:text-sm"
-                  >
-                    Download CV
-                  </Link>
+                  <a
+                  href="public/cv/CV-Muhammad-Amin-Hidayat.pdf"
+                  className="
+                    relative overflow-hidden
+                    col-span-2 lg:col-span-1
+                    px-5 py-2.5
+                    bg-gradient-to-r from-blue-500 to-purple-500
+                    text-white font-semibold rounded-full
+                    transition-all duration-300
+                    hover:shadow-2xl hover:scale-105
+                    active:after:animate-ping
+                    after:absolute after:w-10 after:h-10
+                    after:bg-white/30 after:rounded-full
+                    after:top-1/2 after:left-1/2
+                    after:-translate-x-1/2 after:-translate-y-1/2
+                    after:opacity-0 active:after:opacity-100
+                    text-center text-xs md:text-sm
+                  "
+                >
+                  Download CV
+                </a>
                   <a 
                     href="mailto:hidayatbaru0304@gmail.com"
                     className={`col-span-2 lg:col-span-1 px-5 py-2.5 border-2 ${theme === 'dark' ? 'border-white/30 hover:bg-white/10' : 'border-gray-900/30 hover:bg-gray-900/10'} font-semibold rounded-full hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 text-xs md:text-sm`}
