@@ -21,7 +21,7 @@ const projects: Project[] = [
     description: 'professional company profile website with modern design and responsive layout.',
     rating: 5,
     color: '#00ff88',
-    stack: ['Next.Js', 'React', 'TypeScript', 'Node.js', 'Tailwind CSS'],
+    stack: ['Next.Js', 'React', 'TypeScript', 'Node.js', 'Tailwind CSS', 'Prisma ORM'],
     link: 'https://github.com/dayattt111',
     image: '/images/projects/DataCCProject.png'
   },
@@ -53,7 +53,7 @@ const projects: Project[] = [
     color: '#ffbe0b',
     stack: ['React JS', 'Next Js', 'Firebase', 'Mysql', 'Three JS'],
     link: '#',
-    image: '/images/projects/newDCC.png'
+    image: '/images/projects/webdcc.png'
   },
   {
     id: 5,
@@ -67,13 +67,68 @@ const projects: Project[] = [
   },
   {
     id: 6,
-    title: 'Blog Platform',
-    description: 'Modern blogging platform with markdown support and social features.',
+    title: 'petShop Website Regresi Linear',
+    description: 'E-commerce site for pet supplies with user reviews and secure checkout.',
     rating: 5,
     color: '#00a3ff',
-    stack: ['Next.js', 'MDX', 'Prisma', 'PostgreSQL', 'Vercel'],
-    link: '#',
-    image: '/images/projects/project-6.svg'
+    stack: ['Next.js', 'Vite', 'Prisma', 'PostgreSQL', 'Vercel'],
+    link: 'https://github.com/dayattt111/petshop-php-native.git',
+    image: '/images/projects/petShop.png'
+  }
+  ,
+  {
+    id: 7,
+    title: 'website Portofolio V2',
+    description: 'Redesign portfolio website with enhanced UX and interactive project showcases.',
+    rating: 5,
+    color: '#de0dbf',
+    stack: ['React js', 'Vite', 'Suppabase', 'TypeScript', 'Tailwinds CSS', 'Vercel'],
+    link: 'https://www.devdaya.my.id/',
+    image: '/images/projects/portov2.png'
+  }
+  ,
+  {
+    id: 8,
+    title: 'Website Community Network Dicoding UNDIPA',
+    description: 'Community website for Dicoding UNDIPA with event management and member forums.',
+    rating: 5,
+    color: '#0dde6b',
+    stack: ['React js', 'Next Js', 'Vite', 'Suppabase', 'TypeScript', 'Tailwinds CSS', 'Vercel'],
+    link: 'https://github.com/dayattt111/dcn_undipa.git',
+    image: '/images/projects/dcn.png'
+  }
+  ,
+  {
+    id: 9,
+    title: 'Website Manajemen Prestasi Dipatalent di UNDIPA ',
+    description: 'Prestasi management website for Dipatalent at UNDIPA with achievement tracking and reporting features.',
+    rating: 5,
+    color: '#de5a0d',
+    stack: ['React js', 'Next Js', 'Vite', 'Suppabase', 'TypeScript', 'Tailwinds CSS', 'Vercel'],
+    link: 'https://github.com/dayattt111/project_dipaTalent.git',
+    image: '/images/projects/dipaTalent.png'
+  }
+  ,
+  {
+    id: 10,
+    title: 'Sistem Informasi Monitoring Keungangan Methode Regresi Linear ',
+    description: 'Sistem informasi untuk monitoring keuangan dengan fitur pelaporan dan analisis data.',
+    rating: 5,
+    color: '#2c02fb',
+    stack: ['React js', 'Next Js', 'Vite', 'Suppabase', 'TypeScript', 'Tailwinds CSS', 'Vercel'],
+    link: 'https://github.com/dayattt111/sisfoAnalitikKeuangan.git',
+    image: '/images/projects/monitoringFinance.png'
+  }
+  ,
+  {
+    id: 11,
+    title: 'Sistem Informasi Teman Bus,  Booking dan Pembayaran Bus ',
+    description: 'Sistem informasi untuk monitoring keuangan dengan fitur pelaporan dan analisis data.',
+    rating: 5,
+    color: '#2c02fb',
+    stack: ['React js', 'Next Js', 'Vite', 'Suppabase', 'TypeScript', 'Tailwinds CSS', 'Vercel'],
+    link: 'https://github.com/dayattt111/sisfoAnalitikKeuangan.git',
+    image: '/images/projects/temanBus.png'
   }
 ];
 

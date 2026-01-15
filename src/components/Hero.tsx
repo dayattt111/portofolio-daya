@@ -16,7 +16,6 @@ export default function Hero() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    // Modern floating particles
     interface Particle {
       x: number;
       y: number;
