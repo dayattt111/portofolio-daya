@@ -24,17 +24,19 @@ const projects: Project[] = [
     stack: ['Next.Js', 'React', 'TypeScript', 'Node.js', 'Tailwind CSS', 'Prisma ORM'],
     link: 'https://github.com/dayattt111',
     image: '/images/projects/DataCCProject.png'
-  },
+  }
+  ,
   {
     id: 2,
-    title: 'Portfolio Website',
-    description: 'Retro-themed portfolio with 8-bit aesthetics and modern functionality.',
+    title: 'Organize New DCC Website',
+    description: 'New Website DCC with modern design and responsive layout.',
     rating: 5,
     color: '#ff006e',
     stack: ['React', 'Vite', 'Tailwind CSS', 'TypeScript'],
     link: 'https://github.com/dayattt111/portofolio-daya',
     image: '/images/projects/portoProject.png'
-  },
+  }
+  ,
   {
     id: 3,
     title: 'Organize Website DCC',
@@ -100,7 +102,7 @@ const projects: Project[] = [
   ,
   {
     id: 9,
-    title: 'Website Manajemen Prestasi Dipatalent di UNDIPA ',
+    title: 'Website Manajemen Prestasi Dipatalent di UNDIPA',
     description: 'Prestasi management website for Dipatalent at UNDIPA with achievement tracking and reporting features.',
     rating: 5,
     color: '#de5a0d',

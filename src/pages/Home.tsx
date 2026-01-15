@@ -176,22 +176,24 @@ export default function Home() {
       color: '#00ff88',
       stack: ['Next.Js', 'React', 'TypeScript', 'Tailwind CSS'],
       image: '/images/projects/DataCCProject.png'
-    },
+    }
+    ,
     {
       id: 2,
-      title: 'Organize New DCC Website',
-      description: 'New Website DCC with modern design and responsive layout.',
-      color: '#ffbe0b',
-      stack: ['React JS', 'Next Js', 'Firebase', 'Three JS'],
-      image: '/images/projects/newDCC.png'
-    },
+      title: 'Website Community Network Dicoding UNDIPA',
+      description: 'Community website for Dicoding UNDIPA with event management and member forums.',
+      color: '#ff0000',
+      stack: ['React JS', 'Suppabase ORM', 'Next Js', 'Suppabase', 'Three JS'],
+      image: '/images/projects/dcn.png'
+    }
+    ,
     {
       id: 3,
-      title: 'Laundry Apps',
-      description: 'Laundry management app with real-time order tracking.',
-      color: '#ff006e',
-      stack: ['Laravel', 'React', 'Oracle','Tailwind CSS'],
-      image: '/images/projects/laundryApp.png'
+      title: 'Organize New DCC Webiste',
+      description: 'New Website DCC with modern design and responsive layout.',
+      color: '#6a00ff',
+      stack: ['Next Js', 'React Js', 'Mysql','Tailwind CSS'],
+      image: '/images/projects/webdcc.png'
     }
   ];
 
