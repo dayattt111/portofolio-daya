@@ -40,7 +40,7 @@ export default function Footer() {
                 <img 
                   src="/profil.svg" 
                   alt="Logo" 
-                  className="w-6 h-6 brightness-0 invert"
+                  className="w-11 h-11 object-cover"
                 />
               </div>
               <div>
