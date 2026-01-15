@@ -1,4 +1,4 @@
-import { Code, Zap, Palette, Award, Users, Rocket, Star, Activity } from 'lucide-react';
+import { Code, Zap, Palette, Award, Users, Rocket, Star, Activity, Linkedin, Instagram, BookOpen, FileText } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useEffect, useRef, useState } from 'react';
 
@@ -311,6 +311,176 @@ export default function About() {
               }
             }
           `}</style>
+        </div>
+
+        {/* Social Links Section */}
+        <div className={`text-center mb-12 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <h3 className={`text-lg font-semibold mb-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>Connect With Me</h3>
+          <div className="flex flex-wrap justify-center gap-3">
+            <a href="https://www.linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer" 
+               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
+                 theme === 'dark' 
+                   ? 'bg-gray-800 hover:bg-blue-600 text-gray-300 hover:text-white' 
+                   : 'bg-gray-100 hover:bg-blue-600 text-gray-700 hover:text-white'
+               }`}>
+              <Linkedin className="w-5 h-5" />
+              <span className="text-sm font-medium">LinkedIn</span>
+            </a>
+            <a href="https://scholar.google.com/citations?user=youruser" target="_blank" rel="noopener noreferrer" 
+               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
+                 theme === 'dark' 
+                   ? 'bg-gray-800 hover:bg-red-600 text-gray-300 hover:text-white' 
+                   : 'bg-gray-100 hover:bg-red-600 text-gray-700 hover:text-white'
+               }`}>
+              <BookOpen className="w-5 h-5" />
+              <span className="text-sm font-medium">Scholar</span>
+            </a>
+            <a href="https://www.instagram.com/yourprofile" target="_blank" rel="noopener noreferrer" 
+               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
+                 theme === 'dark' 
+                   ? 'bg-gray-800 hover:bg-pink-600 text-gray-300 hover:text-white' 
+                   : 'bg-gray-100 hover:bg-pink-600 text-gray-700 hover:text-white'
+               }`}>
+              <Instagram className="w-5 h-5" />
+              <span className="text-sm font-medium">Instagram</span>
+            </a>
+            <a href="https://www.scribd.com/user/youruser" target="_blank" rel="noopener noreferrer" 
+               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
+                 theme === 'dark' 
+                   ? 'bg-gray-800 hover:bg-orange-600 text-gray-300 hover:text-white' 
+                   : 'bg-gray-100 hover:bg-orange-600 text-gray-700 hover:text-white'
+               }`}>
+              <FileText className="w-5 h-5" />
+              <span className="text-sm font-medium">Scribd</span>
+            </a>
+            <a href="https://medium.com/@yourprofile" target="_blank" rel="noopener noreferrer" 
+               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
+                 theme === 'dark' 
+                   ? 'bg-gray-800 hover:bg-green-600 text-gray-300 hover:text-white' 
+                   : 'bg-gray-100 hover:bg-green-600 text-gray-700 hover:text-white'
+               }`}>
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/>
+              </svg>
+              <span className="text-sm font-medium">Medium</span>
+            </a>
+            <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener noreferrer" 
+               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
+                 theme === 'dark' 
+                   ? 'bg-gray-800 hover:bg-green-700 text-gray-300 hover:text-white' 
+                   : 'bg-gray-100 hover:bg-green-700 text-gray-700 hover:text-white'
+               }`}>
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947s-.422.947-.947.947a.95.95 0 0 1-.947-.947c0-.525.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-2.016 5.016-5.325 5.016h-3.919V7.416zm1.444 1.303v7.444h2.297c2.359 0 4.053-1.666 4.053-3.722 0-2.025-1.694-3.722-4.053-3.722h-2.297z"/>
+              </svg>
+              <span className="text-sm font-medium">ORCID</span>
+            </a>
+            <a href="https://www.kaggle.com/yourprofile" target="_blank" rel="noopener noreferrer" 
+               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
+                 theme === 'dark' 
+                   ? 'bg-gray-800 hover:bg-cyan-600 text-gray-300 hover:text-white' 
+                   : 'bg-gray-100 hover:bg-cyan-600 text-gray-700 hover:text-white'
+               }`}>
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.825 23.859c-.022.092-.117.141-.281.141h-3.139c-.187 0-.351-.082-.492-.248l-5.178-6.589-1.448 1.374v5.111c0 .235-.117.352-.351.352H5.505c-.236 0-.354-.117-.354-.352V.353c0-.233.118-.353.354-.353h2.431c.234 0 .351.12.351.353v14.343l6.203-6.272c.165-.165.33-.246.495-.246h3.239c.144 0 .236.06.285.18.046.149.034.255-.036.315l-6.555 6.344 6.836 8.507c.095.104.117.208.07.358"/>
+              </svg>
+              <span className="text-sm font-medium">Kaggle</span>
+            </a>
+            <a href="https://developers.google.com/profile/u/yourprofile" target="_blank" rel="noopener noreferrer" 
+               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
+                 theme === 'dark' 
+                   ? 'bg-gray-800 hover:bg-blue-500 text-gray-300 hover:text-white' 
+                   : 'bg-gray-100 hover:bg-blue-500 text-gray-700 hover:text-white'
+               }`}>
+              <Code className="w-5 h-5" />
+              <span className="text-sm font-medium">Google Dev</span>
+            </a>
+          </div>
+        </div>
+
+        {/* Social Links Section */}
+        <div className={`text-center mb-12 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <h3 className={`text-lg font-semibold mb-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>Connect With Me</h3>
+          <div className="flex flex-wrap justify-center gap-3">
+            <a href="https://www.linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer" 
+               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
+                 theme === 'dark' 
+                   ? 'bg-gray-800 hover:bg-blue-600 text-gray-300 hover:text-white' 
+                   : 'bg-gray-100 hover:bg-blue-600 text-gray-700 hover:text-white'
+               }`}>
+              <Linkedin className="w-5 h-5" />
+              <span className="text-sm font-medium">LinkedIn</span>
+            </a>
+            <a href="https://scholar.google.com/citations?user=youruser" target="_blank" rel="noopener noreferrer" 
+               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
+                 theme === 'dark' 
+                   ? 'bg-gray-800 hover:bg-red-600 text-gray-300 hover:text-white' 
+                   : 'bg-gray-100 hover:bg-red-600 text-gray-700 hover:text-white'
+               }`}>
+              <BookOpen className="w-5 h-5" />
+              <span className="text-sm font-medium">Scholar</span>
+            </a>
+            <a href="https://www.instagram.com/yourprofile" target="_blank" rel="noopener noreferrer" 
+               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
+                 theme === 'dark' 
+                   ? 'bg-gray-800 hover:bg-pink-600 text-gray-300 hover:text-white' 
+                   : 'bg-gray-100 hover:bg-pink-600 text-gray-700 hover:text-white'
+               }`}>
+              <Instagram className="w-5 h-5" />
+              <span className="text-sm font-medium">Instagram</span>
+            </a>
+            <a href="https://www.scribd.com/user/youruser" target="_blank" rel="noopener noreferrer" 
+               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
+                 theme === 'dark' 
+                   ? 'bg-gray-800 hover:bg-orange-600 text-gray-300 hover:text-white' 
+                   : 'bg-gray-100 hover:bg-orange-600 text-gray-700 hover:text-white'
+               }`}>
+              <FileText className="w-5 h-5" />
+              <span className="text-sm font-medium">Scribd</span>
+            </a>
+            <a href="https://medium.com/@yourprofile" target="_blank" rel="noopener noreferrer" 
+               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
+                 theme === 'dark' 
+                   ? 'bg-gray-800 hover:bg-green-600 text-gray-300 hover:text-white' 
+                   : 'bg-gray-100 hover:bg-green-600 text-gray-700 hover:text-white'
+               }`}>
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/>
+              </svg>
+              <span className="text-sm font-medium">Medium</span>
+            </a>
+            <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener noreferrer" 
+               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
+                 theme === 'dark' 
+                   ? 'bg-gray-800 hover:bg-green-700 text-gray-300 hover:text-white' 
+                   : 'bg-gray-100 hover:bg-green-700 text-gray-700 hover:text-white'
+               }`}>
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947s-.422.947-.947.947a.95.95 0 0 1-.947-.947c0-.525.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-2.016 5.016-5.325 5.016h-3.919V7.416zm1.444 1.303v7.444h2.297c2.359 0 4.053-1.666 4.053-3.722 0-2.025-1.694-3.722-4.053-3.722h-2.297z"/>
+              </svg>
+              <span className="text-sm font-medium">ORCID</span>
+            </a>
+            <a href="https://www.kaggle.com/yourprofile" target="_blank" rel="noopener noreferrer" 
+               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
+                 theme === 'dark' 
+                   ? 'bg-gray-800 hover:bg-cyan-600 text-gray-300 hover:text-white' 
+                   : 'bg-gray-100 hover:bg-cyan-600 text-gray-700 hover:text-white'
+               }`}>
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.825 23.859c-.022.092-.117.141-.281.141h-3.139c-.187 0-.351-.082-.492-.248l-5.178-6.589-1.448 1.374v5.111c0 .235-.117.352-.351.352H5.505c-.236 0-.354-.117-.354-.352V.353c0-.233.118-.353.354-.353h2.431c.234 0 .351.12.351.353v14.343l6.203-6.272c.165-.165.33-.246.495-.246h3.239c.144 0 .236.06.285.18.046.149.034.255-.036.315l-6.555 6.344 6.836 8.507c.095.104.117.208.07.358"/>
+              </svg>
+              <span className="text-sm font-medium">Kaggle</span>
+            </a>
+            <a href="https://developers.google.com/profile/u/yourprofile" target="_blank" rel="noopener noreferrer" 
+               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
+                 theme === 'dark' 
+                   ? 'bg-gray-800 hover:bg-blue-500 text-gray-300 hover:text-white' 
+                   : 'bg-gray-100 hover:bg-blue-500 text-gray-700 hover:text-white'
+               }`}>
+              <Code className="w-5 h-5" />
+              <span className="text-sm font-medium">Google Dev</span>
+            </a>
+          </div>
         </div>
 
         {/* Stats Grid - Animated */}

@@ -6,7 +6,7 @@ import Footer from '../components/Footer';
 
 // Cache untuk GitHub data
 const CACHE_KEY = 'github_contributions_dayattt111';
-const CACHE_DURATION = 1000 * 60 * 60; // 1 jam
+const CACHE_DURATION = 1000 * 60 * 60; // 1 coud
 
 interface ContributionDay {
   date: string;
@@ -233,6 +233,38 @@ export default function Home() {
                         Muhammad Amin Hidayat
                     </h1>
                 </div>
+                
+                {/* Social Links - Icon Only */}
+                <div className="flex items-center justify-center lg:justify-start gap-3">
+                  <a href="https://www.linkedin.com/in/muhammad-amin-hidayat" target="_blank" rel="noopener noreferrer" 
+                     className={`p-2 rounded-lg transition-all duration-300 hover:scale-110 ${
+                       theme === 'dark' 
+                         ? 'bg-gray-800/50 hover:bg-blue-600/20 border border-gray-700/50 hover:border-blue-500/50' 
+                         : 'bg-white/80 hover:bg-blue-50 border border-gray-200 hover:border-blue-300'
+                     }`} 
+                     title="LinkedIn">
+                    <img src="/images/sosial-media/linkedin.svg" alt="LinkedIn" className="w-5 h-5" />
+                  </a>
+                  <a href="https://www.kaggle.com/muhammadaminhidayat" target="_blank" rel="noopener noreferrer" 
+                     className={`p-2 rounded-lg transition-all duration-300 hover:scale-110 ${
+                       theme === 'dark' 
+                         ? 'bg-gray-800/50 hover:bg-cyan-600/20 border border-gray-700/50 hover:border-cyan-500/50' 
+                         : 'bg-white/80 hover:bg-cyan-50 border border-gray-200 hover:border-cyan-300'
+                     }`} 
+                     title="Kaggle">
+                    <img src="/images/sosial-media/Kaggle_logo.png" alt="Kaggle" className="w-5 h-5 object-contain" />
+                  </a>
+                  <a href="https://scholar.google.com/citations?user=LRRALCsAAAAJ&hl=id" target="_blank" rel="noopener noreferrer" 
+                     className={`p-2 rounded-lg transition-all duration-300 hover:scale-110 ${
+                       theme === 'dark' 
+                         ? 'bg-gray-800/50 hover:bg-red-600/20 border border-gray-700/50 hover:border-red-500/50' 
+                         : 'bg-white/80 hover:bg-red-50 border border-gray-200 hover:border-red-300'
+                     }`} 
+                     title="Google Scholar">
+                    <img src="/images/sosial-media/Google Scholar.svg" alt="Google Scholar" className="w-5 h-5" />
+                  </a>
+                </div>
+
                 <div className="flex items-center justify-center lg:justify-start gap-2 flex-wrap">
                   <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-blue-500/20 backdrop-blur-sm border border-blue-500/30">
                     <Code2 className="w-4 h-4 text-blue-400" />
@@ -244,7 +276,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                <p className={`text-xs md:text-sm lg:text-base leading-relaxed max-w-xl mx-auto lg:mx-0 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+                <p className={`text-xs text-justify md:text-sm lg:text-base leading-relaxed max-w-xl mx-auto lg:mx-0 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
                   Undergraduate student at <b><i>Universitas Dipa Makassar</i></b> and a passionate programmer with a strong focus on <b>Full-Stack Web Development</b>, <b>Computer Networking</b>, and <b>Technical communication</b>. I actively build <i>web-based applications</i>, explore modern <i>technologies</i>, and develop problem-solving skills through real projects and collaborative environments. I am also a member of <b><i>Dipanegara Computer Club</i></b>, where I engage in IT discussions, knowledge sharing, and continuous skill development in <b>programming</b> and <b>networking</b>.
                 </p>
 
