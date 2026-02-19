@@ -155,15 +155,15 @@ export default function Navbar() {
 
           {/* Contact Button with gradient */}
           <a
-            href="https://wa.me/6282197855715?text=Halo%2C%20saya%20tertarik%20dengan%20portfolio%20mu!"
+            href="https://wa.me/6288242763942?text=Halo%2C%20saya%20tertarik%20dengan%20portfolio%20mu!"
             target="_blank"
             rel="noopener noreferrer"
             className="hidden md:block relative group"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full blur-lg opacity-50 group-hover:opacity-75 transition-opacity"></div>
-            <div className="relative px-6 py-2.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full font-semibold text-sm text-white transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl">
+            {/* <div className="relative px-6 py-2.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full font-semibold text-sm text-white transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl">
               Let's Talk
-            </div>
+            </div> */}
           </a>
 
           {/* Mobile Menu Button with animation */}
@@ -223,7 +223,7 @@ export default function Navbar() {
             </Link>
           ))}
           <a
-            href="https://wa.me/6282197855715?text=Halo%2C%20saya%20tertarik%20dengan%20portfolio%20mu!"
+            href="https://wa.me/6288242763942?text=Halo%2C%20saya%20tertarik%20dengan%20portfolio%20mu!"
             target="_blank"
             rel="noopener noreferrer"
             className="relative group mt-4"
@@ -232,9 +232,9 @@ export default function Navbar() {
             }}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl blur-md opacity-50 group-hover:opacity-75 transition-opacity"></div>
-            <div className="relative w-full text-center px-6 py-3.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl font-semibold text-sm text-white transition-all duration-300 group-hover:scale-[1.02]">
+            {/* <div className="relative w-full text-center px-6 py-3.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl font-semibold text-sm text-white transition-all duration-300 group-hover:scale-[1.02]">
               Let's Talk
-            </div>
+            </div> */}
           </a>
         </div>
       </div>

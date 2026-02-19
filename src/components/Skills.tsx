@@ -65,7 +65,7 @@ export default function Skills() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const message = `Name: ${formData.name}%0AEmail: ${formData.email}%0AMessage: ${formData.message}`;
-    window.open(`https://wa.me/6282197855715?text=${message}`, '_blank');
+    window.open(`https://wa.me/6288242763942?text=${message}`, '_blank');
     setFormData({ name: '', email: '', message: '' });
   };
 
@@ -134,7 +134,7 @@ export default function Skills() {
 
           {/* Contact Quick Links */}
           <div className={`space-y-3 transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
-            <a href="https://wa.me/6282197855715" target="_blank" rel="noopener noreferrer" 
+            <a href="https://wa.me/6288242763942" target="_blank" rel="noopener noreferrer" 
                className={`flex items-center gap-3 p-3 rounded-lg hover:scale-105 transition-transform ${theme === 'dark' ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-50 hover:bg-gray-100'}`}>
               <MessageCircle className="w-5 h-5 text-green-500" />
               <div className="text-sm">

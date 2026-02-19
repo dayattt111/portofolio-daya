@@ -177,7 +177,7 @@ export default function Hero() {
                 <span>Get in Touch</span>
               </button>
               <a
-                href="https://wa.me/6282197855715?text=Halo%2C%20saya%20tertarik%20dengan%20portfolio%20mu!"
+                href="https://wa.me/6288242763942?text=Halo%2C%20saya%20tertarik%20dengan%20portfolio%20mu!"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="modern-btn-outline text-sm sm:text-base py-3 sm:py-3 px-6 sm:px-8 w-full sm:w-auto touch-manipulation flex items-center justify-center gap-2"

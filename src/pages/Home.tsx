@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ChevronDown, Code2, Palette, MessageCircle, Award, Users, Rocket, Sparkles, Github, ExternalLink, ArrowRight, Terminal, Globe, Database } from 'lucide-react';
+import { ChevronDown, MessageCircle, Award, Users, Rocket, Sparkles, Github, ExternalLink, ArrowRight, Terminal } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
@@ -65,10 +65,10 @@ const stats = [
 ];
 
 const roles = [
-  { icon: <Code2 className="w-4 h-4" />, label: 'Full Stack Developer', gradient: 'from-blue-500 to-cyan-500' },
-  { icon: <Globe className="w-4 h-4" />, label: 'Cloud Enthusiast', gradient: 'from-purple-500 to-pink-500' },
-  { icon: <Palette className="w-4 h-4" />, label: 'UI/UX Designer', gradient: 'from-rose-500 to-orange-500' },
-  { icon: <Database className="w-4 h-4" />, label: 'Data Engineer', gradient: 'from-emerald-500 to-teal-500' },
+  { label: 'Full Stack Developer', gradient: 'from-blue-500 to-cyan-500' },
+  { label: 'Cloud Enthusiast', gradient: 'from-purple-500 to-pink-500' },
+  { label: 'UI/UX Designer', gradient: 'from-rose-500 to-orange-500' },
+  { label: 'Data Engineer', gradient: 'from-emerald-500 to-teal-500' },
 ];
 
 export default function Home() {
@@ -186,7 +186,7 @@ export default function Home() {
               <div className="flex flex-wrap gap-2 justify-center lg:justify-start fade-in-up" style={{ animationDelay: '0.4s' }}>
                 {roles.map((r, i) => (
                   <div key={i} className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border backdrop-blur-sm transition-transform hover:scale-105 ${theme === 'dark' ? 'bg-gray-800/60 border-gray-700/60 text-gray-300' : 'bg-white/80 border-gray-200 text-gray-700'}`}>
-                    <span className={`bg-gradient-to-r ${r.gradient} bg-clip-text text-transparent`}>{r.icon}</span>
+                    <span className={`bg-gradient-to-r ${r.gradient} bg-clip-text text-transparent`}></span>
                     {r.label}
                   </div>
                 ))}
@@ -213,10 +213,10 @@ export default function Home() {
 
               {/* CTA buttons */}
               <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start fade-in-up" style={{ animationDelay: '0.6s' }}>
-                <a href="public/cv/CV-Muhammad-Amin-Hidayat.pdf" className="group relative px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl hover:shadow-xl hover:shadow-blue-500/25 hover:scale-105 transition-all duration-300 text-sm sm:text-base text-center overflow-hidden">
-                  <span className="relative z-10 flex items-center justify-center gap-2">Download CV <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" /></span>
+                <a href="https://docs.google.com/document/d/14eAmhXNkfFRMoWlU8IlmvrZVHebQnfWrXYs8ENy_GIw/edit?usp=sharing" className="group relative px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl hover:shadow-xl hover:shadow-blue-500/25 hover:scale-105 transition-all duration-300 text-sm sm:text-base text-center overflow-hidden">
+                  <span className="relative z-10 flex items-center justify-center gap-2">View CV <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" /></span>
                 </a>
-                <a href="https://wa.me/6282197855715?text=Halo%2C%20saya%20tertarik%20dengan%20portfolio%20mu!" target="_blank" rel="noopener noreferrer"
+                <a href="https://wa.me/6288242763942?text=Halo%2C%20saya%20tertarik%20dengan%20portfolio%20mu!" target="_blank" rel="noopener noreferrer"
                   className={`px-6 py-3 border-2 font-semibold rounded-xl hover:scale-105 transition-all duration-300 text-sm sm:text-base flex items-center justify-center gap-2 ${theme === 'dark' ? 'border-gray-600 hover:bg-white/5 hover:border-gray-500' : 'border-gray-300 hover:bg-gray-50 hover:border-gray-400'}`}>
                   <MessageCircle className="w-4 h-4" /> Contact Me
                 </a>

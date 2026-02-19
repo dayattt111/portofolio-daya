@@ -122,7 +122,7 @@ export default function Footer() {
                 hidayatbaru0304@gmail.com
               </a>
               <a 
-                href="https://wa.me/6282197855715"
+                href="https://wa.me/6288242763942"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`text-sm flex items-center gap-2 transition-colors duration-300 ${
