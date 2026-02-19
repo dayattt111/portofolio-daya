@@ -31,6 +31,13 @@ export default function About() {
   const [typedResult, setTypedResult] = useState('');
   const typingStarted = useRef(false);
 
+  // Fastfetch states
+  const [typedCommand2, setTypedCommand2] = useState('');
+  const [typingDone2, setTypingDone2] = useState(false);
+  const [showFastfetch, setShowFastfetch] = useState(false);
+  const commandText2 = 'fastfetch';
+  const [cursorPhase, setCursorPhase] = useState<'cmd1' | 'cmd2' | 'done'>('cmd1');
+
   // Terminal typing effect
   const startTyping = useCallback(() => {
     if (typingStarted.current) return;
@@ -53,6 +60,26 @@ export default function About() {
               setTypedResult(resultText.slice(0, j + 1));
               j++;
               setTimeout(typeResult, 50 + Math.random() * 40);
+            } else {
+              // After whoami result done, start typing fastfetch
+              setCursorPhase('cmd2');
+              setTimeout(() => {
+                let k = 0;
+                const typeCmd2 = () => {
+                  if (k < commandText2.length) {
+                    setTypedCommand2(commandText2.slice(0, k + 1));
+                    k++;
+                    setTimeout(typeCmd2, 100 + Math.random() * 80);
+                  } else {
+                    setTimeout(() => {
+                      setTypingDone2(true);
+                      setShowFastfetch(true);
+                      setCursorPhase('done');
+                    }, 500);
+                  }
+                };
+                setTimeout(typeCmd2, 400);
+              }, 800);
             }
           };
           setTimeout(typeResult, 200);
@@ -178,7 +205,7 @@ export default function About() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Terminal Whoami Animation */}
         <div className={`mb-12 sm:mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <div className={`max-w-2xl mx-auto rounded-xl overflow-hidden shadow-2xl border ${
+          <div className={`max-w-3xl mx-auto rounded-xl overflow-hidden shadow-2xl border ${
             theme === 'dark' 
               ? 'border-gray-700 shadow-black/40' 
               : 'border-gray-300 shadow-gray-400/30'
@@ -200,10 +227,10 @@ export default function About() {
             </div>
             
             {/* Terminal Body */}
-            <div className={`px-5 py-5 font-mono text-sm sm:text-base ${
+            <div className={`px-5 py-5 font-mono text-xs sm:text-sm md:text-base ${
               theme === 'dark' ? 'bg-gray-900' : 'bg-gray-950'
-            }`}>
-              {/* Command Line */}
+            } overflow-x-auto`}>
+              {/* Command 1: whoami */}
               <div className="flex items-center flex-wrap">
                 <span className="text-green-400 font-bold">Hikaruu</span>
                 <span className="text-gray-500">@</span>
@@ -211,20 +238,20 @@ export default function About() {
                 <span className="text-gray-500 mx-1.5">~</span>
                 <span className="text-yellow-400 mr-2">$</span>
                 <span className="text-white">{typedCommand}</span>
-                {!typingDone && (
+                {cursorPhase === 'cmd1' && !typingDone && (
                   <span className={`inline-block w-2.5 h-5 ml-0.5 ${
                     cursorVisible ? 'bg-green-400' : 'bg-transparent'
                   } transition-colors duration-100`}></span>
                 )}
               </div>
               
-              {/* Result Line */}
+              {/* Result 1: name */}
               {showResult && (
-                <div className="mt-3">
+                <div className="mt-2">
                   <span className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
                     {typedResult}
                   </span>
-                  {typedResult.length < resultText.length && (
+                  {cursorPhase === 'cmd1' && typedResult.length < resultText.length && (
                     <span className={`inline-block w-2.5 h-7 ml-0.5 align-middle ${
                       cursorVisible ? 'bg-green-400' : 'bg-transparent'
                     } transition-colors duration-100`}></span>
@@ -232,8 +259,79 @@ export default function About() {
                 </div>
               )}
 
-              {/* New prompt after done */}
+              {/* Command 2: fastfetch */}
               {typedResult === resultText && (
+                <div className="flex items-center mt-3 flex-wrap">
+                  <span className="text-green-400 font-bold">Hikaruu</span>
+                  <span className="text-gray-500">@</span>
+                  <span className="text-purple-400 font-bold">Developer</span>
+                  <span className="text-gray-500 mx-1.5">~</span>
+                  <span className="text-yellow-400 mr-2">$</span>
+                  <span className="text-white">{typedCommand2}</span>
+                  {cursorPhase === 'cmd2' && !typingDone2 && (
+                    <span className={`inline-block w-2.5 h-5 ml-0.5 ${
+                      cursorVisible ? 'bg-green-400' : 'bg-transparent'
+                    } transition-colors duration-100`}></span>
+                  )}
+                </div>
+              )}
+
+              {/* Fastfetch Output */}
+              {showFastfetch && (
+                <div className="mt-3 flex gap-4 sm:gap-6 items-start">
+                  {/* Kali Linux ASCII Art */}
+                  <pre className="text-blue-400 text-[8px] sm:text-[10px] md:text-xs leading-tight select-none shrink-0" style={{ fontFamily: 'monospace' }}>{`
+  ......                        
+  .;okOOOkdc,.                  
+  .,lkOOOOOOOOOOOl.              
+  .;oOOOOOOOOOOOOOOOo.            
+  cdOOOOOOOOOOOOOOOOOOd.          
+ .dOOOOOOOOOOOOOOOOOOOOOc         
+ lOOOOOOOOOOOOOOOOOOOOOOOo.       
+ .OOOOOOOOOOOOOOOOOOOOOOOOOO;      
+ :OOOOOOOOOOOOOc..oOOOOOOOOO.     
+ cOOOOOOOOOOOo.    .oOOOOOOOO     
+ :OOOOOOOOOOO.       lOOOOOOOOl   
+ oOOOOOOOOOOc         cOOOOOOOO.  
+     .:oOOOOOo          oOOOOOOO; 
+        .dOOOOo.         :OOOOOO; 
+          cOOOOOo.        lOOOOO; 
+           oOOOOOOo.      :OOOOO: 
+            .oOOOOOOo.    .OOOOOo 
+              cOOOOOOOo.  cOOOOOo 
+              .oOOOOOOOOodOOOOOOo 
+               .oOOOOOOOOOOOOOOo  
+                 oOOOOOOOOOOOOo.  
+                  oOOOOOOOOOo.    
+                   .oOOOOOo.      
+                     .oOo.        
+                       .          `}</pre>
+
+                  {/* System Info */}
+                  <div className="text-[10px] sm:text-xs md:text-sm leading-relaxed sm:leading-loose min-w-0">
+                    <div><span className="text-blue-400 font-bold">Hikaruu</span><span className="text-gray-500">@</span><span className="text-blue-400 font-bold">Developer</span></div>
+                    <div className="text-gray-600">──────────────────</div>
+                    <div><span className="text-blue-400 font-bold">OS</span><span className="text-gray-500">: </span><span className="text-gray-300">Kali GNU/Linux Rolling x86_64</span></div>
+                    <div><span className="text-blue-400 font-bold">Host</span><span className="text-gray-500">: </span><span className="text-gray-300">Portfolio v2.0</span></div>
+                    <div><span className="text-blue-400 font-bold">Kernel</span><span className="text-gray-500">: </span><span className="text-gray-300">6.1.0-kali9-amd64</span></div>
+                    <div><span className="text-blue-400 font-bold">Uptime</span><span className="text-gray-500">: </span><span className="text-gray-300">∞ (always coding)</span></div>
+                    <div><span className="text-blue-400 font-bold">Shell</span><span className="text-gray-500">: </span><span className="text-gray-300">zsh 5.9</span></div>
+                    <div><span className="text-blue-400 font-bold">DE</span><span className="text-gray-500">: </span><span className="text-gray-300">React + TypeScript</span></div>
+                    <div><span className="text-blue-400 font-bold">Theme</span><span className="text-gray-500">: </span><span className="text-gray-300">Tailwind CSS [Dark]</span></div>
+                    <div><span className="text-blue-400 font-bold">Terminal</span><span className="text-gray-500">: </span><span className="text-gray-300">VS Code Integrated</span></div>
+                    <div><span className="text-blue-400 font-bold">Languages</span><span className="text-gray-500">: </span><span className="text-gray-300">TS, JS, PHP, Python</span></div>
+                    <div><span className="text-blue-400 font-bold">Frameworks</span><span className="text-gray-500">: </span><span className="text-gray-300">React, Laravel, Next.js</span></div>
+                    <div className="mt-2 flex gap-1">
+                      {['bg-black','bg-red-600','bg-green-500','bg-yellow-500','bg-blue-500','bg-purple-500','bg-cyan-400','bg-white'].map((c, i) => (
+                        <div key={i} className={`w-3 h-3 sm:w-4 sm:h-4 rounded-sm ${c}`}></div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Final prompt */}
+              {showFastfetch && (
                 <div className="flex items-center mt-3">
                   <span className="text-green-400 font-bold">Hikaruu</span>
                   <span className="text-gray-500">@</span>
