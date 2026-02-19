@@ -1,77 +1,34 @@
-import { useEffect, useRef, useState } from 'react';
-import { Mail, Github, Linkedin, MessageCircle, Send, ArrowRight, Sparkles, Code2, Globe, Database, Palette, Server, Terminal, Smartphone, Braces, GitBranch, Cloud, Star } from 'lucide-react';
+import { useEffect, useRef, useState, useCallback } from 'react';
+import { MessageCircle, Send, Sparkles, Globe, Terminal, Smartphone, Braces, Cloud, Star } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 
-// ─── Skill categories ───
-const skillCategories = [
-  {
-    title: 'Frontend Development',
-    icon: <Code2 className="w-5 h-5" />,
-    gradient: 'from-blue-500 to-cyan-500',
-    skills: [
-      { name: 'React.js', level: 95, icon: '⚛️' },
-      { name: 'TypeScript', level: 92, icon: '📘' },
-      { name: 'Next.js', level: 90, icon: '▲' },
-      { name: 'Tailwind CSS', level: 95, icon: '🎨' },
-      { name: 'HTML/CSS', level: 98, icon: '🌐' },
-    ]
-  },
-  {
-    title: 'Backend Development',
-    icon: <Server className="w-5 h-5" />,
-    gradient: 'from-purple-500 to-pink-500',
-    skills: [
-      { name: 'Node.js', level: 88, icon: '🟢' },
-      { name: 'Laravel', level: 85, icon: '🔴' },
-      { name: 'PHP', level: 85, icon: '🐘' },
-      { name: 'Python', level: 80, icon: '🐍' },
-      { name: 'Express.js', level: 87, icon: '⚡' },
-    ]
-  },
-  {
-    title: 'Database & Cloud',
-    icon: <Database className="w-5 h-5" />,
-    gradient: 'from-emerald-500 to-teal-500',
-    skills: [
-      { name: 'MySQL', level: 88, icon: '🐬' },
-      { name: 'PostgreSQL', level: 82, icon: '🐘' },
-      { name: 'Supabase', level: 85, icon: '⚡' },
-      { name: 'Firebase', level: 80, icon: '🔥' },
-      { name: 'Google Cloud', level: 78, icon: '☁️' },
-    ]
-  },
-  {
-    title: 'Tools & Design',
-    icon: <Palette className="w-5 h-5" />,
-    gradient: 'from-orange-500 to-red-500',
-    skills: [
-      { name: 'Figma', level: 88, icon: '🎯' },
-      { name: 'Git & GitHub', level: 92, icon: '📦' },
-      { name: 'Docker', level: 75, icon: '🐳' },
-      { name: 'VS Code', level: 95, icon: '💻' },
-      { name: 'Linux', level: 82, icon: '🐧' },
-    ]
-  },
+// ─── SVG logo helper ───
+const L = '/images/logo/programs';
+const logo = (file: string) => `${L}/${file}`;
+
+// ─── All skills flattened for the grid ───
+const allSkills = [
+  { name: 'React.js', level: 95, svg: logo('react-svgrepo-com.svg'), category: 'Frontend', glow: '#61dafb' },
+  { name: 'TypeScript', level: 92, svg: logo('typescript-logo-svgrepo-com.svg'), category: 'Frontend', glow: '#3178c6' },
+  { name: 'JavaScript', level: 95, svg: logo('javascript-svgrepo-com.svg'), category: 'Frontend', glow: '#f7df1e' },
+  { name: 'Tailwind CSS', level: 95, svg: logo('tailwind-svgrepo-com.svg'), category: 'Frontend', glow: '#06b6d4' },
+  { name: 'Laravel', level: 85, svg: logo('laravel-svgrepo-com.svg'), category: 'Backend', glow: '#ff2d20' },
+  { name: 'Python', level: 80, svg: logo('python-svgrepo-com.svg'), category: 'Backend', glow: '#3776ab' },
+  { name: 'MySQL', level: 88, svg: logo('mysql-logo-svgrepo-com.svg'), category: 'Database', glow: '#00758f' },
+  { name: 'PostgreSQL', level: 82, svg: logo('postgresql-svgrepo-com.svg'), category: 'Database', glow: '#336791' },
+  { name: 'Firebase', level: 80, svg: logo('firebase-svgrepo-com.svg'), category: 'Cloud', glow: '#ffca28' },
+  { name: 'Docker', level: 75, svg: logo('docker-logo-svgrepo-com.svg'), category: 'DevOps', glow: '#2496ed' },
+  { name: 'Figma', level: 88, svg: logo('figma-svgrepo-com.svg'), category: 'Design', glow: '#a259ff' },
+  { name: 'GitHub', level: 92, svg: logo('github-142-svgrepo-com.svg'), category: 'Tools', glow: '#8b5cf6' },
+  { name: 'Gmail', level: 90, svg: logo('gmail-svgrepo-com.svg'), category: 'Tools', glow: '#ea4335' },
 ];
 
-// ─── Tech marquee items ───
-const techMarquee = [
-  { name: 'JavaScript', icon: '⚡', color: 'from-yellow-400 to-yellow-600' },
-  { name: 'TypeScript', icon: '📘', color: 'from-blue-400 to-blue-600' },
-  { name: 'React', icon: '⚛️', color: 'from-cyan-400 to-cyan-600' },
-  { name: 'Next.js', icon: '▲', color: 'from-gray-600 to-gray-800' },
-  { name: 'Node.js', icon: '🟢', color: 'from-green-400 to-green-600' },
-  { name: 'Python', icon: '🐍', color: 'from-blue-500 to-yellow-500' },
-  { name: 'Laravel', icon: '🔴', color: 'from-red-400 to-red-600' },
-  { name: 'Docker', icon: '🐳', color: 'from-blue-400 to-blue-700' },
-  { name: 'PostgreSQL', icon: '🐘', color: 'from-blue-600 to-indigo-600' },
-  { name: 'MongoDB', icon: '🍃', color: 'from-green-500 to-green-700' },
-  { name: 'Tailwind', icon: '🎨', color: 'from-cyan-400 to-blue-500' },
-  { name: 'Firebase', icon: '🔥', color: 'from-yellow-500 to-orange-600' },
-  { name: 'Git', icon: '📦', color: 'from-red-500 to-orange-500' },
-  { name: 'Figma', icon: '🎯', color: 'from-purple-500 to-pink-500' },
-  { name: 'Supabase', icon: '⚡', color: 'from-emerald-400 to-emerald-600' },
-  { name: 'Three.js', icon: '🎲', color: 'from-gray-400 to-gray-600' },
+
+// ─── Experience items ───
+const experiences = [
+  { year: '2023 — Now', role: 'Full-Stack Developer', where: 'Freelance & Projects', desc: 'Membangun aplikasi web modern dengan React, Laravel, dan cloud services.' },
+  { year: '2024 — Now', role: 'UI / UX Designer', where: 'Freelance', desc: 'Mendesain antarmuka yang intuitif dan user-friendly dengan Figma.' },
+  { year: '2023 — Now', role: 'Open Source Contributor', where: 'GitHub', desc: 'Berkontribusi pada proyek open-source dan membangun tools untuk komunitas developer.' },
 ];
 
 // ─── Intersection observer hook ───
@@ -87,14 +44,117 @@ function useInView(threshold = 0.12) {
   return { ref, visible };
 }
 
+// ─── 3-D tilt card hook ───
+function useTilt() {
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const el = cardRef.current; if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 18;
+    const y = ((e.clientY - rect.top) / rect.height - 0.5) * -18;
+    el.style.transform = `perspective(600px) rotateY(${x}deg) rotateX(${y}deg) scale3d(1.04, 1.04, 1.04)`;
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    const el = cardRef.current; if (!el) return;
+    el.style.transform = 'perspective(600px) rotateY(0) rotateX(0) scale3d(1, 1, 1)';
+  }, []);
+
+  return { cardRef, handleMouseMove, handleMouseLeave };
+}
+
+// ─── Single skill card with 3-D tilt ───
+function SkillCard({ skill, index, visible, theme }: { skill: typeof allSkills[0]; index: number; visible: boolean; theme: string }) {
+  const { cardRef, handleMouseMove, handleMouseLeave } = useTilt();
+  const radius = 40;
+  const circ = 2 * Math.PI * radius;
+  const offset = circ - (skill.level / 100) * circ;
+
+  // Each card flies in from a unique direction based on its index
+  const directions = [
+    { x: -60, y: -40 },  { x: 0, y: -60 },  { x: 60, y: -40 },
+    { x: -80, y: 0 },    { x: 80, y: 0 },    { x: -60, y: 40 },
+    { x: 0, y: 60 },     { x: 60, y: 40 },   { x: -40, y: -60 },
+    { x: 40, y: -60 },   { x: -40, y: 60 },  { x: 40, y: 60 },
+    { x: 0, y: -80 },
+  ];
+  const dir = directions[index % directions.length];
+  const delay = index * 70;
+
+  return (
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="skill-card-wrapper"
+      style={{
+        transition: `transform 0.15s ease-out, opacity 0.6s cubic-bezier(.22,1,.36,1) ${delay}ms, translate 0.6s cubic-bezier(.22,1,.36,1) ${delay}ms, filter 0.6s ease ${delay}ms`,
+        opacity: visible ? 1 : 0,
+        translate: visible ? '0 0' : `${dir.x}px ${dir.y}px`,
+        filter: visible ? 'blur(0)' : 'blur(8px)',
+        willChange: 'transform, opacity, translate, filter',
+      }}
+    >
+      <div className={`relative h-full p-5 rounded-2xl border overflow-hidden group cursor-default
+        ${theme === 'dark'
+          ? 'bg-gray-800/50 border-gray-700/40 hover:border-gray-600/70'
+          : 'bg-white border-gray-200 hover:border-gray-300 shadow-sm hover:shadow-lg'
+        }`}
+      >
+        {/* Glow blob on hover */}
+        <div
+          className="absolute -inset-2 rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-2xl pointer-events-none"
+          style={{ background: skill.glow }}
+        />
+
+        <div className="relative z-10 flex flex-col items-center text-center gap-3">
+          {/* Circular progress ring + logo */}
+          <div className="relative w-[96px] h-[96px] flex items-center justify-center">
+            <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 96 96">
+              <circle cx="48" cy="48" r={radius} fill="none" stroke={theme === 'dark' ? '#374151' : '#e5e7eb'} strokeWidth="4" />
+              <circle
+                cx="48" cy="48" r={radius} fill="none"
+                stroke={skill.glow}
+                strokeWidth="4"
+                strokeLinecap="round"
+                strokeDasharray={circ}
+                strokeDashoffset={visible ? offset : circ}
+                className="transition-all duration-[1.4s] ease-out"
+                style={{ transitionDelay: `${delay + 300}ms` }}
+              />
+            </svg>
+            <img
+              src={skill.svg}
+              alt={skill.name}
+              className="w-10 h-10 object-contain group-hover:scale-110 transition-transform duration-300 drop-shadow-sm"
+              loading="lazy"
+            />
+          </div>
+
+          <div>
+            <h3 className={`text-sm font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{skill.name}</h3>
+            <span className="text-xs font-medium mt-0.5 block" style={{ color: skill.glow }}>{skill.level}%</span>
+          </div>
+
+          <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${theme === 'dark' ? 'bg-gray-700/60 text-gray-400' : 'bg-gray-100 text-gray-500'}`}>
+            {skill.category}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ═══════════ MAIN COMPONENT ═══════════
 export default function Skills() {
   const { theme } = useTheme();
   const heroSection = useInView(0.1);
-  const skillsSection = useInView(0.08);
+  const skillsSection = useInView(0.05);
+  const expSection = useInView(0.1);
   const contactSection = useInView(0.1);
   const templateSection = useInView(0.1);
   const [formData, setFormData] = useState({ name: '', email: '', project: '', budget: '', message: '' });
-  const [activeCategory, setActiveCategory] = useState(0);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -128,24 +188,65 @@ export default function Skills() {
         </div>
       </section>
 
-      {/* ═══════════ TECH MARQUEE ═══════════ */}
-      <section className={`py-4 border-y overflow-hidden ${theme === 'dark' ? 'bg-gray-800/30 border-gray-800' : 'bg-gray-50/80 border-gray-100'}`}>
-        <div className="relative">
-          <div className={`absolute left-0 top-0 bottom-0 w-16 sm:w-24 z-10 pointer-events-none ${theme === 'dark' ? 'bg-gradient-to-r from-gray-900 to-transparent' : 'bg-gradient-to-r from-gray-50 to-transparent'}`} />
-          <div className={`absolute right-0 top-0 bottom-0 w-16 sm:w-24 z-10 pointer-events-none ${theme === 'dark' ? 'bg-gradient-to-l from-gray-900 to-transparent' : 'bg-gradient-to-l from-gray-50 to-transparent'}`} />
-          <div className="flex animate-marquee">
-            {[...techMarquee, ...techMarquee].map((tech, i) => (
-              <div key={i} className={`flex-shrink-0 flex items-center gap-2 mx-4 px-4 py-2 rounded-lg transition-all hover:scale-105 ${theme === 'dark' ? 'bg-gray-800/60' : 'bg-white/80'}`}>
-                <span className="text-lg">{tech.icon}</span>
-                <span className={`text-xs font-semibold bg-gradient-to-r ${tech.color} bg-clip-text text-transparent whitespace-nowrap`}>{tech.name}</span>
-              </div>
+
+
+      {/* ═══════════ SKILLS GRID ═══════════ */}
+      <section ref={skillsSection.ref} className="py-14 sm:py-20">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            {allSkills.map((skill, i) => (
+              <SkillCard key={skill.name} skill={skill} index={i} visible={skillsSection.visible} theme={theme} />
             ))}
           </div>
         </div>
       </section>
 
+      {/* ═══════════ EXPERIENCE TIMELINE ═══════════ */}
+      <section ref={expSection.ref} className={`py-14 sm:py-20 ${theme === 'dark' ? 'bg-gray-800/20' : 'bg-gray-50/60'}`}>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className={`text-center mb-10 transition-all duration-700 ${expSection.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <h2 className="text-2xl sm:text-3xl font-extrabold mb-2 bg-gradient-to-r from-emerald-400 via-teal-500 to-cyan-500 bg-clip-text text-transparent">
+              Experience
+            </h2>
+          </div>
+
+          <div className="relative">
+            {/* Vertical line */}
+            <div className={`absolute left-4 sm:left-6 top-0 bottom-0 w-px ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'}`} />
+
+            <div className="space-y-8">
+              {experiences.map((exp, i) => (
+                <div
+                  key={i}
+                  className="relative pl-12 sm:pl-16"
+                  style={{
+                    transition: `opacity 0.6s cubic-bezier(.22,1,.36,1) ${i * 150}ms, translate 0.6s cubic-bezier(.22,1,.36,1) ${i * 150}ms`,
+                    opacity: expSection.visible ? 1 : 0,
+                    translate: expSection.visible ? '0 0' : '0 30px',
+                  }}
+                >
+                  {/* Dot */}
+                  <div className={`absolute left-2.5 sm:left-4.5 top-1.5 w-3 h-3 rounded-full border-2 transition-colors duration-500 ${theme === 'dark' ? 'bg-gray-900 border-emerald-400' : 'bg-white border-emerald-500'}`} />
+                  {/* Pulse ring */}
+                  <div className="absolute left-1.5 sm:left-3.5 top-0.5 w-5 h-5 rounded-full animate-ping opacity-20" style={{ background: '#34d399' }} />
+
+                  <div className={`p-5 rounded-2xl border transition-all duration-300 hover:scale-[1.01] ${theme === 'dark' ? 'bg-gray-800/50 border-gray-700/40 hover:border-gray-600' : 'bg-white border-gray-200 hover:border-gray-300 shadow-sm hover:shadow-md'}`}>
+                    <span className={`text-xs font-mono mb-1 block ${theme === 'dark' ? 'text-emerald-400' : 'text-emerald-600'}`}>{exp.year}</span>
+                    <h3 className={`text-base font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{exp.role}</h3>
+                    <span className={`text-xs ${theme === 'dark' ? 'text-gray-500' : 'text-gray-500'}`}>{exp.where}</span>
+                    <p className={`text-sm mt-2 leading-relaxed ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>{exp.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ═══════════ HIRE ME / CONTACT ═══════════ */}
-      <section ref={contactSection.ref} className={`py-14 sm:py-20 ${theme === 'dark' ? 'bg-gray-800/30' : 'bg-gray-50/80'}`}>
+      <section ref={contactSection.ref} className="py-14 sm:py-20">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className={`text-center mb-10 md:mb-14 transition-all duration-700 ${contactSection.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full border mb-5 text-xs font-semibold tracking-wider uppercase ${theme === 'dark' ? 'bg-purple-500/10 border-purple-500/30 text-purple-400' : 'bg-purple-50 border-purple-200 text-purple-600'}`}>
@@ -189,12 +290,14 @@ export default function Skills() {
                 <div className="space-y-2">
                   {[
                     { href: 'https://wa.me/6282197855715', icon: <MessageCircle className="w-4 h-4 text-green-500" />, label: 'WhatsApp', value: '082197855715' },
-                    { href: 'mailto:hidayatbaru0304@gmail.com', icon: <Mail className="w-4 h-4 text-blue-500" />, label: 'Email', value: 'hidayatbaru0304@gmail.com' },
-                    { href: 'https://github.com/dayattt111', icon: <Github className="w-4 h-4 text-purple-500" />, label: 'GitHub', value: 'dayattt111' },
-                    { href: 'https://www.linkedin.com/in/muhammad-amin-hidayat', icon: <Linkedin className="w-4 h-4 text-blue-600" />, label: 'LinkedIn', value: 'muhammad-amin-hidayat' },
+                    { href: 'mailto:hidayatbaru0304@gmail.com', svg: logo('gmail-svgrepo-com.svg'), label: 'Email', value: 'hidayatbaru0304@gmail.com' },
+                    { href: 'https://github.com/dayattt111', svg: logo('github-142-svgrepo-com.svg'), label: 'GitHub', value: 'dayattt111' },
+                    { href: 'https://www.linkedin.com/in/muhammad-amin-hidayat', svg: '/images/logo/sosial-media/linkedin-svgrepo-com.svg', label: 'LinkedIn', value: 'muhammad-amin-hidayat' },
                   ].map((c, i) => (
                     <a key={i} href={c.href} target="_blank" rel="noopener noreferrer" className={`flex items-center gap-3 p-3 rounded-xl transition-all hover:scale-[1.02] ${theme === 'dark' ? 'hover:bg-gray-700/40' : 'hover:bg-gray-50'}`}>
-                      <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-100'}`}>{c.icon}</div>
+                      <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-100'}`}>
+                        {'svg' in c && c.svg ? <img src={c.svg} alt={c.label} className="w-4 h-4 object-contain" /> : ('icon' in c ? c.icon : null)}
+                      </div>
                       <div className="min-w-0">
                         <div className={`text-xs ${theme === 'dark' ? 'text-gray-500' : 'text-gray-500'}`}>{c.label}</div>
                         <div className={`text-sm font-medium truncate ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>{c.value}</div>
@@ -207,7 +310,7 @@ export default function Skills() {
 
             {/* Right — Contact Form */}
             <div className={`p-6 sm:p-8 rounded-2xl border relative overflow-hidden ${theme === 'dark' ? 'bg-gray-800/60 border-gray-700/50' : 'bg-white border-gray-200 shadow-md'}`}>
-              <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500`} />
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500" />
               <h3 className={`text-xl font-bold mb-6 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
                 Kirim Pengajuan Proyek
               </h3>
@@ -271,9 +374,8 @@ export default function Skills() {
       <section ref={templateSection.ref} className="py-14 sm:py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className={`relative p-8 sm:p-10 md:p-12 rounded-2xl border overflow-hidden text-center transition-all duration-700 ${templateSection.visible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'} ${theme === 'dark' ? 'bg-gray-800/60 border-gray-700/50' : 'bg-white border-gray-200 shadow-xl'}`}>
-            {/* Decorative gradient */}
             <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-pink-500/5" />
-            <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500`} />
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
 
             <div className="relative z-10">
               <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full border mb-5 text-xs font-semibold tracking-wider uppercase ${theme === 'dark' ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' : 'bg-emerald-50 border-emerald-200 text-emerald-600'}`}>
@@ -295,7 +397,7 @@ export default function Skills() {
               <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <a href="https://github.com/dayattt111/portofolio-daya" target="_blank" rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl hover:shadow-xl hover:shadow-blue-500/20 hover:scale-105 transition-all duration-300 text-sm">
-                  <Github className="w-4 h-4" /> View on GitHub
+                  <img src={logo('github-142-svgrepo-com.svg')} alt="GitHub" className="w-4 h-4 invert" /> View on GitHub
                 </a>
                 <a href="https://github.com/dayattt111/portofolio-daya/stargazers" target="_blank" rel="noopener noreferrer"
                   className={`inline-flex items-center justify-center gap-2 px-6 py-3 border-2 font-semibold rounded-xl hover:scale-105 transition-all duration-300 text-sm ${theme === 'dark' ? 'border-gray-600 text-gray-300 hover:bg-white/5' : 'border-gray-300 text-gray-700 hover:bg-gray-50'}`}>
@@ -303,15 +405,19 @@ export default function Skills() {
                 </a>
               </div>
 
-              <p className={`text-xs mt-5 ${theme === 'dark' ? 'text-gray-600' : 'text-gray-400'}`}>
-                Built with React, TypeScript, Tailwind CSS &amp; Vite
+              <p className={`text-xs mt-5 flex items-center justify-center gap-2 ${theme === 'dark' ? 'text-gray-600' : 'text-gray-400'}`}>
+                Built with
+                <img src={logo('react-svgrepo-com.svg')} alt="React" className="w-3.5 h-3.5 inline" />
+                <img src={logo('typescript-logo-svgrepo-com.svg')} alt="TypeScript" className="w-3.5 h-3.5 inline" />
+                <img src={logo('tailwind-svgrepo-com.svg')} alt="Tailwind" className="w-3.5 h-3.5 inline" />
+                &amp; Vite
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Marquee CSS */}
+      {/* ═══ Inline CSS for marquee + skill card ═══ */}
       <style>{`
         @keyframes marquee {
           0% { transform: translateX(0); }
@@ -322,6 +428,9 @@ export default function Skills() {
         }
         .animate-marquee:hover {
           animation-play-state: paused;
+        }
+        .skill-card-wrapper {
+          transform-style: preserve-3d;
         }
       `}</style>
     </div>
