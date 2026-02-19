@@ -1,83 +1,90 @@
-import { useState, useEffect } from 'react';
-import { BookOpen, Calendar, Clock, ExternalLink, Loader2 } from 'lucide-react';
+import { useEffect, useRef } from 'react';
+import { BookOpen, Calendar, Clock, ExternalLink } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 
 interface Article {
   id: string;
   title: string;
   description: string;
-  thumbnail: string;
   publishedAt: string;
   readTime: string;
   url: string;
   tags: string[];
 }
 
+const articles: Article[] = [
+  {
+    id: '1',
+    title: 'Error "Attempt to read property name on null" di Laravel dan Cara Menyelesaikannya',
+    description: 'Membahas penyebab error "Attempt to read property name on null" yang sering terjadi di Laravel beserta cara-cara untuk menyelesaikannya.',
+    publishedAt: '2024-01-01',
+    readTime: '5 min read',
+    url: 'https://medium.com/@MuhammadAminHidayat/error-attempt-to-read-property-name-on-null-di-laravel-dan-cara-menyelesaikannya-82fa56c0356c',
+    tags: ['Laravel', 'PHP', 'Debugging']
+  },
+  {
+    id: '2',
+    title: 'Tutorial Install WSL (Windows Subsystem Linux)',
+    description: 'Panduan lengkap cara menginstall WSL (Windows Subsystem for Linux) di Windows untuk menjalankan lingkungan Linux langsung di Windows.',
+    publishedAt: '2024-01-01',
+    readTime: '6 min read',
+    url: 'https://medium.com/@MuhammadAminHidayat/tutorial-install-wsl-windows-subsystem-linux-6090057323b5',
+    tags: ['WSL', 'Linux', 'Windows']
+  },
+  {
+    id: '3',
+    title: 'Konfigurasi DHCP Server pada Mikrotik',
+    description: 'Tutorial langkah demi langkah cara mengkonfigurasi DHCP Server pada perangkat Mikrotik untuk manajemen jaringan yang lebih efisien.',
+    publishedAt: '2024-01-01',
+    readTime: '5 min read',
+    url: 'https://medium.com/@MuhammadAminHidayat/konfigurasi-dhcp-server-pada-mikrotik-61b9328c3a6c',
+    tags: ['Mikrotik', 'DHCP', 'Networking']
+  },
+  {
+    id: '4',
+    title: 'Konfigurasi Routing Information Protocol (RIP) Sederhana Menggunakan 2 Router',
+    description: 'Panduan konfigurasi RIP (Routing Information Protocol) sederhana menggunakan 2 router untuk memahami dasar routing dinamis.',
+    publishedAt: '2024-01-01',
+    readTime: '7 min read',
+    url: 'https://medium.com/@MuhammadAminHidayat/konfigurasi-routing-information-protocol-rip-sederhana-menggunakan-2-router-b40b36691b21',
+    tags: ['Routing', 'RIP', 'Networking']
+  },
+  {
+    id: '5',
+    title: 'BIOS Terkunci (BIOS Lock)? Jangan Panik! Lupa Passwordnya? Ini Solusinya!',
+    description: 'Solusi praktis ketika BIOS laptop atau PC terkunci dan lupa password. Panduan lengkap untuk membuka BIOS yang terkunci.',
+    publishedAt: '2024-01-01',
+    readTime: '4 min read',
+    url: 'https://medium.com/@MuhammadAminHidayat/bios-terkunci-bios-lock-jangan-panik-lupa-passwordnya-ini-solusinya-8b45f63533a5',
+    tags: ['BIOS', 'Hardware', 'Troubleshooting']
+  }
+];
+
 export default function Articles() {
   const { theme } = useTheme();
-  const [articles, setArticles] = useState<Article[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
 
+  // IntersectionObserver to trigger scroll-animate → animate-in
   useEffect(() => {
-    fetchArticles();
-  }, []);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
 
-  const fetchArticles = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      
-      // TODO: Ganti dengan endpoint backend Anda
-      const response = await fetch('https://your-backend-api.com/api/articles');
-      
-      if (!response.ok) {
-        throw new Error('Failed to fetch articles');
-      }
-      
-      const data = await response.json();
-      setArticles(data);
-    } catch (err) {
-      console.error('Error fetching articles:', err);
-      setError('Failed to load articles. Please try again later.');
-      
-      // Dummy data untuk development
-      setArticles([
-        {
-          id: '1',
-          title: 'Building Modern Web Applications with React and TypeScript',
-          description: 'Learn how to create scalable and maintainable web applications using React 18 and TypeScript with best practices.',
-          thumbnail: '/images/projects/project1.jpg',
-          publishedAt: '2024-12-01',
-          readTime: '8 min read',
-          url: 'https://medium.com/@yourusername/article-1',
-          tags: ['React', 'TypeScript', 'Web Development']
-        },
-        {
-          id: '2',
-          title: 'Mastering Tailwind CSS: Tips and Tricks',
-          description: 'Discover advanced techniques and best practices for using Tailwind CSS in your projects.',
-          thumbnail: '/images/projects/project2.jpg',
-          publishedAt: '2024-11-15',
-          readTime: '6 min read',
-          url: 'https://medium.com/@yourusername/article-2',
-          tags: ['CSS', 'Tailwind', 'Design']
-        },
-        {
-          id: '3',
-          title: 'The Future of Frontend Development',
-          description: 'Exploring emerging trends and technologies that are shaping the future of web development.',
-          thumbnail: '/images/projects/project3.jpg',
-          publishedAt: '2024-10-20',
-          readTime: '10 min read',
-          url: 'https://medium.com/@yourusername/article-3',
-          tags: ['Frontend', 'JavaScript', 'Future']
-        }
-      ]);
-    } finally {
-      setLoading(false);
+    const section = sectionRef.current;
+    if (section) {
+      const elements = section.querySelectorAll('.scroll-animate');
+      elements.forEach((el) => observer.observe(el));
     }
-  };
+
+    return () => observer.disconnect();
+  }, []);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -90,6 +97,7 @@ export default function Articles() {
 
   return (
     <section 
+      ref={sectionRef}
       id="articles" 
       className={`py-12 sm:py-16 relative overflow-hidden transition-colors duration-300 ${
         theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'
@@ -123,36 +131,13 @@ export default function Articles() {
           </p>
         </div>
 
-        {/* Loading State */}
-        {loading && (
-          <div className="flex flex-col items-center justify-center py-16">
-            <Loader2 className={`animate-spin mb-4 ${theme === 'dark' ? 'text-blue-400' : 'text-blue-600'}`} size={48} />
-            <p className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>Loading articles...</p>
-          </div>
-        )}
-
-        {/* Error State */}
-        {error && !loading && (
-          <div className={`text-center py-16 px-4 rounded-xl ${
-            theme === 'dark' ? 'bg-red-900/20 text-red-400' : 'bg-red-50 text-red-600'
-          }`}>
-            <p className="mb-4">{error}</p>
-            <button
-              onClick={fetchArticles}
-              className="modern-btn text-sm py-2 px-6"
-            >
-              Try Again
-            </button>
-          </div>
-        )}
-
         {/* Articles Grid */}
-        {!loading && !error && articles.length > 0 && (
+        {articles.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
             {articles.map((article, index) => (
               <article
                 key={article.id}
-                className={`group scroll-animate opacity-0 rounded-2xl overflow-hidden transition-all duration-500 ${
+                className={`group scroll-animate opacity-0 rounded-xl overflow-hidden transition-all duration-500 ${
                   theme === 'dark' 
                     ? 'bg-gray-800 hover:bg-gray-750' 
                     : 'bg-white hover:shadow-2xl'
@@ -161,26 +146,6 @@ export default function Articles() {
                   transitionDelay: `${index * 0.1}s`
                 }}
               >
-                {/* Thumbnail */}
-                <div className="relative h-48 overflow-hidden">
-                  <img
-                    src={article.thumbnail}
-                    alt={article.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23ddd" width="400" height="300"/%3E%3Ctext fill="%23999" font-family="sans-serif" font-size="24" dy="10.5" font-weight="bold" x="50%25" y="50%25" text-anchor="middle"%3ENo Image%3C/text%3E%3C/svg%3E';
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                  
-                  {/* Read Time Badge */}
-                  <div className="absolute top-4 right-4 flex items-center gap-1.5 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-medium text-gray-800">
-                    <Clock size={14} />
-                    {article.readTime}
-                  </div>
-                </div>
-
                 {/* Content */}
                 <div className="p-4 sm:p-6">
                   {/* Date */}
@@ -245,7 +210,7 @@ export default function Articles() {
         )}
 
         {/* Empty State */}
-        {!loading && !error && articles.length === 0 && (
+        {articles.length === 0 && (
           <div className="text-center py-16">
             <BookOpen 
               size={64} 
@@ -258,10 +223,10 @@ export default function Articles() {
         )}
 
         {/* View All Button */}
-        {!loading && !error && articles.length > 0 && (
+        {articles.length > 0 && (
           <div className="text-center mt-12 scroll-animate opacity-0">
             <a
-              href="https://medium.com/@yourusername"
+              href="https://medium.com/@MuhammadAminHidayat"
               target="_blank"
               rel="noopener noreferrer"
               className="modern-btn-outline text-sm sm:text-base py-3 px-8 inline-flex items-center gap-2"

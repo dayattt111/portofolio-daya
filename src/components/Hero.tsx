@@ -223,7 +223,7 @@ export default function Hero() {
                    }`} title="Scribd">
                   <FileText className="w-5 h-5" />
                 </a>
-                <a href="https://medium.com/@yourprofile" target="_blank" rel="noopener noreferrer" 
+                <a href="https://medium.com/@MuhammadAminHidayat" target="_blank" rel="noopener noreferrer" 
                    className={`p-2 rounded-lg transition-all duration-300 hover:scale-110 ${
                      theme === 'dark' 
                        ? 'bg-gray-800 hover:bg-green-600 text-gray-300 hover:text-white' 
