@@ -1,4 +1,4 @@
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, Layers } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import ProjectStack from './ProjectStack';
 import { useTheme } from '../contexts/ThemeContext';
@@ -147,11 +147,31 @@ export default function Projects() {
       ([entry]) => {
         if (entry.isIntersecting) setIsVisible(true);
       },
-      { threshold: 0.1 }
+      { threshold: 0.05 }
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
+
+  // Unique stagger directions for each card
+  const getEntryStyle = (index: number): React.CSSProperties => {
+    const directions = [
+      { x: -50, y: -30, r: -6 }, { x: 30, y: -50, r: 4 }, { x: 50, y: -20, r: 6 },
+      { x: -60, y: 20, r: -4 }, { x: 0, y: -60, r: 0 }, { x: 60, y: 10, r: 5 },
+      { x: -40, y: 40, r: -3 }, { x: 40, y: 30, r: 3 }, { x: -20, y: 50, r: -5 },
+      { x: 20, y: -40, r: 2 }, { x: -30, y: -20, r: -2 },
+    ];
+    const d = directions[index % directions.length];
+    const delay = index * 80;
+    return {
+      transition: `opacity 0.7s cubic-bezier(.22,1,.36,1) ${delay}ms, transform 0.7s cubic-bezier(.22,1,.36,1) ${delay}ms, filter 0.7s ease ${delay}ms`,
+      opacity: isVisible ? 1 : 0,
+      transform: isVisible
+        ? 'translate3d(0,0,0) rotate(0deg) scale(1)'
+        : `translate3d(${d.x}px,${d.y}px,0) rotate(${d.r}deg) scale(0.85)`,
+      filter: isVisible ? 'blur(0px)' : 'blur(6px)',
+    };
+  };
 
   return (
     <>
@@ -164,12 +184,18 @@ export default function Projects() {
           }} />
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className={`mb-10 sm:mb-12 text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <h2 className="section-title-gradient text-3xl sm:text-4xl md:text-5xl">
-              Projects
+          <div className={`mb-10 sm:mb-14 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <div className="flex items-center gap-3 mb-3">
+              <Layers className={`w-6 h-6 ${theme === 'dark' ? 'text-blue-400' : 'text-blue-600'}`} />
+              <span className={`text-sm font-medium tracking-widest uppercase ${theme === 'dark' ? 'text-blue-400' : 'text-blue-600'}`}>
+                Portfolio
+              </span>
+            </div>
+            <h2 className={`text-3xl sm:text-4xl md:text-5xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+              Featured Projects
             </h2>
-            <p className={`mt-2 sm:mt-3 text-sm sm:text-base ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
-              Selected works and applications
+            <p className={`mt-3 text-base sm:text-lg max-w-2xl ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+              Selected works and applications I've built with passion &amp; precision.
             </p>
           </div>
 
@@ -184,8 +210,8 @@ export default function Projects() {
                 }}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
-                className={`text-left transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
-                style={{ transitionDelay: `${index * 0.15}s` }}
+                className="text-left will-change-transform"
+                style={getEntryStyle(index)}
               >
                 <div className={`relative h-full group overflow-hidden rounded-2xl transition-all duration-500 ${hoveredIndex === index ? 'scale-105 shadow-2xl' : 'scale-100'} ${theme === 'dark' ? 'bg-gradient-to-br from-gray-800 to-gray-900' : 'bg-gradient-to-br from-white to-gray-50'} border ${theme === 'dark' ? 'border-gray-700' : 'border-gray-200'}`}>
                   {/* Hover Glow Effect */}

@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
-import { BookOpen, Calendar, ExternalLink } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { BookOpen, Calendar, ExternalLink, PenLine } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 
 interface Article {
@@ -63,28 +63,36 @@ const articles: Article[] = [
 export default function Articles() {
   const { theme } = useTheme();
   const sectionRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
-  // IntersectionObserver to trigger scroll-animate → animate-in
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-in');
-          }
-        });
+      ([entry]) => {
+        if (entry.isIntersecting) setIsVisible(true);
       },
-      { threshold: 0.1 }
+      { threshold: 0.05 }
     );
-
-    const section = sectionRef.current;
-    if (section) {
-      const elements = section.querySelectorAll('.scroll-animate');
-      elements.forEach((el) => observer.observe(el));
-    }
-
+    if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
+
+  // Unique scatter directions per card
+  const getEntryStyle = (index: number): React.CSSProperties => {
+    const dirs = [
+      { x: -45, y: -35, r: -5 }, { x: 35, y: -45, r: 4 }, { x: 50, y: -15, r: 6 },
+      { x: -55, y: 15, r: -3 }, { x: 0, y: -55, r: 0 },
+    ];
+    const d = dirs[index % dirs.length];
+    const delay = index * 90;
+    return {
+      transition: `opacity 0.7s cubic-bezier(.22,1,.36,1) ${delay}ms, transform 0.7s cubic-bezier(.22,1,.36,1) ${delay}ms, filter 0.7s ease ${delay}ms`,
+      opacity: isVisible ? 1 : 0,
+      transform: isVisible
+        ? 'translate3d(0,0,0) rotate(0deg) scale(1)'
+        : `translate3d(${d.x}px,${d.y}px,0) rotate(${d.r}deg) scale(0.88)`,
+      filter: isVisible ? 'blur(0px)' : 'blur(6px)',
+    };
+  };
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -113,21 +121,18 @@ export default function Articles() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <div className="text-center mb-8 sm:mb-12 scroll-animate opacity-0">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            {/* <BookOpen className={`${theme === 'dark' ? 'text-blue-400' : 'text-blue-600'}`} size={32} /> */}
-            <h2 className={`text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r ${
-              theme === 'dark' 
-                ? 'from-blue-400 via-purple-400 to-pink-400' 
-                : 'from-blue-600 via-purple-600 to-pink-600'
-            } bg-clip-text text-transparent`}>
-              Latest Articles
-            </h2>
+        <div className={`mb-10 sm:mb-14 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className="flex items-center gap-3 mb-3">
+            <PenLine className={`w-6 h-6 ${theme === 'dark' ? 'text-blue-400' : 'text-blue-600'}`} />
+            <span className={`text-sm font-medium tracking-widest uppercase ${theme === 'dark' ? 'text-blue-400' : 'text-blue-600'}`}>
+              Blog
+            </span>
           </div>
-          <p className={`text-base sm:text-lg max-w-2xl mx-auto ${
-            theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
-          }`}>
-            Thoughts, tutorials, and insights about web development
+          <h2 className={`text-3xl sm:text-4xl md:text-5xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+            Insights &amp; Tutorials
+          </h2>
+          <p className={`mt-3 text-base sm:text-lg max-w-2xl ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+            Thoughts, tutorials, and insights about web development &amp; technology.
           </p>
         </div>
 
@@ -137,14 +142,12 @@ export default function Articles() {
             {articles.map((article, index) => (
               <article
                 key={article.id}
-                className={`group scroll-animate opacity-0 rounded-xl overflow-hidden transition-all duration-500 ${
+                className={`group rounded-xl overflow-hidden transition-shadow duration-500 will-change-transform ${
                   theme === 'dark' 
                     ? 'bg-gray-800 hover:bg-gray-750' 
                     : 'bg-white hover:shadow-2xl'
                 } shadow-lg hover:-translate-y-2 touch-manipulation`}
-                style={{
-                  transitionDelay: `${index * 0.1}s`
-                }}
+                style={getEntryStyle(index)}
               >
                 {/* Content */}
                 <div className="p-4 sm:p-6">
@@ -224,7 +227,7 @@ export default function Articles() {
 
         {/* View All Button */}
         {articles.length > 0 && (
-          <div className="text-center mt-12 scroll-animate opacity-0">
+          <div className={`text-center mt-12 transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
             <a
               href="https://medium.com/@MuhammadAminHidayat"
               target="_blank"

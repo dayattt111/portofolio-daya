@@ -87,6 +87,18 @@ export default function Certificates() {
   const [selectedCert, setSelectedCert] = useState<number | null>(null);
   const [isPaused, setIsPaused] = useState(false);
   const autoPlayRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  // Entrance animation observer
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setIsVisible(true); },
+      { threshold: 0.05 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   const currentCert = selectedCert !== null ? certificates[selectedCert] : null;
 
@@ -163,8 +175,29 @@ export default function Certificates() {
     return 'scale-100 opacity-100 translate-y-0 rotate-0';
   };
 
+  // Scatter-in style per bento slot
+  const getSlotEntryStyle = (slotIndex: number): React.CSSProperties => {
+    const dirs = [
+      { x: -50, y: -30, r: -5 },
+      { x: 40, y: -45, r: 4 },
+      { x: 55, y: 20, r: 6 },
+      { x: -40, y: 35, r: -4 },
+    ];
+    const d = dirs[slotIndex % dirs.length];
+    const delay = 200 + slotIndex * 100;
+    return {
+      transition: `opacity 0.7s cubic-bezier(.22,1,.36,1) ${delay}ms, transform 0.7s cubic-bezier(.22,1,.36,1) ${delay}ms, filter 0.6s ease ${delay}ms`,
+      opacity: isVisible ? 1 : 0,
+      transform: isVisible
+        ? 'translate3d(0,0,0) rotate(0deg) scale(1)'
+        : `translate3d(${d.x}px,${d.y}px,0) rotate(${d.r}deg) scale(0.85)`,
+      filter: isVisible ? 'blur(0px)' : 'blur(6px)',
+    };
+  };
+
   return (
     <section
+      ref={sectionRef}
       id="certificates"
       className={`py-16 sm:py-20 transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}
       onMouseEnter={() => setIsPaused(true)}
@@ -173,7 +206,7 @@ export default function Certificates() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
-        <div className="mb-10 sm:mb-14">
+        <div className={`mb-10 sm:mb-14 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <div className="flex items-center gap-3 mb-3">
             <Award className={`w-6 h-6 ${theme === 'dark' ? 'text-blue-400' : 'text-blue-600'}`} />
             <span className={`text-sm font-medium tracking-widest uppercase ${theme === 'dark' ? 'text-blue-400' : 'text-blue-600'}`}>
@@ -245,7 +278,7 @@ export default function Certificates() {
                     ? 'bg-gray-800/80 border border-gray-700/50 hover:border-gray-600'
                     : 'bg-white border border-gray-200 hover:border-gray-300 shadow-sm hover:shadow-xl'
                 } transition-all duration-400 ease-out hover:-translate-y-1 ${animClass}`}
-                style={{ transitionDuration: '400ms' }}
+                style={{ transitionDuration: '400ms', ...getSlotEntryStyle(slotIndex) }}
                 onClick={() => setSelectedCert(certIndex)}
               >
                 {/* Accent gradient bar top */}
