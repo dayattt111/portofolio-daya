@@ -1,211 +1,407 @@
 import { useEffect, useRef, useState } from 'react';
-import { Mail, Github, Linkedin, MessageCircle } from 'lucide-react';
+import { Mail, Github, Linkedin, MessageCircle, Send, ArrowRight, Sparkles, Code2, Globe, Database, Palette, Server, Terminal, Smartphone, Braces, GitBranch, Cloud, Star } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 
-const skills = [
-  { name: 'React & TypeScript', level: 95 },
-  { name: 'Node.js & Express', level: 90 },
-  { name: 'UI/UX Design', level: 88 },
-  { name: 'Database Management', level: 85 }
+// ─── Skill categories ───
+const skillCategories = [
+  {
+    title: 'Frontend Development',
+    icon: <Code2 className="w-5 h-5" />,
+    gradient: 'from-blue-500 to-cyan-500',
+    skills: [
+      { name: 'React.js', level: 95, icon: '⚛️' },
+      { name: 'TypeScript', level: 92, icon: '📘' },
+      { name: 'Next.js', level: 90, icon: '▲' },
+      { name: 'Tailwind CSS', level: 95, icon: '🎨' },
+      { name: 'HTML/CSS', level: 98, icon: '🌐' },
+    ]
+  },
+  {
+    title: 'Backend Development',
+    icon: <Server className="w-5 h-5" />,
+    gradient: 'from-purple-500 to-pink-500',
+    skills: [
+      { name: 'Node.js', level: 88, icon: '🟢' },
+      { name: 'Laravel', level: 85, icon: '🔴' },
+      { name: 'PHP', level: 85, icon: '🐘' },
+      { name: 'Python', level: 80, icon: '🐍' },
+      { name: 'Express.js', level: 87, icon: '⚡' },
+    ]
+  },
+  {
+    title: 'Database & Cloud',
+    icon: <Database className="w-5 h-5" />,
+    gradient: 'from-emerald-500 to-teal-500',
+    skills: [
+      { name: 'MySQL', level: 88, icon: '🐬' },
+      { name: 'PostgreSQL', level: 82, icon: '🐘' },
+      { name: 'Supabase', level: 85, icon: '⚡' },
+      { name: 'Firebase', level: 80, icon: '🔥' },
+      { name: 'Google Cloud', level: 78, icon: '☁️' },
+    ]
+  },
+  {
+    title: 'Tools & Design',
+    icon: <Palette className="w-5 h-5" />,
+    gradient: 'from-orange-500 to-red-500',
+    skills: [
+      { name: 'Figma', level: 88, icon: '🎯' },
+      { name: 'Git & GitHub', level: 92, icon: '📦' },
+      { name: 'Docker', level: 75, icon: '🐳' },
+      { name: 'VS Code', level: 95, icon: '💻' },
+      { name: 'Linux', level: 82, icon: '🐧' },
+    ]
+  },
 ];
 
-const technologies = [
+// ─── Tech marquee items ───
+const techMarquee = [
   { name: 'JavaScript', icon: '⚡', color: 'from-yellow-400 to-yellow-600' },
   { name: 'TypeScript', icon: '📘', color: 'from-blue-400 to-blue-600' },
   { name: 'React', icon: '⚛️', color: 'from-cyan-400 to-cyan-600' },
+  { name: 'Next.js', icon: '▲', color: 'from-gray-600 to-gray-800' },
   { name: 'Node.js', icon: '🟢', color: 'from-green-400 to-green-600' },
   { name: 'Python', icon: '🐍', color: 'from-blue-500 to-yellow-500' },
+  { name: 'Laravel', icon: '🔴', color: 'from-red-400 to-red-600' },
   { name: 'Docker', icon: '🐳', color: 'from-blue-400 to-blue-700' },
-  { name: 'AWS', icon: '☁️', color: 'from-orange-400 to-orange-600' },
   { name: 'PostgreSQL', icon: '🐘', color: 'from-blue-600 to-indigo-600' },
-  { name: 'GraphQL', icon: '◇', color: 'from-pink-500 to-purple-600' },
   { name: 'MongoDB', icon: '🍃', color: 'from-green-500 to-green-700' },
-  { name: 'Next.js', icon: '▲', color: 'from-gray-700 to-gray-900' },
   { name: 'Tailwind', icon: '🎨', color: 'from-cyan-400 to-blue-500' },
   { name: 'Firebase', icon: '🔥', color: 'from-yellow-500 to-orange-600' },
   { name: 'Git', icon: '📦', color: 'from-red-500 to-orange-500' },
   { name: 'Figma', icon: '🎯', color: 'from-purple-500 to-pink-500' },
-  { name: 'Laravel', icon: '🔴', color: 'from-red-400 to-red-600' }
+  { name: 'Supabase', icon: '⚡', color: 'from-emerald-400 to-emerald-600' },
+  { name: 'Three.js', icon: '🎲', color: 'from-gray-400 to-gray-600' },
 ];
+
+// ─── Intersection observer hook ───
+function useInView(threshold = 0.12) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current; if (!el) return;
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true); }, { threshold });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [threshold]);
+  return { ref, visible };
+}
 
 export default function Skills() {
   const { theme } = useTheme();
-  const [isVisible, setIsVisible] = useState(false);
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [scrollPosition, setScrollPosition] = useState(0);
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setIsVisible(true);
-      },
-      { threshold: 0.1 }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
-
-  // Auto-scroll carousel
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setScrollPosition(prev => (prev + 1) % technologies.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    if (scrollRef.current) {
-      const scrollWidth = scrollRef.current.scrollWidth / 2;
-      scrollRef.current.scrollLeft = (scrollPosition * 150) % scrollWidth;
-    }
-  }, [scrollPosition]);
+  const heroSection = useInView(0.1);
+  const skillsSection = useInView(0.08);
+  const contactSection = useInView(0.1);
+  const templateSection = useInView(0.1);
+  const [formData, setFormData] = useState({ name: '', email: '', project: '', budget: '', message: '' });
+  const [activeCategory, setActiveCategory] = useState(0);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const message = `Name: ${formData.name}%0AEmail: ${formData.email}%0AMessage: ${formData.message}`;
-    window.open(`https://wa.me/6288242763942?text=${message}`, '_blank');
-    setFormData({ name: '', email: '', message: '' });
+    const msg = `Halo, saya ${formData.name}.%0AEmail: ${formData.email}%0AProyek: ${formData.project}%0ABudget: ${formData.budget}%0APesan: ${formData.message}`;
+    window.open(`https://wa.me/6282197855715?text=${msg}`, '_blank');
+    setFormData({ name: '', email: '', project: '', budget: '', message: '' });
   };
 
   return (
-    <section id="skills" ref={sectionRef} className={`py-12 sm:py-16 transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className={`text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-12 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-          Skills & Contact
-        </h2>
+    <div className={`transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
 
-        <div className="grid lg:grid-cols-3 gap-6 sm:gap-8 mb-10 sm:mb-12">
-          {/* Skills Progress */}
-          <div className={`lg:col-span-2 space-y-4 transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
-            {skills.map((skill, index) => (
-              <div key={skill.name} className={`p-4 rounded-lg ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50'}`}>
-                <div className="flex justify-between mb-2">
-                  <span className="font-medium text-sm">{skill.name}</span>
-                  <span className="text-sm text-blue-500">{skill.level}%</span>
-                </div>
-                <div className={`h-2 rounded-full overflow-hidden ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'}`}>
-                  <div
-                    className="h-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-1000"
-                    style={{ width: isVisible ? `${skill.level}%` : '0%', transitionDelay: `${index * 0.1}s` }}
-                  />
-                </div>
+      {/* ═══════════ HERO HEADER ═══════════ */}
+      <section ref={heroSection.ref} className="py-12 sm:py-16 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className={`absolute -top-20 -right-20 w-96 h-96 rounded-full blur-3xl opacity-10 ${theme === 'dark' ? 'bg-blue-500' : 'bg-blue-300'}`} />
+          <div className={`absolute -bottom-20 -left-20 w-96 h-96 rounded-full blur-3xl opacity-10 ${theme === 'dark' ? 'bg-purple-500' : 'bg-purple-300'}`} />
+        </div>
+
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className={`text-center transition-all duration-700 ${heroSection.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full border mb-5 text-xs font-semibold tracking-wider uppercase ${theme === 'dark' ? 'bg-blue-500/10 border-blue-500/30 text-blue-400' : 'bg-blue-50 border-blue-200 text-blue-600'}`}>
+              <Sparkles className="w-3.5 h-3.5" /> Skills & Services
+            </div>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+              Skills & Expertise
+            </h1>
+            <p className={`text-base sm:text-lg max-w-2xl mx-auto leading-relaxed ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+              Teknologi dan tools yang saya kuasai untuk membangun solusi digital yang modern, scalable, dan berkualitas tinggi
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════ TECH MARQUEE ═══════════ */}
+      <section className={`py-4 border-y overflow-hidden ${theme === 'dark' ? 'bg-gray-800/30 border-gray-800' : 'bg-gray-50/80 border-gray-100'}`}>
+        <div className="relative">
+          <div className={`absolute left-0 top-0 bottom-0 w-16 sm:w-24 z-10 pointer-events-none ${theme === 'dark' ? 'bg-gradient-to-r from-gray-900 to-transparent' : 'bg-gradient-to-r from-gray-50 to-transparent'}`} />
+          <div className={`absolute right-0 top-0 bottom-0 w-16 sm:w-24 z-10 pointer-events-none ${theme === 'dark' ? 'bg-gradient-to-l from-gray-900 to-transparent' : 'bg-gradient-to-l from-gray-50 to-transparent'}`} />
+          <div className="flex animate-marquee">
+            {[...techMarquee, ...techMarquee].map((tech, i) => (
+              <div key={i} className={`flex-shrink-0 flex items-center gap-2 mx-4 px-4 py-2 rounded-lg transition-all hover:scale-105 ${theme === 'dark' ? 'bg-gray-800/60' : 'bg-white/80'}`}>
+                <span className="text-lg">{tech.icon}</span>
+                <span className={`text-xs font-semibold bg-gradient-to-r ${tech.color} bg-clip-text text-transparent whitespace-nowrap`}>{tech.name}</span>
               </div>
             ))}
-            
-            {/* Tech Stack Carousel */}
-            <div className="pt-4 sm:pt-6">
-              <h3 className={`text-base sm:text-lg font-semibold mb-3 sm:mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                Tech Stack
-              </h3>
-              <div className="relative overflow-hidden rounded-xl touch-pan-x">
-                {/* Gradient Overlays */}
-                <div className={`absolute left-0 top-0 bottom-0 w-12 sm:w-20 z-10 pointer-events-none ${theme === 'dark' ? 'bg-gradient-to-r from-gray-900 to-transparent' : 'bg-gradient-to-r from-white to-transparent'}`} />
-                <div className={`absolute right-0 top-0 bottom-0 w-12 sm:w-20 z-10 pointer-events-none ${theme === 'dark' ? 'bg-gradient-to-l from-gray-900 to-transparent' : 'bg-gradient-to-l from-white to-transparent'}`} />
-                
-                {/* Scrolling Container */}
-                <div 
-                  ref={scrollRef}
-                  className="flex gap-4 overflow-x-hidden py-4 scroll-smooth"
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════ SKILLS GRID ═══════════ */}
+      <section ref={skillsSection.ref} className="py-14 sm:py-20">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Category Tabs */}
+          <div className={`flex flex-wrap justify-center gap-2 sm:gap-3 mb-10 transition-all duration-700 ${skillsSection.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            {skillCategories.map((cat, i) => (
+              <button
+                key={i}
+                onClick={() => setActiveCategory(i)}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 ${
+                  activeCategory === i
+                    ? `bg-gradient-to-r ${cat.gradient} text-white shadow-lg scale-105`
+                    : theme === 'dark' ? 'bg-gray-800/60 text-gray-400 hover:bg-gray-700 hover:text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-900'
+                }`}
+              >
+                {cat.icon}
+                <span className="hidden sm:inline">{cat.title}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Active Category Skills */}
+          <div className={`transition-all duration-500 ${skillsSection.visible ? 'opacity-100' : 'opacity-0'}`}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+              {/* Category Info Card */}
+              <div className={`sm:col-span-2 lg:col-span-1 p-6 rounded-2xl border relative overflow-hidden ${theme === 'dark' ? 'bg-gray-800/60 border-gray-700/50' : 'bg-white border-gray-200 shadow-md'}`}>
+                <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${skillCategories[activeCategory].gradient}`} />
+                <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${skillCategories[activeCategory].gradient} flex items-center justify-center text-white mb-4 shadow-lg`}>
+                  {skillCategories[activeCategory].icon}
+                </div>
+                <h3 className={`text-xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                  {skillCategories[activeCategory].title}
+                </h3>
+                <p className={`text-sm leading-relaxed ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+                  {activeCategory === 0 && 'Membangun antarmuka yang responsif, interaktif, dan berperforma tinggi dengan framework modern.'}
+                  {activeCategory === 1 && 'Mengembangkan API, server, dan logic backend yang scalable dan aman.'}
+                  {activeCategory === 2 && 'Mengelola database, cloud services, dan infrastruktur aplikasi modern.'}
+                  {activeCategory === 3 && 'Menggunakan tools profesional untuk design, version control, dan deployment.'}
+                </p>
+                <div className="mt-4 flex items-center gap-2">
+                  <div className={`px-3 py-1 rounded-full text-xs font-medium ${theme === 'dark' ? 'bg-green-500/20 text-green-400' : 'bg-green-50 text-green-600'}`}>
+                    {skillCategories[activeCategory].skills.length} Skills
+                  </div>
+                  <div className={`px-3 py-1 rounded-full text-xs font-medium ${theme === 'dark' ? 'bg-blue-500/20 text-blue-400' : 'bg-blue-50 text-blue-600'}`}>
+                    Avg {Math.round(skillCategories[activeCategory].skills.reduce((s, sk) => s + sk.level, 0) / skillCategories[activeCategory].skills.length)}%
+                  </div>
+                </div>
+              </div>
+
+              {/* Skill Bars */}
+              {skillCategories[activeCategory].skills.map((skill, i) => (
+                <div
+                  key={`${activeCategory}-${skill.name}`}
+                  className={`p-5 rounded-2xl border transition-all duration-500 hover:scale-[1.02] hover:shadow-lg group ${theme === 'dark' ? 'bg-gray-800/40 border-gray-700/40 hover:border-gray-600' : 'bg-white border-gray-200 hover:border-gray-300 shadow-sm'}`}
+                  style={{ animationDelay: `${i * 80}ms` }}
                 >
-                  {/* Double the technologies for infinite scroll effect */}
-                  {[...technologies, ...technologies].map((tech, index) => (
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="text-2xl group-hover:scale-110 transition-transform">{skill.icon}</span>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex justify-between items-center">
+                        <span className={`font-semibold text-sm ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{skill.name}</span>
+                        <span className={`text-sm font-bold bg-gradient-to-r ${skillCategories[activeCategory].gradient} bg-clip-text text-transparent`}>{skill.level}%</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={`h-2 rounded-full overflow-hidden ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'}`}>
                     <div
-                      key={`${tech.name}-${index}`}
-                      className={`flex-shrink-0 w-24 sm:w-32 p-3 sm:p-4 rounded-lg sm:rounded-xl transition-all duration-300 hover:scale-110 cursor-pointer touch-manipulation ${theme === 'dark' ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-100 hover:bg-gray-200'}`}
-                      style={{
-                        animation: `slide 30s linear infinite`,
-                        animationDelay: `${index * 0.1}s`
-                      }}
-                    >
-                      <div className="text-center">
-                        <div className="text-2xl sm:text-3xl mb-1 sm:mb-2">{tech.icon}</div>
-                        <div className={`text-[10px] sm:text-xs font-medium bg-gradient-to-r ${tech.color} bg-clip-text text-transparent`}>
-                          {tech.name}
-                        </div>
+                      className={`h-full rounded-full bg-gradient-to-r ${skillCategories[activeCategory].gradient} transition-all duration-1000 ease-out`}
+                      style={{ width: skillsSection.visible ? `${skill.level}%` : '0%', transitionDelay: `${i * 100 + 200}ms` }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════ HIRE ME / CONTACT ═══════════ */}
+      <section ref={contactSection.ref} className={`py-14 sm:py-20 ${theme === 'dark' ? 'bg-gray-800/30' : 'bg-gray-50/80'}`}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className={`text-center mb-10 md:mb-14 transition-all duration-700 ${contactSection.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full border mb-5 text-xs font-semibold tracking-wider uppercase ${theme === 'dark' ? 'bg-purple-500/10 border-purple-500/30 text-purple-400' : 'bg-purple-50 border-purple-200 text-purple-600'}`}>
+              <MessageCircle className="w-3.5 h-3.5" /> Let's Work Together
+            </div>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-3 bg-gradient-to-r from-purple-400 via-pink-500 to-blue-500 bg-clip-text text-transparent">
+              Ajukan Kerja Sama
+            </h2>
+            <p className={`text-sm sm:text-base max-w-xl mx-auto ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+              Tertarik menggunakan jasa saya? Kirim pengajuan proyek Anda dan mari kita wujudkan bersama!
+            </p>
+          </div>
+
+          <div className={`grid grid-cols-1 lg:grid-cols-[1fr_1.3fr] gap-6 md:gap-8 transition-all duration-700 ${contactSection.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            {/* Left — Contact Info */}
+            <div className="space-y-4">
+              {/* Services */}
+              <div className={`p-6 rounded-2xl border ${theme === 'dark' ? 'bg-gray-800/60 border-gray-700/50' : 'bg-white border-gray-200 shadow-md'}`}>
+                <h3 className={`text-lg font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Layanan Saya</h3>
+                <div className="space-y-3">
+                  {[
+                    { icon: <Globe className="w-4 h-4" />, label: 'Web Development', desc: 'Website & Aplikasi Web', gradient: 'from-blue-500 to-cyan-500' },
+                    { icon: <Smartphone className="w-4 h-4" />, label: 'UI/UX Design', desc: 'Desain Antarmuka Modern', gradient: 'from-purple-500 to-pink-500' },
+                    { icon: <Braces className="w-4 h-4" />, label: 'API Development', desc: 'REST & GraphQL APIs', gradient: 'from-orange-500 to-red-500' },
+                    { icon: <Cloud className="w-4 h-4" />, label: 'Cloud & DevOps', desc: 'Deploy & Infrastructure', gradient: 'from-emerald-500 to-teal-500' },
+                  ].map((s, i) => (
+                    <div key={i} className={`flex items-center gap-3 p-3 rounded-xl transition-all hover:scale-[1.02] ${theme === 'dark' ? 'bg-gray-700/40 hover:bg-gray-700/60' : 'bg-gray-50 hover:bg-gray-100'}`}>
+                      <div className={`w-9 h-9 rounded-lg bg-gradient-to-br ${s.gradient} flex items-center justify-center text-white shrink-0`}>{s.icon}</div>
+                      <div>
+                        <div className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{s.label}</div>
+                        <div className={`text-xs ${theme === 'dark' ? 'text-gray-500' : 'text-gray-500'}`}>{s.desc}</div>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
+
+              {/* Quick Contact */}
+              <div className={`p-6 rounded-2xl border ${theme === 'dark' ? 'bg-gray-800/60 border-gray-700/50' : 'bg-white border-gray-200 shadow-md'}`}>
+                <h3 className={`text-lg font-bold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Kontak Langsung</h3>
+                <div className="space-y-2">
+                  {[
+                    { href: 'https://wa.me/6282197855715', icon: <MessageCircle className="w-4 h-4 text-green-500" />, label: 'WhatsApp', value: '082197855715' },
+                    { href: 'mailto:hidayatbaru0304@gmail.com', icon: <Mail className="w-4 h-4 text-blue-500" />, label: 'Email', value: 'hidayatbaru0304@gmail.com' },
+                    { href: 'https://github.com/dayattt111', icon: <Github className="w-4 h-4 text-purple-500" />, label: 'GitHub', value: 'dayattt111' },
+                    { href: 'https://www.linkedin.com/in/muhammad-amin-hidayat', icon: <Linkedin className="w-4 h-4 text-blue-600" />, label: 'LinkedIn', value: 'muhammad-amin-hidayat' },
+                  ].map((c, i) => (
+                    <a key={i} href={c.href} target="_blank" rel="noopener noreferrer" className={`flex items-center gap-3 p-3 rounded-xl transition-all hover:scale-[1.02] ${theme === 'dark' ? 'hover:bg-gray-700/40' : 'hover:bg-gray-50'}`}>
+                      <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-100'}`}>{c.icon}</div>
+                      <div className="min-w-0">
+                        <div className={`text-xs ${theme === 'dark' ? 'text-gray-500' : 'text-gray-500'}`}>{c.label}</div>
+                        <div className={`text-sm font-medium truncate ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>{c.value}</div>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Right — Contact Form */}
+            <div className={`p-6 sm:p-8 rounded-2xl border relative overflow-hidden ${theme === 'dark' ? 'bg-gray-800/60 border-gray-700/50' : 'bg-white border-gray-200 shadow-md'}`}>
+              <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500`} />
+              <h3 className={`text-xl font-bold mb-6 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                Kirim Pengajuan Proyek
+              </h3>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className={`block text-xs font-medium mb-1.5 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Nama Lengkap</label>
+                    <input type="text" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} placeholder="John Doe" required
+                      className={`w-full px-4 py-2.5 rounded-xl border focus:ring-2 focus:ring-purple-500 outline-none transition text-sm ${theme === 'dark' ? 'bg-gray-700/50 border-gray-600 text-white placeholder-gray-500' : 'bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-400'}`} />
+                  </div>
+                  <div>
+                    <label className={`block text-xs font-medium mb-1.5 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Email</label>
+                    <input type="email" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} placeholder="john@example.com" required
+                      className={`w-full px-4 py-2.5 rounded-xl border focus:ring-2 focus:ring-purple-500 outline-none transition text-sm ${theme === 'dark' ? 'bg-gray-700/50 border-gray-600 text-white placeholder-gray-500' : 'bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-400'}`} />
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className={`block text-xs font-medium mb-1.5 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Jenis Proyek</label>
+                    <select value={formData.project} onChange={(e) => setFormData({...formData, project: e.target.value})} required
+                      className={`w-full px-4 py-2.5 rounded-xl border focus:ring-2 focus:ring-purple-500 outline-none transition text-sm ${theme === 'dark' ? 'bg-gray-700/50 border-gray-600 text-white' : 'bg-gray-50 border-gray-200 text-gray-900'}`}>
+                      <option value="">Pilih jenis proyek</option>
+                      <option value="Website">Website / Web App</option>
+                      <option value="UI/UX Design">UI/UX Design</option>
+                      <option value="API Development">API Development</option>
+                      <option value="Landing Page">Landing Page</option>
+                      <option value="Company Profile">Company Profile</option>
+                      <option value="E-Commerce">E-Commerce</option>
+                      <option value="Lainnya">Lainnya</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className={`block text-xs font-medium mb-1.5 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Estimasi Budget</label>
+                    <select value={formData.budget} onChange={(e) => setFormData({...formData, budget: e.target.value})}
+                      className={`w-full px-4 py-2.5 rounded-xl border focus:ring-2 focus:ring-purple-500 outline-none transition text-sm ${theme === 'dark' ? 'bg-gray-700/50 border-gray-600 text-white' : 'bg-gray-50 border-gray-200 text-gray-900'}`}>
+                      <option value="">Pilih budget</option>
+                      <option value="< 1 Juta">&lt; Rp 1 Juta</option>
+                      <option value="1 - 3 Juta">Rp 1 - 3 Juta</option>
+                      <option value="3 - 5 Juta">Rp 3 - 5 Juta</option>
+                      <option value="5 - 10 Juta">Rp 5 - 10 Juta</option>
+                      <option value="> 10 Juta">&gt; Rp 10 Juta</option>
+                      <option value="Diskusi">Diskusi Lebih Lanjut</option>
+                    </select>
+                  </div>
+                </div>
+                <div>
+                  <label className={`block text-xs font-medium mb-1.5 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Detail Proyek</label>
+                  <textarea value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} placeholder="Ceritakan tentang proyek yang ingin Anda buat..." rows={4} required
+                    className={`w-full px-4 py-2.5 rounded-xl border focus:ring-2 focus:ring-purple-500 outline-none resize-none transition text-sm ${theme === 'dark' ? 'bg-gray-700/50 border-gray-600 text-white placeholder-gray-500' : 'bg-gray-50 border-gray-200 text-gray-900 placeholder-gray-400'}`} />
+                </div>
+                <button type="submit" className="w-full group px-6 py-3.5 bg-gradient-to-r from-purple-500 to-pink-600 text-white font-semibold rounded-xl hover:shadow-xl hover:shadow-purple-500/20 hover:scale-[1.02] transition-all duration-300 text-sm sm:text-base flex items-center justify-center gap-2">
+                  <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" /> Kirim via WhatsApp
+                </button>
+              </form>
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Contact Quick Links */}
-          <div className={`space-y-3 transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
-            <a href="https://wa.me/6288242763942" target="_blank" rel="noopener noreferrer" 
-               className={`flex items-center gap-3 p-3 rounded-lg hover:scale-105 transition-transform ${theme === 'dark' ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-50 hover:bg-gray-100'}`}>
-              <MessageCircle className="w-5 h-5 text-green-500" />
-              <div className="text-sm">
-                <p className="font-medium">WhatsApp</p>
-                <p className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>082197855715</p>
-              </div>
-            </a>
-            
-            <a href="mailto:hidayatbaru0304@gmail.com"
-               className={`flex items-center gap-3 p-3 rounded-lg hover:scale-105 transition-transform ${theme === 'dark' ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-50 hover:bg-gray-100'}`}>
-              <Mail className="w-5 h-5 text-blue-500" />
-              <div className="text-sm">
-                <p className="font-medium">Email</p>
-                <p className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>hidayatbaru0304@gmail.com</p>
-              </div>
-            </a>
+      {/* ═══════════ PORTFOLIO TEMPLATE CTA ═══════════ */}
+      <section ref={templateSection.ref} className="py-14 sm:py-20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className={`relative p-8 sm:p-10 md:p-12 rounded-2xl border overflow-hidden text-center transition-all duration-700 ${templateSection.visible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'} ${theme === 'dark' ? 'bg-gray-800/60 border-gray-700/50' : 'bg-white border-gray-200 shadow-xl'}`}>
+            {/* Decorative gradient */}
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-pink-500/5" />
+            <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500`} />
 
-            <a href="https://github.com/dayattt111" target="_blank" rel="noopener noreferrer"
-               className={`flex items-center gap-3 p-3 rounded-lg hover:scale-105 transition-transform ${theme === 'dark' ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-50 hover:bg-gray-100'}`}>
-              <Github className="w-5 h-5 text-purple-500" />
-              <div className="text-sm">
-                <p className="font-medium">GitHub</p>
-                <p className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>dayattt111</p>
+            <div className="relative z-10">
+              <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full border mb-5 text-xs font-semibold tracking-wider uppercase ${theme === 'dark' ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' : 'bg-emerald-50 border-emerald-200 text-emerald-600'}`}>
+                <Star className="w-3.5 h-3.5" /> Open Source
               </div>
-            </a>
 
-            <a href="http://www.linkedin.com/in/muhammad-amin-hidayat" target="_blank" rel="noopener noreferrer"
-               className={`flex items-center gap-3 p-3 rounded-lg hover:scale-105 transition-transform ${theme === 'dark' ? 'bg-gray-800 hover:bg-gray-700' : 'bg-gray-50 hover:bg-gray-100'}`}>
-              <Linkedin className="w-5 h-5 text-blue-600" />
-              <div className="text-sm">
-                <p className="font-medium">LinkedIn</p>
-                <p className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>muhammad-amin-hidayat</p>
+              <h3 className="text-2xl sm:text-3xl font-extrabold mb-3 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+                Tertarik Membuat Portfolio Sendiri?
+              </h3>
+              <p className={`text-sm sm:text-base max-w-lg mx-auto mb-6 leading-relaxed ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+                Website portfolio ini bersifat <strong>open-source</strong>! Anda bisa menggunakan template ini sebagai dasar untuk membangun portfolio pribadi Anda sendiri.
+              </p>
+
+              <div className={`inline-flex items-center gap-3 px-5 py-3 rounded-xl mb-6 font-mono text-sm ${theme === 'dark' ? 'bg-gray-900/80 text-gray-300 border border-gray-700' : 'bg-gray-100 text-gray-700 border border-gray-200'}`}>
+                <Terminal className="w-4 h-4 text-green-500 shrink-0" />
+                <code className="truncate">git clone https://github.com/dayattt111/portofolio-daya.git</code>
               </div>
-            </a>
+
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <a href="https://github.com/dayattt111/portofolio-daya" target="_blank" rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl hover:shadow-xl hover:shadow-blue-500/20 hover:scale-105 transition-all duration-300 text-sm">
+                  <Github className="w-4 h-4" /> View on GitHub
+                </a>
+                <a href="https://github.com/dayattt111/portofolio-daya/stargazers" target="_blank" rel="noopener noreferrer"
+                  className={`inline-flex items-center justify-center gap-2 px-6 py-3 border-2 font-semibold rounded-xl hover:scale-105 transition-all duration-300 text-sm ${theme === 'dark' ? 'border-gray-600 text-gray-300 hover:bg-white/5' : 'border-gray-300 text-gray-700 hover:bg-gray-50'}`}>
+                  <Star className="w-4 h-4 text-yellow-500" /> Give a Star
+                </a>
+              </div>
+
+              <p className={`text-xs mt-5 ${theme === 'dark' ? 'text-gray-600' : 'text-gray-400'}`}>
+                Built with React, TypeScript, Tailwind CSS &amp; Vite
+              </p>
+            </div>
           </div>
         </div>
+      </section>
 
-        {/* Contact Form */}
-        <div id="contact" className={`max-w-2xl mx-auto p-4 sm:p-6 rounded-xl transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'} ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50'}`}>
-          <h3 className="text-lg sm:text-xl font-bold mb-4 text-center">Send Message</h3>
-          <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
-            <input
-              type="text"
-              placeholder="Your Name"
-              value={formData.name}
-              onChange={(e) => setFormData({...formData, name: e.target.value})}
-              className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border focus:ring-2 focus:ring-blue-500 outline-none transition text-sm sm:text-base touch-manipulation ${theme === 'dark' ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'}`}
-              required
-            />
-            <input
-              type="email"
-              placeholder="Your Email"
-              value={formData.email}
-              onChange={(e) => setFormData({...formData, email: e.target.value})}
-              className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border focus:ring-2 focus:ring-blue-500 outline-none transition text-sm sm:text-base touch-manipulation ${theme === 'dark' ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'}`}
-              required
-            />
-            <textarea
-              placeholder="Your Message"
-              value={formData.message}
-              onChange={(e) => setFormData({...formData, message: e.target.value})}
-              rows={3}
-              className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border focus:ring-2 focus:ring-blue-500 outline-none resize-none transition text-sm sm:text-base touch-manipulation ${theme === 'dark' ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'}`}
-              required
-            />
-            <button type="submit" className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 sm:py-3.5 rounded-lg font-medium hover:shadow-lg transition-all text-sm sm:text-base touch-manipulation hover:scale-105 active:scale-95">
-              Send via WhatsApp
-            </button>
-          </form>
-        </div>
-      </div>
-    </section>
+      {/* Marquee CSS */}
+      <style>{`
+        @keyframes marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+          animation: marquee 25s linear infinite;
+        }
+        .animate-marquee:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
+    </div>
   );
 }
