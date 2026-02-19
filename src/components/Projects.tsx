@@ -28,8 +28,8 @@ const projects: Project[] = [
   ,
   {
     id: 2,
-    title: 'Organize New DCC Website',
-    description: 'New Website DCC with modern design and responsive layout.',
+    title: 'Web Portfolio V1',
+    description: 'Personal portfolio website showcasing projects, skills, and experience with a clean and modern design.',
     rating: 5,
     color: '#ff006e',
     stack: ['React', 'Vite', 'Tailwind CSS', 'TypeScript'],
