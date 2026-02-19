@@ -5,6 +5,7 @@ import reactImg from '/images/certificates/PsertiCy.png';
 import reactImg2 from '/images/certificates/PsertiNet.png';
 import reactImg3 from '/images/certificates/Muhammad_Amin_Hidayat.png';
 import reactImg4 from '/images/certificates/Sertifikat_AI_Nation_Makassar_Muhammad_Amin_Hidayat.png';
+import reactImg5 from '/images/certificates/Screenshot 2026-02-19 173120.png';
 
 interface Certificate {
   title: string;
@@ -57,6 +58,16 @@ const certificates: Certificate[] = [
     skills: ['Cloud Architecture', 'AWS Services', 'Security'],
     accent: 'from-amber-500 to-yellow-500',
     image: reactImg4,
+  },
+  {
+    title: 'Dicoding AI Engineer Entry Level',
+    issuer: 'Dicoding || AI || Engineer',
+    date: 'February 2026',
+    credentialId: '0LZ0Y33E3X65',
+    credentialUrl: 'https://www.dicoding.com/certificates/0LZ0Y33E3X65',
+    skills: ['Cloud Architecture', 'AWS Services', 'Security'],
+    accent: 'from-amber-500 to-blue-500',
+    image: reactImg5,
   },
 ];
 
