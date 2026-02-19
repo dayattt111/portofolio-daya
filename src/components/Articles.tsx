@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { BookOpen, Calendar, Clock, ExternalLink } from 'lucide-react';
+import { BookOpen, Calendar, ExternalLink } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 
 interface Article {
@@ -115,7 +115,7 @@ export default function Articles() {
         {/* Header */}
         <div className="text-center mb-8 sm:mb-12 scroll-animate opacity-0">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <BookOpen className={`${theme === 'dark' ? 'text-blue-400' : 'text-blue-600'}`} size={32} />
+            {/* <BookOpen className={`${theme === 'dark' ? 'text-blue-400' : 'text-blue-600'}`} size={32} /> */}
             <h2 className={`text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r ${
               theme === 'dark' 
                 ? 'from-blue-400 via-purple-400 to-pink-400' 

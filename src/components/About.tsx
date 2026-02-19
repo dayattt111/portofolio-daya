@@ -1,6 +1,6 @@
 import { Code, Zap, Palette, Award, Users, Rocket, Star, Activity, Linkedin, Instagram, BookOpen, FileText } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 
 // Cache untuk GitHub data
 const CACHE_KEY = 'github_contributions_dayattt111';
@@ -20,6 +20,55 @@ export default function About() {
   const [graphVisible, setGraphVisible] = useState(false);
   const [contributions, setContributions] = useState<ContributionDay[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Terminal typing animation states
+  const [typedCommand, setTypedCommand] = useState('');
+  const [showResult, setShowResult] = useState(false);
+  const [cursorVisible, setCursorVisible] = useState(true);
+  const [typingDone, setTypingDone] = useState(false);
+  const commandText = 'whoami';
+  const resultText = 'Muhammad Amin Hidayat';
+  const [typedResult, setTypedResult] = useState('');
+  const typingStarted = useRef(false);
+
+  // Terminal typing effect
+  const startTyping = useCallback(() => {
+    if (typingStarted.current) return;
+    typingStarted.current = true;
+
+    let i = 0;
+    const typeCommand = () => {
+      if (i < commandText.length) {
+        setTypedCommand(commandText.slice(0, i + 1));
+        i++;
+        setTimeout(typeCommand, 100 + Math.random() * 80);
+      } else {
+        // Pause after command typed, then show result
+        setTimeout(() => {
+          setTypingDone(true);
+          setShowResult(true);
+          let j = 0;
+          const typeResult = () => {
+            if (j < resultText.length) {
+              setTypedResult(resultText.slice(0, j + 1));
+              j++;
+              setTimeout(typeResult, 50 + Math.random() * 40);
+            }
+          };
+          setTimeout(typeResult, 200);
+        }, 600);
+      }
+    };
+    setTimeout(typeCommand, 800);
+  }, []);
+
+  // Cursor blink
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCursorVisible(v => !v);
+    }, 530);
+    return () => clearInterval(interval);
+  }, []);
 
   // Calculate total contributions
   const totalContributions = contributions.reduce((sum, day) => sum + day.count, 0);
@@ -85,6 +134,7 @@ export default function About() {
         if (entry.isIntersecting) {
           setIsVisible(true);
           setTimeout(() => setGraphVisible(true), 300);
+          startTyping();
         }
       },
       { threshold: 0.15 }
@@ -126,17 +176,80 @@ export default function About() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Title with Subtitle */}
-        <div className={`mb-12 sm:mb-16 text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <div className="inline-block mb-3 sm:mb-4">
-            <span className={`text-xs sm:text-sm font-semibold px-3 sm:px-4 py-1.5 sm:py-2 rounded-full ${theme === 'dark' ? 'bg-blue-500/10 text-blue-400' : 'bg-blue-100 text-blue-600'}`}>
-              WHO I AM
-            </span>
+        {/* Terminal Whoami Animation */}
+        <div className={`mb-12 sm:mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className={`max-w-2xl mx-auto rounded-xl overflow-hidden shadow-2xl border ${
+            theme === 'dark' 
+              ? 'border-gray-700 shadow-black/40' 
+              : 'border-gray-300 shadow-gray-400/30'
+          }`}>
+            {/* Terminal Title Bar */}
+            <div className={`flex items-center gap-2 px-4 py-2.5 ${
+              theme === 'dark' ? 'bg-gray-800' : 'bg-gray-200'
+            }`}>
+              <div className="flex gap-1.5">
+                <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                <div className="w-3 h-3 rounded-full bg-green-500"></div>
+              </div>
+              <span className={`text-xs font-medium ml-2 ${
+                theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
+              }`}>
+                terminal — bash
+              </span>
+            </div>
+            
+            {/* Terminal Body */}
+            <div className={`px-5 py-5 font-mono text-sm sm:text-base ${
+              theme === 'dark' ? 'bg-gray-900' : 'bg-gray-950'
+            }`}>
+              {/* Command Line */}
+              <div className="flex items-center flex-wrap">
+                <span className="text-green-400 font-bold">Hikaruu</span>
+                <span className="text-gray-500">@</span>
+                <span className="text-purple-400 font-bold">Developer</span>
+                <span className="text-gray-500 mx-1.5">~</span>
+                <span className="text-yellow-400 mr-2">$</span>
+                <span className="text-white">{typedCommand}</span>
+                {!typingDone && (
+                  <span className={`inline-block w-2.5 h-5 ml-0.5 ${
+                    cursorVisible ? 'bg-green-400' : 'bg-transparent'
+                  } transition-colors duration-100`}></span>
+                )}
+              </div>
+              
+              {/* Result Line */}
+              {showResult && (
+                <div className="mt-3">
+                  <span className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                    {typedResult}
+                  </span>
+                  {typedResult.length < resultText.length && (
+                    <span className={`inline-block w-2.5 h-7 ml-0.5 align-middle ${
+                      cursorVisible ? 'bg-green-400' : 'bg-transparent'
+                    } transition-colors duration-100`}></span>
+                  )}
+                </div>
+              )}
+
+              {/* New prompt after done */}
+              {typedResult === resultText && (
+                <div className="flex items-center mt-3">
+                  <span className="text-green-400 font-bold">Hikaruu</span>
+                  <span className="text-gray-500">@</span>
+                  <span className="text-purple-400 font-bold">Developer</span>
+                  <span className="text-gray-500 mx-1.5">~</span>
+                  <span className="text-yellow-400 mr-2">$</span>
+                  <span className={`inline-block w-2.5 h-5 ml-0.5 ${
+                    cursorVisible ? 'bg-green-400' : 'bg-transparent'
+                  } transition-colors duration-100`}></span>
+                </div>
+              )}
+            </div>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-            Muhammad Amin Hidayat
-          </h2>
-          <p className={`text-base sm:text-lg max-w-2xl mx-auto leading-relaxed px-4 sm:px-0 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+
+          {/* Subtitle below terminal */}
+          <p className={`text-base sm:text-lg max-w-2xl mx-auto leading-relaxed px-4 sm:px-0 text-center mt-6 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
             Passionate developer with expertise in building scalable web applications and creating memorable user experiences
           </p>
         </div>
