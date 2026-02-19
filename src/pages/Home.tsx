@@ -58,10 +58,10 @@ const featuredProjects = [
 ];
 
 const stats = [
-  { icon: <Award className="w-5 h-5" />, value: '5+', label: 'Years Exp', color: 'from-blue-500 to-cyan-500' },
+  { icon: <Award className="w-5 h-5" />, value: '3+', label: 'Years Exp', color: 'from-blue-500 to-cyan-500' },
   { icon: <Users className="w-5 h-5" />, value: '50+', label: 'Clients', color: 'from-purple-500 to-pink-500' },
-  { icon: <Rocket className="w-5 h-5" />, value: '100+', label: 'Projects', color: 'from-orange-500 to-red-500' },
-  { icon: <Sparkles className="w-5 h-5" />, value: '15+', label: 'Certificates', color: 'from-yellow-500 to-orange-500' },
+  { icon: <Rocket className="w-5 h-5" />, value: '30+', label: 'Projects', color: 'from-orange-500 to-red-500' },
+  { icon: <Sparkles className="w-5 h-5" />, value: '10+', label: 'Certificates', color: 'from-yellow-500 to-orange-500' },
 ];
 
 const roles = [
@@ -154,14 +154,14 @@ export default function Home() {
                 </div>
                 {/* Floating badges */}
                 <div className={`absolute -top-2 -right-4 sm:-right-8 px-3 py-2 rounded-xl shadow-xl backdrop-blur-md border animate-float ${theme === 'dark' ? 'bg-gray-800/90 border-gray-700' : 'bg-white/90 border-gray-200'}`}>
-                  <div className="flex items-center gap-2"><Terminal className="w-4 h-4 text-emerald-500" /><span className="text-xs font-bold text-emerald-500">Available</span></div>
+                  <div className="flex items-center gap-2"><Terminal className="w-4 h-4 text-emerald-500" /><span className="text-xs font-bold text-emerald-500">Consultation</span></div>
                 </div>
                 <div className={`absolute bottom-8 -left-4 sm:-left-10 px-4 py-3 rounded-xl shadow-xl backdrop-blur-md border animate-float ${theme === 'dark' ? 'bg-gray-800/90 border-gray-700' : 'bg-white/90 border-gray-200'}`} style={{ animationDelay: '1s' }}>
-                  <div className="text-xl font-black bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">5+</div>
+                  <div className="text-xl font-black bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">3+</div>
                   <div className={`text-[10px] ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Years Exp</div>
                 </div>
                 <div className={`absolute -bottom-2 -right-2 sm:-right-6 px-4 py-3 rounded-xl shadow-xl backdrop-blur-md border animate-float ${theme === 'dark' ? 'bg-gray-800/90 border-gray-700' : 'bg-white/90 border-gray-200'}`} style={{ animationDelay: '2s' }}>
-                  <div className="text-xl font-black bg-gradient-to-r from-pink-500 to-rose-600 bg-clip-text text-transparent">100+</div>
+                  <div className="text-xl font-black bg-gradient-to-r from-pink-500 to-rose-600 bg-clip-text text-transparent">30+</div>
                   <div className={`text-[10px] ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Projects</div>
                 </div>
               </div>

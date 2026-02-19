@@ -1,4 +1,4 @@
-import { Code, Zap, Palette, Award, Users, Rocket, Star, Activity, Linkedin, Instagram, BookOpen, FileText } from 'lucide-react';
+import { Code, Zap, Palette, Award, Users, Rocket, Star, Activity, Linkedin, Instagram, BookOpen, ChevronDown } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useEffect, useRef, useState, useCallback } from 'react';
 
@@ -182,10 +182,10 @@ export default function About() {
   }, []);
   
   const achievements = [
-    { icon: <Award className="w-6 h-6" />, value: '5+', label: 'Years Experience', color: 'from-blue-500 to-cyan-500' },
+    { icon: <Award className="w-6 h-6" />, value: '3+', label: 'Years Experience', color: 'from-blue-500 to-cyan-500' },
     { icon: <Users className="w-6 h-6" />, value: '50+', label: 'Happy Clients', color: 'from-purple-500 to-pink-500' },
-    { icon: <Rocket className="w-6 h-6" />, value: '100+', label: 'Projects Done', color: 'from-orange-500 to-red-500' },
-    { icon: <Star className="w-6 h-6" />, value: '15+', label: 'Certifications', color: 'from-yellow-500 to-orange-500' }
+    { icon: <Rocket className="w-6 h-6" />, value: '30+', label: 'Projects Done', color: 'from-orange-500 to-red-500' },
+    { icon: <Star className="w-6 h-6" />, value: '10+', label: 'Certifications', color: 'from-yellow-500 to-orange-500' }
   ];
 
   return (
@@ -521,186 +521,220 @@ export default function About() {
           `}</style>
         </div>
 
-        {/* Social Links Section */}
-        <div className={`text-center mb-12 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <h3 className={`text-lg font-semibold mb-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>Connect With Me</h3>
-          <div className="flex flex-wrap justify-center gap-3">
-            <a href="https://www.linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer" 
-               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
-                 theme === 'dark' 
-                   ? 'bg-gray-800 hover:bg-blue-600 text-gray-300 hover:text-white' 
-                   : 'bg-gray-100 hover:bg-blue-600 text-gray-700 hover:text-white'
-               }`}>
-              <Linkedin className="w-5 h-5" />
-              <span className="text-sm font-medium">LinkedIn</span>
-            </a>
-            <a href="https://scholar.google.com/citations?user=youruser" target="_blank" rel="noopener noreferrer" 
-               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
-                 theme === 'dark' 
-                   ? 'bg-gray-800 hover:bg-red-600 text-gray-300 hover:text-white' 
-                   : 'bg-gray-100 hover:bg-red-600 text-gray-700 hover:text-white'
-               }`}>
-              <BookOpen className="w-5 h-5" />
-              <span className="text-sm font-medium">Scholar</span>
-            </a>
-            <a href="https://www.instagram.com/yourprofile" target="_blank" rel="noopener noreferrer" 
-               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
-                 theme === 'dark' 
-                   ? 'bg-gray-800 hover:bg-pink-600 text-gray-300 hover:text-white' 
-                   : 'bg-gray-100 hover:bg-pink-600 text-gray-700 hover:text-white'
-               }`}>
-              <Instagram className="w-5 h-5" />
-              <span className="text-sm font-medium">Instagram</span>
-            </a>
-            <a href="https://www.scribd.com/user/youruser" target="_blank" rel="noopener noreferrer" 
-               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
-                 theme === 'dark' 
-                   ? 'bg-gray-800 hover:bg-orange-600 text-gray-300 hover:text-white' 
-                   : 'bg-gray-100 hover:bg-orange-600 text-gray-700 hover:text-white'
-               }`}>
-              <FileText className="w-5 h-5" />
-              <span className="text-sm font-medium">Scribd</span>
-            </a>
-            <a href="https://medium.com/@yourprofile" target="_blank" rel="noopener noreferrer" 
-               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
-                 theme === 'dark' 
-                   ? 'bg-gray-800 hover:bg-green-600 text-gray-300 hover:text-white' 
-                   : 'bg-gray-100 hover:bg-green-600 text-gray-700 hover:text-white'
-               }`}>
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/>
-              </svg>
-              <span className="text-sm font-medium">Medium</span>
-            </a>
-            <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener noreferrer" 
-               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
-                 theme === 'dark' 
-                   ? 'bg-gray-800 hover:bg-green-700 text-gray-300 hover:text-white' 
-                   : 'bg-gray-100 hover:bg-green-700 text-gray-700 hover:text-white'
-               }`}>
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947s-.422.947-.947.947a.95.95 0 0 1-.947-.947c0-.525.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-2.016 5.016-5.325 5.016h-3.919V7.416zm1.444 1.303v7.444h2.297c2.359 0 4.053-1.666 4.053-3.722 0-2.025-1.694-3.722-4.053-3.722h-2.297z"/>
-              </svg>
-              <span className="text-sm font-medium">ORCID</span>
-            </a>
-            <a href="https://www.kaggle.com/yourprofile" target="_blank" rel="noopener noreferrer" 
-               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
-                 theme === 'dark' 
-                   ? 'bg-gray-800 hover:bg-cyan-600 text-gray-300 hover:text-white' 
-                   : 'bg-gray-100 hover:bg-cyan-600 text-gray-700 hover:text-white'
-               }`}>
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M18.825 23.859c-.022.092-.117.141-.281.141h-3.139c-.187 0-.351-.082-.492-.248l-5.178-6.589-1.448 1.374v5.111c0 .235-.117.352-.351.352H5.505c-.236 0-.354-.117-.354-.352V.353c0-.233.118-.353.354-.353h2.431c.234 0 .351.12.351.353v14.343l6.203-6.272c.165-.165.33-.246.495-.246h3.239c.144 0 .236.06.285.18.046.149.034.255-.036.315l-6.555 6.344 6.836 8.507c.095.104.117.208.07.358"/>
-              </svg>
-              <span className="text-sm font-medium">Kaggle</span>
-            </a>
-            <a href="https://developers.google.com/profile/u/yourprofile" target="_blank" rel="noopener noreferrer" 
-               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
-                 theme === 'dark' 
-                   ? 'bg-gray-800 hover:bg-blue-500 text-gray-300 hover:text-white' 
-                   : 'bg-gray-100 hover:bg-blue-500 text-gray-700 hover:text-white'
-               }`}>
-              <Code className="w-5 h-5" />
-              <span className="text-sm font-medium">Google Dev</span>
-            </a>
+        {/* ═══════════ ABOUT ME — SEO Rich Bio ═══════════ */}
+        <article className={`mb-16 sm:mb-20 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} itemScope itemType="https://schema.org/Person">
+          <meta itemProp="name" content="Muhammad Amin Hidayat" />
+          <meta itemProp="jobTitle" content="Full Stack Developer" />
+          <meta itemProp="url" content="https://devdaya.my.id" />
+          <link itemProp="image" href="https://devdaya.my.id/images/profile/pp.png" />
+          <div itemProp="address" itemScope itemType="https://schema.org/PostalAddress">
+            <meta itemProp="addressLocality" content="Makassar" />
+            <meta itemProp="addressRegion" content="Sulawesi Selatan" />
+            <meta itemProp="addressCountry" content="ID" />
           </div>
-        </div>
 
-        {/* Social Links Section */}
-        <div className={`text-center mb-12 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <h3 className={`text-lg font-semibold mb-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>Connect With Me</h3>
-          <div className="flex flex-wrap justify-center gap-3">
-            <a href="https://www.linkedin.com/in/yourprofile" target="_blank" rel="noopener noreferrer" 
-               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
-                 theme === 'dark' 
-                   ? 'bg-gray-800 hover:bg-blue-600 text-gray-300 hover:text-white' 
-                   : 'bg-gray-100 hover:bg-blue-600 text-gray-700 hover:text-white'
-               }`}>
-              <Linkedin className="w-5 h-5" />
-              <span className="text-sm font-medium">LinkedIn</span>
-            </a>
-            <a href="https://scholar.google.com/citations?user=youruser" target="_blank" rel="noopener noreferrer" 
-               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
-                 theme === 'dark' 
-                   ? 'bg-gray-800 hover:bg-red-600 text-gray-300 hover:text-white' 
-                   : 'bg-gray-100 hover:bg-red-600 text-gray-700 hover:text-white'
-               }`}>
-              <BookOpen className="w-5 h-5" />
-              <span className="text-sm font-medium">Scholar</span>
-            </a>
-            <a href="https://www.instagram.com/yourprofile" target="_blank" rel="noopener noreferrer" 
-               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
-                 theme === 'dark' 
-                   ? 'bg-gray-800 hover:bg-pink-600 text-gray-300 hover:text-white' 
-                   : 'bg-gray-100 hover:bg-pink-600 text-gray-700 hover:text-white'
-               }`}>
-              <Instagram className="w-5 h-5" />
-              <span className="text-sm font-medium">Instagram</span>
-            </a>
-            <a href="https://www.scribd.com/user/youruser" target="_blank" rel="noopener noreferrer" 
-               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
-                 theme === 'dark' 
-                   ? 'bg-gray-800 hover:bg-orange-600 text-gray-300 hover:text-white' 
-                   : 'bg-gray-100 hover:bg-orange-600 text-gray-700 hover:text-white'
-               }`}>
-              <FileText className="w-5 h-5" />
-              <span className="text-sm font-medium">Scribd</span>
-            </a>
-            <a href="https://medium.com/@yourprofile" target="_blank" rel="noopener noreferrer" 
-               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
-                 theme === 'dark' 
-                   ? 'bg-gray-800 hover:bg-green-600 text-gray-300 hover:text-white' 
-                   : 'bg-gray-100 hover:bg-green-600 text-gray-700 hover:text-white'
-               }`}>
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/>
-              </svg>
-              <span className="text-sm font-medium">Medium</span>
-            </a>
-            <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener noreferrer" 
-               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
-                 theme === 'dark' 
-                   ? 'bg-gray-800 hover:bg-green-700 text-gray-300 hover:text-white' 
-                   : 'bg-gray-100 hover:bg-green-700 text-gray-700 hover:text-white'
-               }`}>
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947s-.422.947-.947.947a.95.95 0 0 1-.947-.947c0-.525.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-2.016 5.016-5.325 5.016h-3.919V7.416zm1.444 1.303v7.444h2.297c2.359 0 4.053-1.666 4.053-3.722 0-2.025-1.694-3.722-4.053-3.722h-2.297z"/>
-              </svg>
-              <span className="text-sm font-medium">ORCID</span>
-            </a>
-            <a href="https://www.kaggle.com/yourprofile" target="_blank" rel="noopener noreferrer" 
-               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
-                 theme === 'dark' 
-                   ? 'bg-gray-800 hover:bg-cyan-600 text-gray-300 hover:text-white' 
-                   : 'bg-gray-100 hover:bg-cyan-600 text-gray-700 hover:text-white'
-               }`}>
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M18.825 23.859c-.022.092-.117.141-.281.141h-3.139c-.187 0-.351-.082-.492-.248l-5.178-6.589-1.448 1.374v5.111c0 .235-.117.352-.351.352H5.505c-.236 0-.354-.117-.354-.352V.353c0-.233.118-.353.354-.353h2.431c.234 0 .351.12.351.353v14.343l6.203-6.272c.165-.165.33-.246.495-.246h3.239c.144 0 .236.06.285.18.046.149.034.255-.036.315l-6.555 6.344 6.836 8.507c.095.104.117.208.07.358"/>
-              </svg>
-              <span className="text-sm font-medium">Kaggle</span>
-            </a>
-            <a href="https://developers.google.com/profile/u/yourprofile" target="_blank" rel="noopener noreferrer" 
-               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 ${
-                 theme === 'dark' 
-                   ? 'bg-gray-800 hover:bg-blue-500 text-gray-300 hover:text-white' 
-                   : 'bg-gray-100 hover:bg-blue-500 text-gray-700 hover:text-white'
-               }`}>
-              <Code className="w-5 h-5" />
-              <span className="text-sm font-medium">Google Dev</span>
-            </a>
+          {/* Section Header */}
+          <div className="text-center mb-10 md:mb-14">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border mb-4 text-xs font-semibold tracking-wider uppercase ${theme === 'dark' ? 'bg-blue-500/10 border-blue-500/30 text-blue-400' : 'bg-blue-50 border-blue-200 text-blue-600'}">
+              <Star className="w-3.5 h-3.5" /> Tentang Saya
+            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent mb-3">
+              Muhammad Amin Hidayat
+            </h2>
+            <p className={`text-base sm:text-lg max-w-3xl mx-auto leading-relaxed ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+              Programmer &amp; Full Stack Developer dari <strong>Makassar, Sulawesi Selatan</strong>
+            </p>
           </div>
-        </div>
+
+          {/* Bio Card */}
+          <div className={`relative rounded-2xl border overflow-hidden mb-10 md:mb-14 ${theme === 'dark' ? 'bg-gray-800/60 border-gray-700/60' : 'bg-white border-gray-200 shadow-lg'}`}>
+            <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500`} />
+            <div className="p-6 sm:p-8 md:p-10">
+              <div className="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-8 items-start">
+                {/* Profile Image */}
+                <div className="flex justify-center lg:justify-start">
+                  <div className="relative group">
+                    <div className="absolute -inset-2 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-2xl blur-lg opacity-25 group-hover:opacity-40 transition-opacity" />
+                    <img
+                      src="/images/profile/pp.png"
+                      alt="Muhammad Amin Hidayat — Programmer dan Full Stack Developer asal Makassar, Sulawesi Selatan"
+                      className="relative w-36 sm:w-44 lg:w-52 h-auto object-contain rounded-xl"
+                      itemProp="image"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+
+                {/* Bio Text */}
+                <div className="space-y-4" itemProp="description">
+                  <h3 className={`text-xl sm:text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                    Halo, Saya <span className="bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">Muhammad Amin Hidayat</span> 👋
+                  </h3>
+
+                  <p className={`text-sm sm:text-base leading-relaxed ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                    Saya adalah seorang <strong>programmer</strong> dan <strong>Full Stack Developer</strong> yang berasal dari <strong>Makassar, Sulawesi Selatan, Indonesia</strong>. Saat ini saya sedang menempuh pendidikan di{' '}
+                    <strong itemProp="alumniOf">Universitas Dipa Makassar</strong> dan aktif sebagai anggota{' '}
+                    <strong>Dipanegara Computer Club (DCC)</strong>, sebuah komunitas IT terbesar di kampus saya.
+                  </p>
+
+                  <p className={`text-sm sm:text-base leading-relaxed ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                    Dengan pengalaman lebih dari <strong>5 tahun</strong> di dunia pemrograman, saya telah menyelesaikan <strong>30+ proyek</strong> dan meraih <strong>10+ sertifikasi profesional</strong>. Keahlian utama saya meliputi <strong>Full-Stack Web Development</strong> (React, TypeScript, Next.js, Node.js, Laravel),{' '}
+                    <strong>Cloud Computing</strong>, <strong>UI/UX Design</strong>, <strong>Data Engineering</strong>, dan <strong>Computer Networking</strong>.
+                  </p>
+
+                  <p className={`text-sm sm:text-base leading-relaxed ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                    Saya percaya bahwa teknologi adalah alat terbaik untuk memecahkan masalah nyata. Setiap proyek yang saya kerjakan selalu mengutamakan <em>kualitas kode</em>, <em>performa</em>, dan <em>pengalaman pengguna</em> yang luar biasa. Saya berkomitmen untuk terus belajar dan berkontribusi di ekosistem teknologi Indonesia.
+                  </p>
+
+                  {/* Quick Info Pills */}
+                  <div className="flex flex-wrap gap-2 pt-2">
+                    {[
+                      { label: '📍 Makassar, Indonesia', color: 'from-green-500 to-emerald-500' },
+                      { label: '🎓 Universitas Dipa Makassar', color: 'from-blue-500 to-cyan-500' },
+                      { label: '💻 3+ Tahun Pengalaman', color: 'from-purple-500 to-pink-500' },
+                      { label: '🏆 10+ Sertifikasi', color: 'from-orange-500 to-red-500' },
+                      { label: '🚀 100+ Proyek', color: 'from-yellow-500 to-orange-500' },
+                    ].map((pill, i) => (
+                      <span key={i} className={`px-3 py-1.5 rounded-full text-xs font-medium border ${theme === 'dark' ? 'bg-gray-700/60 border-gray-600/60 text-gray-300' : 'bg-gray-50 border-gray-200 text-gray-700'}`}>
+                        {pill.label}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Keahlian Utama — SEO rich */}
+          <div className="mb-10 md:mb-14">
+            <h3 className={`text-2xl sm:text-3xl font-bold text-center mb-8 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+              Keahlian &amp; Spesialisasi
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6" itemProp="knowsAbout">
+              {[
+                { 
+                  icon: <Code className="w-7 h-7 text-white" />, 
+                  title: 'Full-Stack Web Development', 
+                  desc: 'Membangun aplikasi web modern dan scalable menggunakan React, TypeScript, Next.js, Node.js, dan Laravel. Ahli dalam frontend dan backend development.', 
+                  gradient: 'from-blue-500 to-cyan-600',
+                  bg: theme === 'dark' ? 'from-blue-900/30 to-cyan-900/30' : 'from-blue-50 to-cyan-50',
+                  border: theme === 'dark' ? 'border-blue-700/40' : 'border-blue-200'
+                },
+                { 
+                  icon: <Palette className="w-7 h-7 text-white" />, 
+                  title: 'UI/UX Design', 
+                  desc: 'Mendesain antarmuka pengguna yang intuitif dan menarik dengan Figma dan Adobe XD. Fokus pada user experience, aksesibilitas, dan responsive design.', 
+                  gradient: 'from-purple-500 to-pink-600',
+                  bg: theme === 'dark' ? 'from-purple-900/30 to-pink-900/30' : 'from-purple-50 to-pink-50',
+                  border: theme === 'dark' ? 'border-purple-700/40' : 'border-purple-200'
+                },
+                { 
+                  icon: <Zap className="w-7 h-7 text-white" />, 
+                  title: 'Cloud & Data Engineering', 
+                  desc: 'Mengelola infrastruktur cloud, data pipeline, dan analisis data. Berpengalaman dengan Google Cloud, Python, dan platform Kaggle untuk data science.', 
+                  gradient: 'from-orange-500 to-red-600',
+                  bg: theme === 'dark' ? 'from-orange-900/30 to-red-900/30' : 'from-orange-50 to-red-50',
+                  border: theme === 'dark' ? 'border-orange-700/40' : 'border-orange-200'
+                },
+              ].map((skill, i) => (
+                <div key={i} className={`group relative p-6 sm:p-7 rounded-2xl overflow-hidden bg-gradient-to-br ${skill.bg} border ${skill.border} transition-all duration-500 hover:scale-[1.03] hover:shadow-xl`}>
+                  <div className={`absolute top-0 right-0 w-28 h-28 bg-gradient-to-br ${skill.gradient} opacity-10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500`} />
+                  <div className="relative z-10">
+                    <div className={`w-14 h-14 mb-5 flex items-center justify-center bg-gradient-to-br ${skill.gradient} rounded-xl shadow-lg group-hover:rotate-6 transition-transform duration-300`}>
+                      {skill.icon}
+                    </div>
+                    <h4 className={`text-lg font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{skill.title}</h4>
+                    <p className={`text-sm leading-relaxed ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>{skill.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Connect With Me — Visual Redesign */}
+          <div className="mb-10 md:mb-14">
+            <h3 className={`text-2xl sm:text-3xl font-bold text-center mb-3 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+              Connect With Me
+            </h3>
+            <p className={`text-center text-sm mb-8 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+              Mari berkolaborasi! Hubungi saya melalui platform profesional berikut
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto">
+              {[
+                { href: 'https://www.linkedin.com/in/muhammad-amin-hidayat', label: 'LinkedIn', icon: <Linkedin className="w-5 h-5" />, gradient: 'from-blue-600 to-blue-700', hover: 'hover:shadow-blue-500/30' },
+                { href: 'https://github.com/dayattt111', label: 'GitHub', icon: <Activity className="w-5 h-5" />, gradient: 'from-gray-700 to-gray-900', hover: 'hover:shadow-gray-500/30' },
+                { href: 'https://scholar.google.com/citations?user=LRRALCsAAAAJ&hl=id', label: 'Google Scholar', icon: <BookOpen className="w-5 h-5" />, gradient: 'from-red-500 to-red-700', hover: 'hover:shadow-red-500/30' },
+                { href: 'https://www.kaggle.com/muhammadaminhidayat', label: 'Kaggle', icon: <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M18.825 23.859c-.022.092-.117.141-.281.141h-3.139c-.187 0-.351-.082-.492-.248l-5.178-6.589-1.448 1.374v5.111c0 .235-.117.352-.351.352H5.505c-.236 0-.354-.117-.354-.352V.353c0-.233.118-.353.354-.353h2.431c.234 0 .351.12.351.353v14.343l6.203-6.272c.165-.165.33-.246.495-.246h3.239c.144 0 .236.06.285.18.046.149.034.255-.036.315l-6.555 6.344 6.836 8.507c.095.104.117.208.07.358"/></svg>, gradient: 'from-cyan-500 to-cyan-700', hover: 'hover:shadow-cyan-500/30' },
+                { href: 'https://www.instagram.com/aminhdyt1/', label: 'Instagram', icon: <Instagram className="w-5 h-5" />, gradient: 'from-pink-500 to-purple-600', hover: 'hover:shadow-pink-500/30' },
+                { href: 'https://medium.com/@muhammadaminhidayat', label: 'Medium', icon: <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/></svg>, gradient: 'from-green-500 to-green-700', hover: 'hover:shadow-green-500/30' },
+                { href: 'https://orcid.org/0009-0003-0045-8498', label: 'ORCID', icon: <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947s-.422.947-.947.947a.95.95 0 0 1-.947-.947c0-.525.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-2.016 5.016-5.325 5.016h-3.919V7.416zm1.444 1.303v7.444h2.297c2.359 0 4.053-1.666 4.053-3.722 0-2.025-1.694-3.722-4.053-3.722h-2.297z"/></svg>, gradient: 'from-green-600 to-green-800', hover: 'hover:shadow-green-500/30' },
+                { href: 'https://developers.google.com/profile/u/muhammadaminhidayat', label: 'Google Dev', icon: <Code className="w-5 h-5" />, gradient: 'from-blue-400 to-blue-600', hover: 'hover:shadow-blue-500/30' },
+              ].map((link, i) => (
+                <a
+                  key={i}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  itemProp="sameAs"
+                  className={`group flex flex-col items-center gap-2 p-4 sm:p-5 rounded-xl border transition-all duration-300 hover:scale-[1.05] hover:shadow-xl ${link.hover} ${theme === 'dark' ? 'bg-gray-800/60 border-gray-700/50 hover:border-gray-600' : 'bg-white border-gray-200 hover:border-gray-300'}`}
+                >
+                  <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${link.gradient} flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform duration-300`}>
+                    {link.icon}
+                  </div>
+                  <span className={`text-xs font-semibold ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>{link.label}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* FAQ Section — Hidden SEO text for Google AI */}
+          <div className="mb-10 md:mb-14">
+            <h3 className={`text-2xl sm:text-3xl font-bold text-center mb-3 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+              Pertanyaan Umum
+            </h3>
+            <p className={`text-center text-sm mb-8 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+              Hal yang sering ditanyakan tentang saya
+            </p>
+            <div className="max-w-3xl mx-auto space-y-4">
+              {[
+                {
+                  q: 'Siapa Muhammad Amin Hidayat?',
+                  a: 'Muhammad Amin Hidayat adalah seorang programmer muda berbakat dan Full Stack Developer yang berasal dari Makassar, Sulawesi Selatan, Indonesia. Ia merupakan mahasiswa Universitas Dipa Makassar dan anggota aktif Dipanegara Computer Club (DCC). Dengan pengalaman lebih dari 5 tahun di dunia IT, ia telah menyelesaikan lebih dari 100 proyek dan meraih 10+ sertifikasi profesional di bidang teknologi.'
+                },
+                {
+                  q: 'Apa saja keahlian Muhammad Amin Hidayat?',
+                  a: 'Keahlian utama Muhammad Amin Hidayat meliputi Full-Stack Web Development (React, TypeScript, Next.js, Node.js, Laravel, PHP), Cloud Computing (Google Cloud Platform), UI/UX Design (Figma, Adobe XD), Data Engineering & Data Science (Python, Kaggle), dan Computer Networking. Ia juga menguasai berbagai database seperti MySQL, PostgreSQL, dan Supabase.'
+                },
+                {
+                  q: 'Programmer terbaik di Makassar siapa?',
+                  a: 'Muhammad Amin Hidayat dikenal sebagai salah satu programmer muda paling berbakat di Makassar, Sulawesi Selatan. Ia aktif berkontribusi di komunitas developer, memiliki portofolio yang luas, dan secara konsisten mengembangkan proyek-proyek inovatif. Profilnya dapat dilihat di devdaya.my.id dan LinkedIn.'
+                },
+                {
+                  q: 'Di mana Muhammad Amin Hidayat berkuliah?',
+                  a: 'Muhammad Amin Hidayat saat ini berkuliah di Universitas Dipa Makassar, sebuah perguruan tinggi swasta di Makassar, Sulawesi Selatan, Indonesia. Di kampusnya, ia aktif sebagai anggota Dipanegara Computer Club (DCC), komunitas IT terbesar di universitas tersebut.'
+                },
+              ].map((faq, i) => (
+                <details key={i} className={`group rounded-xl border overflow-hidden transition-all duration-300 ${theme === 'dark' ? 'bg-gray-800/50 border-gray-700/50' : 'bg-white border-gray-200'}`}>
+                  <summary className={`flex items-center justify-between p-5 cursor-pointer list-none font-semibold text-sm sm:text-base transition-colors ${theme === 'dark' ? 'text-white hover:text-blue-400' : 'text-gray-900 hover:text-blue-600'}`}>
+                    <span>{faq.q}</span>
+                    <ChevronDown className="w-5 h-5 transition-transform duration-300 group-open:rotate-180 shrink-0 ml-3" />
+                  </summary>
+                  <div className={`px-5 pb-5 text-sm leading-relaxed ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+                    {faq.a}
+                  </div>
+                </details>
+              ))}
+            </div>
+          </div>
+        </article>
 
         {/* Stats Grid - Animated */}
-        <div className={`grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mb-12 sm:mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+        <div className={`grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 transition-all duration-700 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
           {achievements.map((item, index) => (
             <div
               key={index}
-              className={`group relative p-4 sm:p-6 rounded-xl sm:rounded-2xl transition-all duration-500 hover:scale-105 cursor-pointer touch-manipulation ${theme === 'dark' ? 'bg-gray-800/50 backdrop-blur-sm hover:bg-gray-800/70' : 'bg-gray-50 hover:bg-gray-100'}`}
-              style={{ 
-                transitionDelay: `${index * 0.1}s`,
-                transform: isVisible ? 'translateY(0)' : 'translateY(20px)'
-              }}
+              className={`group relative p-4 sm:p-6 rounded-xl sm:rounded-2xl transition-all duration-500 hover:scale-105 cursor-pointer ${theme === 'dark' ? 'bg-gray-800/50 backdrop-blur-sm hover:bg-gray-800/70' : 'bg-gray-50 hover:bg-gray-100'}`}
+              style={{ transitionDelay: `${index * 0.1}s`, transform: isVisible ? 'translateY(0)' : 'translateY(20px)' }}
             >
               <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br ${item.color} flex items-center justify-center text-white mb-3 sm:mb-4 transform transition-transform group-hover:rotate-12`}>
                 {item.icon}
@@ -713,156 +747,6 @@ export default function About() {
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Main Content - Enhanced Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-          {/* Card 1: Development - Enhanced */}
-          <div 
-            className={`transition-all duration-700 hover:scale-105 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} 
-            style={{ transitionDelay: '0.4s' }}
-          >
-            <div className={`relative p-8 rounded-2xl h-full group overflow-hidden ${theme === 'dark' ? 'bg-gradient-to-br from-gray-800 to-gray-900' : 'bg-gradient-to-br from-white to-gray-50'} border ${theme === 'dark' ? 'border-gray-700' : 'border-gray-200'}`}>
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-500" />
-              
-              <div className="relative z-10">
-                <div className="w-16 h-16 mb-6 flex items-center justify-center bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl group-hover:rotate-6 transition-transform duration-300 shadow-lg">
-                  <Code className="w-8 h-8 text-white" />
-                </div>
-                <h3 className={`text-xl font-bold mb-3 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                  Full-Stack Development
-                </h3>
-                <p className={`text-sm mb-6 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
-                  Expert in building scalable web applications with React, TypeScript, Node.js, and modern frameworks. Specialized in creating performant, maintainable code.
-                </p>
-                
-                <div className="space-y-3">
-                  <div>
-                    <div className="flex justify-between text-xs mb-2">
-                      <span className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>Frontend</span>
-                      <span className="text-blue-500 font-semibold">95%</span>
-                    </div>
-                    <div className={`w-full rounded-full h-2 ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'}`}>
-                      <div 
-                        className="bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full transition-all duration-1000 shadow-lg shadow-blue-500/50"
-                        style={{ width: isVisible ? '95%' : '0%' }}
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <div className="flex justify-between text-xs mb-2">
-                      <span className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>Backend</span>
-                      <span className="text-purple-500 font-semibold">90%</span>
-                    </div>
-                    <div className={`w-full rounded-full h-2 ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'}`}>
-                      <div 
-                        className="bg-gradient-to-r from-purple-500 to-purple-600 h-2 rounded-full transition-all duration-1000 delay-200 shadow-lg shadow-purple-500/50"
-                        style={{ width: isVisible ? '90%' : '0%' }}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 2: UI/UX Design - Enhanced */}
-          <div 
-            className={`transition-all duration-700 hover:scale-105 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} 
-            style={{ transitionDelay: '0.6s' }}
-          >
-            <div className={`relative p-8 rounded-2xl h-full group overflow-hidden ${theme === 'dark' ? 'bg-gradient-to-br from-purple-900/30 to-pink-900/30' : 'bg-gradient-to-br from-purple-50 to-pink-50'} border ${theme === 'dark' ? 'border-purple-700/50' : 'border-purple-200'}`}>
-              <div className="absolute -top-10 -right-10 w-40 h-40 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-500" />
-              
-              <div className="relative z-10">
-                <div className="w-16 h-16 mb-6 flex items-center justify-center bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl group-hover:-rotate-6 transition-transform duration-300 shadow-lg">
-                  <Palette className="w-8 h-8 text-white" />
-                </div>
-                <h3 className={`text-xl font-bold mb-3 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                  UI/UX Design
-                </h3>
-                <p className={`text-sm mb-6 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
-                  Crafting beautiful, intuitive user interfaces with Figma, Adobe XD. Focus on user-centered design and accessibility standards.
-                </p>
-                
-                <div className="space-y-3">
-                  <div>
-                    <div className="flex justify-between text-xs mb-2">
-                      <span className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>UI Design</span>
-                      <span className="text-purple-500 font-semibold">92%</span>
-                    </div>
-                    <div className={`w-full rounded-full h-2 ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'}`}>
-                      <div 
-                        className="bg-gradient-to-r from-purple-500 to-pink-600 h-2 rounded-full transition-all duration-1000 delay-400 shadow-lg shadow-purple-500/50"
-                        style={{ width: isVisible ? '92%' : '0%' }}
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <div className="flex justify-between text-xs mb-2">
-                      <span className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>UX Research</span>
-                      <span className="text-pink-500 font-semibold">88%</span>
-                    </div>
-                    <div className={`w-full rounded-full h-2 ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'}`}>
-                      <div 
-                        className="bg-gradient-to-r from-pink-500 to-rose-600 h-2 rounded-full transition-all duration-1000 delay-600 shadow-lg shadow-pink-500/50"
-                        style={{ width: isVisible ? '88%' : '0%' }}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 3: Performance & Quality - Enhanced */}
-          <div 
-            className={`transition-all duration-700 hover:scale-105 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} 
-            style={{ transitionDelay: '0.8s' }}
-          >
-            <div className={`relative p-8 rounded-2xl h-full group overflow-hidden ${theme === 'dark' ? 'bg-gradient-to-br from-orange-900/30 to-red-900/30' : 'bg-gradient-to-br from-orange-50 to-red-50'} border ${theme === 'dark' ? 'border-orange-700/50' : 'border-orange-200'}`}>
-              <div className="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-tr from-orange-500/20 to-red-500/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-500" />
-              
-              <div className="relative z-10">
-                <div className="w-16 h-16 mb-6 flex items-center justify-center bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl group-hover:rotate-12 transition-transform duration-300 shadow-lg">
-                  <Zap className="w-8 h-8 text-white" />
-                </div>
-                <h3 className={`text-xl font-bold mb-3 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                  Performance & Quality
-                </h3>
-                <p className={`text-sm mb-6 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
-                  Delivering optimized, scalable solutions with clean code architecture. Committed to web vitals and best practices.
-                </p>
-                
-                <div className="space-y-3">
-                  <div>
-                    <div className="flex justify-between text-xs mb-2">
-                      <span className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>Code Quality</span>
-                      <span className="text-orange-500 font-semibold">96%</span>
-                    </div>
-                    <div className={`w-full rounded-full h-2 ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'}`}>
-                      <div 
-                        className="bg-gradient-to-r from-orange-500 to-red-600 h-2 rounded-full transition-all duration-1000 delay-800 shadow-lg shadow-orange-500/50"
-                        style={{ width: isVisible ? '96%' : '0%' }}
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <div className="flex justify-between text-xs mb-2">
-                      <span className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>Optimization</span>
-                      <span className="text-red-500 font-semibold">94%</span>
-                    </div>
-                    <div className={`w-full rounded-full h-2 ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'}`}>
-                      <div 
-                        className="bg-gradient-to-r from-red-500 to-rose-600 h-2 rounded-full transition-all duration-1000 delay-1000 shadow-lg shadow-red-500/50"
-                        style={{ width: isVisible ? '94%' : '0%' }}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
 
       </div>
