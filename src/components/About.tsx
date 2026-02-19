@@ -278,34 +278,31 @@ export default function About() {
 
               {/* Fastfetch Output */}
               {showFastfetch && (
-                <div className="mt-3 flex gap-4 sm:gap-6 items-start">
-                  {/* Kali Linux ASCII Art */}
-                  <pre className="text-blue-400 text-[8px] sm:text-[10px] md:text-xs leading-tight select-none shrink-0" style={{ fontFamily: 'monospace' }}>{`
-  ......                        
-  .;okOOOkdc,.                  
-  .,lkOOOOOOOOOOOl.              
-  .;oOOOOOOOOOOOOOOOo.            
-  cdOOOOOOOOOOOOOOOOOOd.          
- .dOOOOOOOOOOOOOOOOOOOOOc         
- lOOOOOOOOOOOOOOOOOOOOOOOo.       
- .OOOOOOOOOOOOOOOOOOOOOOOOOO;      
- :OOOOOOOOOOOOOc..oOOOOOOOOO.     
- cOOOOOOOOOOOo.    .oOOOOOOOO     
- :OOOOOOOOOOO.       lOOOOOOOOl   
- oOOOOOOOOOOc         cOOOOOOOO.  
-     .:oOOOOOo          oOOOOOOO; 
-        .dOOOOo.         :OOOOOO; 
-          cOOOOOo.        lOOOOO; 
-           oOOOOOOo.      :OOOOO: 
-            .oOOOOOOo.    .OOOOOo 
-              cOOOOOOOo.  cOOOOOo 
-              .oOOOOOOOOodOOOOOOo 
-               .oOOOOOOOOOOOOOOo  
-                 oOOOOOOOOOOOOo.  
-                  oOOOOOOOOOo.    
-                   .oOOOOOo.      
-                     .oOo.        
-                       .          `}</pre>
+                <div className="mt-3 flex gap-3 sm:gap-5 items-start">
+                  {/* Kali Linux Dragon Logo - neofetch ASCII */}
+                  <div className="shrink-0 select-none">
+                    <pre className="text-blue-500 text-[6px] sm:text-[8px] md:text-[10px] leading-[1.15] font-mono">{`..............
+            ..,;:ccc,.
+          ......''';lxO.
+.....''''..........,:ld;
+           .';;;:::;,,.x,
+      ..'''.            0Xxoc:,.  ...
+  ....                ,ONkc;,;cokOdc',.
+ .                   OMo           ':ddo.
+                    dMc               :OO;
+                    0M.                 .:o.
+                    ;Wd
+                     ;XO,
+                       ,d0Odlc;,..
+                           ..',;:cdOOd::,.
+                                    .:d;.':;.
+                                       'd,  .'
+                                         ;l   ..
+                                          .o
+                                            c
+                                            .'
+                                             .`}</pre>
+                  </div>
 
                   {/* System Info */}
                   <div className="text-[10px] sm:text-xs md:text-sm leading-relaxed sm:leading-loose min-w-0">
