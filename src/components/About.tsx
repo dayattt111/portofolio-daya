@@ -556,9 +556,9 @@ export default function About() {
                   <div className="relative group">
                     <div className="absolute -inset-2 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-2xl blur-lg opacity-25 group-hover:opacity-40 transition-opacity" />
                     <img
-                      src="/images/profile/pp.png"
+                      src="/images/profile/dayat.jpg"
                       alt="Muhammad Amin Hidayat — Programmer dan Full Stack Developer asal Makassar, Sulawesi Selatan"
-                      className="relative w-36 sm:w-44 lg:w-52 h-auto object-contain rounded-xl"
+                      className="relative w-46 sm:w-44 lg:w-80 h-auto object-contain rounded-xl"
                       itemProp="image"
                       loading="lazy"
                     />
