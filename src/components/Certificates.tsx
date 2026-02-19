@@ -1,5 +1,5 @@
-import { Calendar, ExternalLink, ChevronLeft, ChevronRight, X } from 'lucide-react';
-import { useState, useEffect, useRef } from 'react';
+import { Calendar, ExternalLink, Award, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import reactImg from '/images/certificates/PsertiCy.png';
 import reactImg2 from '/images/certificates/PsertiNet.png';
@@ -13,12 +13,10 @@ interface Certificate {
   credentialId: string;
   credentialUrl: string;
   skills: string[];
-  color: string;
-  icon: string;
+  accent: string;
   image: string;
 }
 
-// Data
 const certificates: Certificate[] = [
   {
     title: 'Pemateri Cyber Security',
@@ -27,8 +25,7 @@ const certificates: Certificate[] = [
     credentialId: '421/615/UPT.SMAN.01-BONE/XI/2025',
     credentialUrl: '#',
     skills: ['Malware Analyst', 'Digital Safety', 'Aware Data'],
-    color: '#00ff88',
-    icon: '⚛️',
+    accent: 'from-emerald-500 to-cyan-500',
     image: reactImg,
   },
   {
@@ -38,8 +35,7 @@ const certificates: Certificate[] = [
     credentialId: '421/615/UPT.SMAN.01-BONE/XI/2025',
     credentialUrl: '#',
     skills: ['Network', 'Topology Architecture', 'Administrator'],
-    color: '#ff006e',
-    icon: '🔧',
+    accent: 'from-rose-500 to-orange-500',
     image: reactImg2,
   },
   {
@@ -49,297 +45,372 @@ const certificates: Certificate[] = [
     credentialId: 'MSFT-2022-112',
     credentialUrl: '#',
     skills: ['CTF', 'Cybersecurity', 'AI for Cybersecurity'],
-    color: '#b537f2',
-    icon: '📘',
+    accent: 'from-violet-500 to-purple-500',
     image: reactImg3,
   },
   {
-    title: 'Participant Ai Talent Development Nation Makassar',
-    issuer: 'Amazon AWS || Alibaaba || Google Cloud',
+    title: 'Participant AI Talent Development Nation Makassar',
+    issuer: 'Amazon AWS || Alibaba || Google Cloud',
     date: 'November 2025',
     credentialId: '5072361716644257',
     credentialUrl: 'https://drive.google.com/file/d/1w10PYiKxpu2m5ObS7OBX28YUqWzHwMu6/view?usp=drive_link',
     skills: ['Cloud Architecture', 'AWS Services', 'Security'],
-    color: '#ffbe0b',
-    icon: '☁️',
+    accent: 'from-amber-500 to-yellow-500',
     image: reactImg4,
   },
-  // {
-  //   title: 'Google Cloud Professional',
-  //   issuer: 'Google Cloud',
-  //   date: 'May 2022',
-  //   credentialId: 'GCP-2022-PRO',
-  //   credentialUrl: '#',
-  //   skills: ['GCP', 'BigQuery', 'Kubernetes'],
-  //   color: '#00a3ff',
-  //   icon: '🌩️',
-  //   image: '/images/certificates/gcp.png',
-  // },
-  // {
-  //   title: 'UI/UX Design Certification',
-  //   issuer: 'Interaction Design Foundation',
-  //   date: 'February 2022',
-  //   credentialId: 'IDF-2022-UI',
-  //   credentialUrl: '#',
-  //   skills: ['Design Thinking', 'Prototyping', 'User Research'],
-  //   color: '#00ff88',
-  //   icon: '🎨',
-  //   image: '/images/certificates/uiux.png',
-  // },
+];
+
+// Grid span classes — same bento layout as before
+const gridSpans = [
+  'md:col-span-2 md:row-span-2', // 0 — large featured
+  'md:col-span-1 md:row-span-1', // 1 — small
+  'md:col-span-1 md:row-span-1', // 2 — small
+  'md:col-span-2 md:row-span-1', // 3 — wide
 ];
 
 export default function Certificates() {
   const { theme } = useTheme();
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const [fadeState, setFadeState] = useState('fade-in');
-  const [showModal, setShowModal] = useState(false);
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const [order, setOrder] = useState<number[]>(certificates.map((_, i) => i));
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [phase, setPhase] = useState<'idle' | 'exit' | 'enter'>('idle');
+  const [selectedCert, setSelectedCert] = useState<number | null>(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const autoPlayRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const currentCert = certificates[currentIndex];
+  const currentCert = selectedCert !== null ? certificates[selectedCert] : null;
 
+  // FIFO cycle: front (slot 0) goes to back (slot 3), others shift forward
+  const cycleNext = useCallback(() => {
+    if (isAnimating) return;
+    setIsAnimating(true);
+    setPhase('exit');
+
+    // After exit animation, reorder & enter
+    setTimeout(() => {
+      setOrder((prev) => [...prev.slice(1), prev[0]]);
+      setPhase('enter');
+
+      // After enter animation completes
+      setTimeout(() => {
+        setPhase('idle');
+        setIsAnimating(false);
+      }, 400);
+    }, 400);
+  }, [isAnimating]);
+
+  // Reverse cycle
+  const cyclePrev = useCallback(() => {
+    if (isAnimating) return;
+    setIsAnimating(true);
+    setPhase('exit');
+
+    setTimeout(() => {
+      setOrder((prev) => [prev[prev.length - 1], ...prev.slice(0, -1)]);
+      setPhase('enter');
+
+      setTimeout(() => {
+        setPhase('idle');
+        setIsAnimating(false);
+      }, 400);
+    }, 400);
+  }, [isAnimating]);
+
+  // Auto-play
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setIsVisible(true);
-      },
-      { threshold: 0.15 }
+    if (isPaused || selectedCert !== null) {
+      if (autoPlayRef.current) clearInterval(autoPlayRef.current);
+      return;
+    }
+    autoPlayRef.current = setInterval(cycleNext, 5000);
+    return () => {
+      if (autoPlayRef.current) clearInterval(autoPlayRef.current);
+    };
+  }, [cycleNext, isPaused, selectedCert]);
+
+  // Modal nav
+  const handleModalPrev = () => {
+    setSelectedCert((prev) =>
+      prev !== null ? (prev - 1 + certificates.length) % certificates.length : 0
     );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!isAutoPlaying) return;
-    const interval = setInterval(() => handleNext(), 5000);
-    return () => clearInterval(interval);
-  }, [currentIndex, isAutoPlaying]);
-
-  const handleNext = () => {
-    setFadeState('fade-out');
-    setTimeout(() => {
-      setCurrentIndex((prev) => (prev + 1) % certificates.length);
-      setFadeState('fade-in');
-    }, 250);
+  };
+  const handleModalNext = () => {
+    setSelectedCert((prev) =>
+      prev !== null ? (prev + 1) % certificates.length : 0
+    );
   };
 
-  const handlePrev = () => {
-    setFadeState('fade-out');
-    setTimeout(() => {
-      setCurrentIndex((prev) => (prev - 1 + certificates.length) % certificates.length);
-      setFadeState('fade-in');
-    }, 250);
-  };
-
-  const goToSlide = (index: number) => {
-    setFadeState('fade-out');
-    setTimeout(() => {
-      setCurrentIndex(index);
-      setFadeState('fade-in');
-    }, 250);
+  // Animation class per grid slot
+  const getAnimClass = (slotIndex: number) => {
+    if (phase === 'exit') {
+      // slot 0 (featured) flies out; others fade slightly
+      if (slotIndex === 0) return 'scale-90 opacity-0 -translate-y-6 rotate-[-3deg]';
+      return 'scale-95 opacity-50';
+    }
+    if (phase === 'enter') {
+      return 'scale-100 opacity-100 translate-y-0 rotate-0';
+    }
+    return 'scale-100 opacity-100 translate-y-0 rotate-0';
   };
 
   return (
-    <section ref={sectionRef} id="certificates" className={`py-12 sm:py-16 transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
+    <section
+      id="certificates"
+      className={`py-16 sm:py-20 transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* TITLE */}
-        <div className={`mb-8 sm:mb-12 text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <h2 className={`text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-3 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Certifications</h2>
-          <p className={`text-sm sm:text-base md:text-lg ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Continuous learning & professional development</p>
+        {/* Header */}
+        <div className="mb-10 sm:mb-14">
+          <div className="flex items-center gap-3 mb-3">
+            <Award className={`w-6 h-6 ${theme === 'dark' ? 'text-blue-400' : 'text-blue-600'}`} />
+            <span className={`text-sm font-medium tracking-widest uppercase ${theme === 'dark' ? 'text-blue-400' : 'text-blue-600'}`}>
+              Certifications
+            </span>
+          </div>
+          <h2 className={`text-3xl sm:text-4xl md:text-5xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+            Professional Credentials
+          </h2>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mt-3">
+            <p className={`text-base sm:text-lg max-w-2xl ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+              Continuous learning & professional development journey.
+            </p>
+
+            {/* Controls */}
+            <div className="flex items-center gap-3 shrink-0">
+              <button
+                onClick={cyclePrev}
+                disabled={isAnimating}
+                className={`p-2.5 rounded-full transition-all ${
+                  theme === 'dark'
+                    ? 'bg-gray-800 hover:bg-gray-700 text-gray-400 disabled:opacity-30'
+                    : 'bg-gray-100 hover:bg-gray-200 text-gray-600 disabled:opacity-30'
+                }`}
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+
+              {/* Dot indicators */}
+              <div className="flex items-center gap-2">
+                {certificates.map((cert, i) => (
+                  <div
+                    key={i}
+                    className={`rounded-full transition-all duration-500 ${
+                      order[0] === i
+                        ? `w-6 h-2 bg-gradient-to-r ${cert.accent}`
+                        : `w-2 h-2 ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-300'}`
+                    }`}
+                  />
+                ))}
+              </div>
+
+              <button
+                onClick={cycleNext}
+                disabled={isAnimating}
+                className={`p-2.5 rounded-full transition-all ${
+                  theme === 'dark'
+                    ? 'bg-gray-800 hover:bg-gray-700 text-gray-400 disabled:opacity-30'
+                    : 'bg-gray-100 hover:bg-gray-200 text-gray-600 disabled:opacity-30'
+                }`}
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
         </div>
 
-        {/* 3-Item Carousel Container */}
-        <div
-          className={`relative transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
-          onMouseEnter={() => setIsAutoPlaying(false)}
-          onMouseLeave={() => setIsAutoPlaying(true)}
-        >
-          {/* Navigation Buttons */}
-          <button
-            onClick={handlePrev}
-            className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-14 p-4 rounded-full shadow-xl z-20 transition-all hover:scale-110 group ${theme === 'dark' ? 'bg-gray-800 hover:bg-gray-700 border-gray-700' : 'bg-white hover:bg-gray-50 border-gray-200'} border-2`}
-          >
-            <ChevronLeft className={`w-6 h-6 transition-transform group-hover:-translate-x-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`} />
-          </button>
+        {/* Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 md:auto-rows-[260px] gap-4 sm:gap-5">
+          {order.map((certIndex, slotIndex) => {
+            const cert = certificates[certIndex];
+            const animClass = getAnimClass(slotIndex);
 
-          <button
-            onClick={handleNext}
-            className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-14 p-4 rounded-full shadow-xl z-20 transition-all hover:scale-110 group ${theme === 'dark' ? 'bg-gray-800 hover:bg-gray-700 border-gray-700' : 'bg-white hover:bg-gray-50 border-gray-200'} border-2`}
-          >
-            <ChevronRight className={`w-6 h-6 transition-transform group-hover:translate-x-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`} />
-          </button>
+            return (
+              <div
+                key={`slot-${slotIndex}-cert-${certIndex}`}
+                className={`group relative rounded-2xl overflow-hidden cursor-pointer ${gridSpans[slotIndex] || ''} ${
+                  theme === 'dark'
+                    ? 'bg-gray-800/80 border border-gray-700/50 hover:border-gray-600'
+                    : 'bg-white border border-gray-200 hover:border-gray-300 shadow-sm hover:shadow-xl'
+                } transition-all duration-400 ease-out hover:-translate-y-1 ${animClass}`}
+                style={{ transitionDuration: '400ms' }}
+                onClick={() => setSelectedCert(certIndex)}
+              >
+                {/* Accent gradient bar top */}
+                <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${cert.accent} opacity-60 group-hover:opacity-100 transition-opacity z-10`} />
 
-          {/* 3 Certificates Grid with Carousel Effect */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 px-2 sm:px-4">
-            {[-1, 0, 1].map((offset) => {
-              const index = (currentIndex + offset + certificates.length) % certificates.length;
-              const cert = certificates[index];
-              const isCenter = offset === 0;
-              
-              return (
-                <div
-                  key={`${index}-${offset}`}
-                  className={`transition-all duration-500 ${
-                    isCenter 
-                      ? 'scale-100 opacity-100 z-10' 
-                      : 'scale-90 opacity-60 blur-[2px] hidden md:block'
-                  } ${fadeState === 'fade-in' ? 'translate-y-0' : 'translate-y-4'}`}
-                >
-                  <div 
-                    className={`group relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer ${
-                      isCenter ? 'ring-2 ring-blue-500 hover:scale-105' : 'hover:scale-95'
-                    } ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}
-                    onClick={() => isCenter && setShowModal(true)}
-                  >
-                    {/* Glow Effect on Center */}
-                    {isCenter && (
-                      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 animate-gradient-shift" />
-                    )}
-
-                    <div className="relative z-10 p-4">
-                      {/* Certificate Image */}
-                      <div className={`aspect-[4/3] rounded-xl overflow-hidden mb-4 relative ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-100'}`}>
-                        <img
-                          src={cert.image}
-                          alt={cert.title}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                        />
-                        {isCenter && (
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                        )}
-                      </div>
-
-                      {/* Certificate Info - Compact */}
-                      <div className="text-center space-y-2">
-                        <div className="text-2xl">{cert.icon}</div>
-                        
-                        <h3 className={`text-sm md:text-base font-bold line-clamp-2 ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
+                {/* Card content — adaptive layout per slot */}
+                {slotIndex === 0 ? (
+                  /* Large featured card — slot 0 */
+                  <div className="h-full flex flex-col">
+                    <div className="relative flex-1 overflow-hidden">
+                      <img
+                        src={cert.image}
+                        alt={cert.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className={`absolute inset-0 ${
+                        theme === 'dark'
+                          ? 'bg-gradient-to-t from-gray-900 via-gray-900/60 to-transparent'
+                          : 'bg-gradient-to-t from-white via-white/70 to-transparent'
+                      }`} />
+                      {/* Info overlay at bottom */}
+                      <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6">
+                        <div className="flex flex-wrap gap-1.5 mb-3">
+                          {cert.skills.map((skill, i) => (
+                            <span key={i} className={`px-2.5 py-1 rounded-full text-[10px] font-semibold bg-gradient-to-r ${cert.accent} text-white`}>
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+                        <h3 className={`text-lg sm:text-xl font-bold mb-1.5 leading-tight ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
                           {cert.title}
                         </h3>
-
-                        <p className={`text-xs line-clamp-1 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
-                          {cert.issuer}
-                        </p>
-
-                        <div className="flex items-center justify-center gap-2 text-xs">
-                          <Calendar className="w-3 h-3 text-blue-500" />
-                          <span className={theme === 'dark' ? 'text-gray-500' : 'text-gray-500'}>
+                        <div className="flex items-center gap-3">
+                          <span className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>{cert.issuer}</span>
+                          <span className={`text-xs px-2 py-0.5 rounded-full ${theme === 'dark' ? 'bg-gray-700 text-gray-400' : 'bg-gray-100 text-gray-500'}`}>
                             {cert.date}
                           </span>
                         </div>
-
-                        {/* View Button - Only show on center */}
-                        {isCenter && (
-                          <button
-                            className="mt-2 text-xs font-medium text-blue-500 hover:text-blue-600 transition-colors flex items-center gap-1 mx-auto"
-                          >
-                            <ExternalLink className="w-3 h-3" />
-                            View Details
-                          </button>
-                        )}
                       </div>
                     </div>
                   </div>
+                ) : slotIndex === 3 ? (
+                  /* Wide bottom card — slot 3 */
+                  <div className="h-full flex flex-col sm:flex-row">
+                    <div className="relative w-full sm:w-2/5 h-48 sm:h-full overflow-hidden shrink-0">
+                      <img
+                        src={cert.image}
+                        alt={cert.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
+                    <div className="flex-1 p-5 sm:p-6 flex flex-col justify-center">
+                      <div className="flex flex-wrap gap-1.5 mb-3">
+                        {cert.skills.map((skill, i) => (
+                          <span key={i} className={`px-2.5 py-1 rounded-full text-[10px] font-semibold bg-gradient-to-r ${cert.accent} text-white`}>
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                      <h3 className={`text-base sm:text-lg font-bold mb-1.5 leading-tight ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                        {cert.title}
+                      </h3>
+                      <span className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>{cert.issuer}</span>
+                      <span className={`text-xs mt-1 ${theme === 'dark' ? 'text-gray-500' : 'text-gray-500'}`}>{cert.date}</span>
+                      <div className={`mt-3 flex items-center gap-1.5 text-xs font-medium ${theme === 'dark' ? 'text-blue-400' : 'text-blue-600'} group-hover:gap-2.5 transition-all`}>
+                        <ExternalLink className="w-3.5 h-3.5" />
+                        View Certificate
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  /* Regular small cards — slots 1 & 2 */
+                  <div className="h-full flex flex-col">
+                    <div className="relative h-36 sm:h-40 overflow-hidden shrink-0">
+                      <img
+                        src={cert.image}
+                        alt={cert.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className={`absolute inset-0 ${
+                        theme === 'dark'
+                          ? 'bg-gradient-to-t from-gray-800 to-transparent opacity-80'
+                          : 'bg-gradient-to-t from-white to-transparent opacity-60'
+                      }`} />
+                    </div>
+                    <div className="flex-1 p-4 flex flex-col justify-end">
+                      <div className="flex flex-wrap gap-1 mb-2">
+                        {cert.skills.slice(0, 2).map((skill, i) => (
+                          <span key={i} className={`px-2 py-0.5 rounded-full text-[10px] font-semibold bg-gradient-to-r ${cert.accent} text-white`}>
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                      <h3 className={`text-sm font-bold leading-snug line-clamp-2 mb-1 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                        {cert.title}
+                      </h3>
+                      <span className={`text-xs ${theme === 'dark' ? 'text-gray-500' : 'text-gray-500'}`}>
+                        {cert.issuer}
+                      </span>
+                    </div>
+                  </div>
+                )}
+
+                {/* Hover arrow indicator */}
+                <div className={`absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0 ${
+                  theme === 'dark' ? 'bg-white/10 text-white' : 'bg-black/5 text-gray-700'
+                }`}>
+                  <ExternalLink className="w-3.5 h-3.5" />
                 </div>
-              );
-            })}
-          </div>
-
-          {/* Indicators with Animation */}
-          <div className="flex items-center justify-center gap-3 mt-8">
-            {certificates.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => goToSlide(index)}
-                className={`transition-all duration-300 rounded-full ${
-                  index === currentIndex 
-                    ? 'w-12 h-3 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 shadow-lg' 
-                    : `w-3 h-3 ${theme === 'dark' ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-300 hover:bg-gray-400'}`
-                }`}
-              />
-            ))}
-          </div>
-
-          {/* Auto Play Status */}
-          <div className="text-center mt-6">
-            <span className={`inline-flex items-center gap-2 text-sm px-4 py-2 rounded-full ${theme === 'dark' ? 'bg-gray-800 text-gray-400' : 'bg-gray-100 text-gray-600'}`}>
-              {isAutoPlaying ? (
-                <>
-                  <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                  Auto-playing
-                </>
-              ) : (
-                <>
-                  <span className="w-2 h-2 bg-gray-400 rounded-full" />
-                  Paused
-                </>
-              )}
-            </span>
-          </div>
+              </div>
+            );
+          })}
         </div>
       </div>
 
-      {/* MODAL with Enhanced Animation */}
-      {showModal && (
-        <div 
-          className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center p-2 sm:p-4 z-[999] animate-fade-in"
-          onClick={() => setShowModal(false)}
+      {/* Modal */}
+      {currentCert && selectedCert !== null && (
+        <div
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 z-[999]"
+          onClick={() => setSelectedCert(null)}
         >
-          <div 
-            className={`w-full max-w-5xl rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 relative overflow-y-auto max-h-[95vh] sm:max-h-[90vh] shadow-2xl animate-scale-in ${theme === 'dark' ? 'bg-gray-800 border border-gray-700' : 'bg-white border border-gray-200'}`}
+          <div
+            className={`w-full max-w-4xl rounded-2xl p-5 sm:p-8 relative overflow-y-auto max-h-[92vh] shadow-2xl ${
+              theme === 'dark'
+                ? 'bg-gray-900 border border-gray-700'
+                : 'bg-white border border-gray-200'
+            }`}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Animated Background Gradient */}
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-pink-500/5 animate-gradient-shift rounded-2xl" />
+            {/* Accent bar */}
+            <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${currentCert.accent} rounded-t-2xl`} />
 
-            {/* CLOSE BUTTON */}
+            {/* Close */}
             <button
-              className={`absolute top-4 right-4 transition-all p-2 rounded-full z-10 hover:rotate-90 ${theme === 'dark' ? 'text-gray-400 hover:text-white hover:bg-red-500' : 'text-gray-500 hover:text-white hover:bg-red-500'}`}
-              onClick={() => setShowModal(false)}
+              className={`absolute top-4 right-4 p-2 rounded-full z-10 transition-colors ${
+                theme === 'dark' ? 'text-gray-400 hover:text-white hover:bg-gray-700' : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
+              }`}
+              onClick={() => setSelectedCert(null)}
             >
-              <X size={28} />
+              <X size={24} />
             </button>
 
-            {/* MODAL CONTENT */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 relative z-10">
-              
-              {/* LEFT CONTENT */}
-              <div>
-                <div className="text-5xl mb-4 animate-bounce">{currentCert.icon}</div>
-                
-                <h2 className={`text-3xl font-bold mb-3 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent`}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mt-4">
+              {/* Left — Info */}
+              <div className="flex flex-col justify-center">
+                <h2 className={`text-2xl sm:text-3xl font-bold mb-3 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
                   {currentCert.title}
                 </h2>
 
-                <p className={`mb-6 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
-                  Issued by <span className="font-semibold text-blue-500">{currentCert.issuer}</span>
+                <p className={`mb-5 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+                  Issued by <span className="font-semibold">{currentCert.issuer}</span>
                 </p>
 
                 <div className="space-y-4">
-                  <div className={`p-4 rounded-xl ${theme === 'dark' ? 'bg-gray-700/50' : 'bg-gray-50'}`}>
-                    <p className={`text-sm mb-2 font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>Issued Date:</p>
-                    <div className={`flex items-center gap-2 ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
-                      <Calendar className="w-5 h-5 text-blue-500" /> 
-                      <span className="font-semibold">{currentCert.date}</span>
+                  <div className={`flex items-center gap-3 p-3 rounded-xl ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50'}`}>
+                    <Calendar className="w-5 h-5 text-blue-500 shrink-0" />
+                    <div>
+                      <p className={`text-xs ${theme === 'dark' ? 'text-gray-500' : 'text-gray-400'}`}>Issued Date</p>
+                      <p className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>{currentCert.date}</p>
                     </div>
                   </div>
 
-                  <div className={`p-4 rounded-xl ${theme === 'dark' ? 'bg-gray-700/50' : 'bg-gray-50'}`}>
-                    <p className={`text-sm mb-2 font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>Credential ID:</p>
-                    <p className={`font-mono text-sm px-3 py-2 rounded ${theme === 'dark' ? 'bg-gray-800 text-gray-300' : 'bg-gray-100 text-gray-800'}`}>
+                  <div className={`p-3 rounded-xl ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50'}`}>
+                    <p className={`text-xs mb-1 ${theme === 'dark' ? 'text-gray-500' : 'text-gray-400'}`}>Credential ID</p>
+                    <p className={`font-mono text-xs sm:text-sm break-all ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                       {currentCert.credentialId}
                     </p>
                   </div>
 
                   <div>
-                    <p className={`text-sm mb-3 font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>Skills Covered:</p>
+                    <p className={`text-xs mb-2 ${theme === 'dark' ? 'text-gray-500' : 'text-gray-400'}`}>Skills</p>
                     <div className="flex flex-wrap gap-2">
                       {currentCert.skills.map((skill, idx) => (
                         <span
                           key={idx}
-                          className={`px-4 py-2 rounded-full text-xs font-medium transition-all hover:scale-110 ${theme === 'dark' ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white' : 'bg-gradient-to-r from-blue-500 to-purple-500 text-white'} shadow-lg`}
+                          className={`px-3 py-1.5 rounded-lg text-xs font-medium bg-gradient-to-r ${currentCert.accent} text-white`}
                         >
                           {skill}
                         </span>
@@ -347,53 +418,45 @@ export default function Certificates() {
                     </div>
                   </div>
 
-                  <a
-                    href={currentCert.credentialUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 mt-6 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white px-8 py-3 rounded-xl hover:shadow-2xl transition-all text-sm font-semibold group hover:scale-105"
-                  >
-                    <ExternalLink className="w-4 group-hover:rotate-45 transition-transform" />
-                    <span>Verify Certificate</span>
-                  </a>
+                  {currentCert.credentialUrl !== '#' && (
+                    <a
+                      href={currentCert.credentialUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`inline-flex items-center gap-2 mt-4 bg-gradient-to-r ${currentCert.accent} text-white px-6 py-2.5 rounded-xl text-sm font-semibold hover:shadow-lg transition-shadow`}
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      Verify Certificate
+                    </a>
+                  )}
                 </div>
               </div>
 
-              {/* RIGHT — IMAGE with Hover Effect */}
-              <div className={`flex items-center justify-center rounded-xl p-4 overflow-hidden group ${theme === 'dark' ? 'bg-gray-700/50' : 'bg-gray-50'}`}>
+              {/* Right — Image */}
+              <div className={`flex items-center justify-center rounded-xl overflow-hidden ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50'}`}>
                 <img
                   src={currentCert.image}
-                  alt="Certificate"
-                  className="rounded-lg w-full object-contain transition-transform duration-500 group-hover:scale-105"
+                  alt={currentCert.title}
+                  className="w-full object-contain rounded-lg"
                 />
               </div>
             </div>
 
-            {/* Navigation Between Certificates in Modal */}
-            <div className="flex items-center justify-center gap-4 mt-8">
-              <button
-                onClick={handlePrev}
-                className={`p-3 rounded-full transition-all hover:scale-110 ${theme === 'dark' ? 'bg-gray-700 hover:bg-gray-600 text-gray-300' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'}`}
-              >
+            {/* Navigation */}
+            <div className={`flex items-center justify-center gap-4 mt-6 pt-4 border-t ${theme === 'dark' ? 'border-gray-700' : 'border-gray-200'}`}>
+              <button onClick={handleModalPrev} className={`p-2 rounded-full transition-colors ${theme === 'dark' ? 'hover:bg-gray-800 text-gray-400' : 'hover:bg-gray-100 text-gray-600'}`}>
                 <ChevronLeft className="w-5 h-5" />
               </button>
-              
-              <span className={`text-sm font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
-                {currentIndex + 1} / {certificates.length}
+              <span className={`text-sm font-medium tabular-nums ${theme === 'dark' ? 'text-gray-500' : 'text-gray-400'}`}>
+                {selectedCert + 1} / {certificates.length}
               </span>
-              
-              <button
-                onClick={handleNext}
-                className={`p-3 rounded-full transition-all hover:scale-110 ${theme === 'dark' ? 'bg-gray-700 hover:bg-gray-600 text-gray-300' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'}`}
-              >
+              <button onClick={handleModalNext} className={`p-2 rounded-full transition-colors ${theme === 'dark' ? 'hover:bg-gray-800 text-gray-400' : 'hover:bg-gray-100 text-gray-600'}`}>
                 <ChevronRight className="w-5 h-5" />
               </button>
             </div>
-
           </div>
         </div>
       )}
-
     </section>
   );
 }
