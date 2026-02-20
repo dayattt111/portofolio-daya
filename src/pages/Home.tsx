@@ -146,7 +146,7 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
 
             {/* Profile Image */}
-            <div className="flex justify-center order-1">
+            <div className="flex justify-center order-1 mt-[25px] lg:mt-0">
               <div className="relative group">
                 <div className="absolute -inset-3 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-[2rem] blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-700 animate-pulse" />
                 <div className="relative w-64 sm:w-72 lg:w-80 xl:w-[340px]">
@@ -154,16 +154,45 @@ export default function Home() {
                 </div>
                 {/* Floating badges */}
                 <div className={`absolute -top-2 -right-4 sm:-right-8 px-3 py-2 rounded-xl shadow-xl backdrop-blur-md border animate-float ${theme === 'dark' ? 'bg-gray-800/90 border-gray-700' : 'bg-white/90 border-gray-200'}`}>
-                  <div className="flex items-center gap-2"><Terminal className="w-4 h-4 text-emerald-500" /><span className="text-xs font-bold text-emerald-500">Consultation</span></div>
+                  <div className="flex items-center gap-2"><Terminal className="w-4 h-4 text-emerald-500" /><span className="text-xs font-bold text-emerald-500">Consultation With Me</span></div>
                 </div>
-                <div className={`absolute bottom-8 -left-4 sm:-left-10 px-4 py-3 rounded-xl shadow-xl backdrop-blur-md border animate-float ${theme === 'dark' ? 'bg-gray-800/90 border-gray-700' : 'bg-white/90 border-gray-200'}`} style={{ animationDelay: '1s' }}>
+
+                <div className={`absolute top-[250px] -left-2 sm:-left-10 px-4 py-3 rounded-xl shadow-xl animate-float `}>
+                  <div className="flex items-center gap-2">
+                    {/* gambar floating */}
+                    <img src="/images/logo/programs/laravel-svgrepo-com.svg" alt="Muhammad Amin Hidayat — Full Stack Developer" className="relative w-[50px] h-auto object-contain group-hover:scale-[1.03] transition-transform duration-500" style={{ maxHeight: '480px' }} loading="eager" />
+                    </div>
+                </div>
+
+                <div className={`mr-4  absolute top-[190px] -right-2 sm:-right-10 px-4 py-3 rounded-xl shadow-xl animate-float `}>
+                  <div className="flex items-center gap-2">
+                    {/* gambar floating */}
+                    <img src="/images/logo/programs/docker-logo-svgrepo-com.svg" alt="Muhammad Amin Hidayat — Full Stack Developer" className="relative w-[50px] h-auto object-contain group-hover:scale-[1.03] transition-transform duration-500" style={{ maxHeight: '480px' }} loading="eager" />
+                    </div>
+                </div>
+
+                <div className={`absolute top-[50px] -right-2 sm:-right-10 px-4 py-3 rounded-xl shadow-xl animate-float `}>
+                  <div className="flex items-center gap-2">
+                    {/* gambar floating */}
+                    <img src="/images/logo/programs/python-svgrepo-com.svg" alt="Muhammad Amin Hidayat — Full Stack Developer" className="relative w-[50px] h-auto object-contain group-hover:scale-[1.03] transition-transform duration-500" style={{ maxHeight: '480px' }} loading="eager" />
+                    </div>
+                </div>
+
+                <div className={`ml-4 absolute top-[100px] -left-2 sm:-left-10 px-4 py-3 rounded-xl shadow-xl animate-float `}>
+                  <div className="flex items-center gap-2">
+                    {/* gambar floating */}
+                    <img src="/images/logo/programs/react-svgrepo-com.svg" alt="Muhammad Amin Hidayat — Full Stack Developer" className="relative w-[50px] h-auto object-contain group-hover:scale-[1.03] transition-transform duration-500" style={{ maxHeight: '480px' }} loading="eager" />
+                    </div>
+                </div>
+
+                {/* <div className={`absolute bottom-8 -left-4 sm:-left-10 px-4 py-3 rounded-xl shadow-xl backdrop-blur-md border animate-float ${theme === 'dark' ? 'bg-gray-800/90 border-gray-700' : 'bg-white/90 border-gray-200'}`} style={{ animationDelay: '1s' }}>
                   <div className="text-xl font-black bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">3+</div>
                   <div className={`text-[10px] ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Years Exp</div>
                 </div>
                 <div className={`absolute -bottom-2 -right-2 sm:-right-6 px-4 py-3 rounded-xl shadow-xl backdrop-blur-md border animate-float ${theme === 'dark' ? 'bg-gray-800/90 border-gray-700' : 'bg-white/90 border-gray-200'}`} style={{ animationDelay: '2s' }}>
                   <div className="text-xl font-black bg-gradient-to-r from-pink-500 to-rose-600 bg-clip-text text-transparent">30+</div>
                   <div className={`text-[10px] ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Projects</div>
-                </div>
+                </div> */}
               </div>
             </div>
 

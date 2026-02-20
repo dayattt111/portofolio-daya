@@ -102,7 +102,7 @@ export default function Hero() {
       <div className={`absolute top-20 left-10 w-96 h-96 ${theme === 'dark' ? 'bg-blue-900' : 'bg-blue-400'} rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float`}></div>
       <div className={`absolute top-40 right-10 w-96 h-96 ${theme === 'dark' ? 'bg-purple-900' : 'bg-purple-400'} rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float`} style={{ animationDelay: '2s' }}></div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[85vh] flex items-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-start lg:items-center lg:min-h-[85vh] pt-[130px] lg:pt-0">
         <div className="grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center w-full">
           {/* Left Section - Text Content */}
           <div className="space-y-4 sm:space-y-6 animate-fade-in-up text-center lg:text-left">

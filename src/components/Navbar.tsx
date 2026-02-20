@@ -136,10 +136,10 @@ export default function Navbar() {
 
         {/* Right Actions */}
         <div className="flex items-center gap-3">
-          {/* Theme Toggle with animated icon */}
+          {/* Theme Toggle with animated icon - only visible on desktop */}
           <button
             onClick={toggleTheme}
-            className={`relative p-3 rounded-full transition-all duration-300 group overflow-hidden ${
+            className={`hidden lg:flex relative p-3 rounded-full transition-all duration-300 group overflow-hidden ${
               theme === 'dark' 
                 ? 'bg-gradient-to-br from-gray-700 to-gray-800 text-yellow-400 hover:from-gray-600 hover:to-gray-700' 
                 : 'bg-gradient-to-br from-gray-100 to-gray-200 text-gray-700 hover:from-gray-200 hover:to-gray-300'
@@ -194,6 +194,25 @@ export default function Navbar() {
         } ${theme === 'dark' ? 'bg-gray-900/95 border-gray-700/50' : 'bg-white/95 border-gray-200/50'}`}
       >
         <div className="flex flex-col gap-2 p-4">
+          {/* Theme Toggle inside mobile menu */}
+          <button
+            onClick={toggleTheme}
+            className={`relative flex items-center gap-3 px-5 py-3.5 rounded-xl transition-all duration-300 text-sm font-medium overflow-hidden group ${
+              theme === 'dark'
+                ? 'text-gray-300 hover:bg-gray-800'
+                : 'text-gray-700 hover:bg-gray-50'
+            }`}
+          >
+            <div className={`p-1.5 rounded-full ${
+              theme === 'dark'
+                ? 'bg-gray-700 text-yellow-400'
+                : 'bg-gray-200 text-gray-700'
+            }`}>
+              {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+            </div>
+            <span>{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
+          </button>
+
           {navItems.map((item, index) => (
             <Link
               key={item.path}
@@ -222,20 +241,6 @@ export default function Navbar() {
               </span>
             </Link>
           ))}
-          <a
-            href="https://wa.me/6288242763942?text=Halo%2C%20saya%20tertarik%20dengan%20portfolio%20mu!"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="relative group mt-4"
-            style={{
-              animation: isOpen ? `slideInLeft 0.5s ease-out ${navItems.length * 0.05}s both` : 'none'
-            }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl blur-md opacity-50 group-hover:opacity-75 transition-opacity"></div>
-            {/* <div className="relative w-full text-center px-6 py-3.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl font-semibold text-sm text-white transition-all duration-300 group-hover:scale-[1.02]">
-              Let's Talk
-            </div> */}
-          </a>
         </div>
       </div>
     </nav>
