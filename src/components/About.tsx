@@ -1,4 +1,4 @@
-import { Code, Zap, Palette, Award, Users, Rocket, Star, Activity, Linkedin, Instagram, BookOpen, ChevronDown } from 'lucide-react';
+import { Code, Zap, Palette, Award, Users, Rocket, Star, Instagram, ChevronDown } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useEffect, useRef, useState, useCallback } from 'react';
 
@@ -354,7 +354,7 @@ export default function About() {
           <div className="text-center mb-6 sm:mb-8">
             <div className="flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4">
               <div className={`p-2 sm:p-3 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 shadow-lg ${theme === 'dark' ? 'shadow-purple-500/20' : 'shadow-purple-500/30'}`}>
-                <Activity className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                <img src="/images/logo/programs/github-142-svgrepo-com.svg" alt="GitHub Activity" className="w-5 h-5 sm:w-6 sm:h-6 object-contain" />
               </div>
               <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
                 Coding Activity
@@ -578,7 +578,7 @@ export default function About() {
                   </p>
 
                   <p className={`text-sm sm:text-base leading-relaxed ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-                    Dengan pengalaman lebih dari <strong>5 tahun</strong> di dunia pemrograman, saya telah menyelesaikan <strong>30+ proyek</strong> dan meraih <strong>10+ sertifikasi profesional</strong>. Keahlian utama saya meliputi <strong>Full-Stack Web Development</strong> (React, TypeScript, Next.js, Node.js, Laravel),{' '}
+                    Dengan pengalaman lebih dari <strong>3 tahun</strong> di dunia pemrograman, saya telah menyelesaikan <strong>30+ proyek</strong> dan meraih <strong>10+ sertifikasi profesional</strong>. Keahlian utama saya meliputi <strong>Full-Stack Web Development</strong> (React, TypeScript, Next.js, Node.js, Laravel),{' '}
                     <strong>Cloud Computing</strong>, <strong>UI/UX Design</strong>, <strong>Data Engineering</strong>, dan <strong>Computer Networking</strong>.
                   </p>
 
@@ -661,14 +661,14 @@ export default function About() {
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto">
               {[
-                { href: 'https://www.linkedin.com/in/muhammad-amin-hidayat', label: 'LinkedIn', icon: <Linkedin className="w-5 h-5" />, gradient: 'from-blue-600 to-blue-700', hover: 'hover:shadow-blue-500/30' },
-                { href: 'https://github.com/dayattt111', label: 'GitHub', icon: <Activity className="w-5 h-5" />, gradient: 'from-gray-700 to-gray-900', hover: 'hover:shadow-gray-500/30' },
-                { href: 'https://scholar.google.com/citations?user=LRRALCsAAAAJ&hl=id', label: 'Google Scholar', icon: <BookOpen className="w-5 h-5" />, gradient: 'from-red-500 to-red-700', hover: 'hover:shadow-red-500/30' },
-                { href: 'https://www.kaggle.com/muhammadaminhidayat', label: 'Kaggle', icon: <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M18.825 23.859c-.022.092-.117.141-.281.141h-3.139c-.187 0-.351-.082-.492-.248l-5.178-6.589-1.448 1.374v5.111c0 .235-.117.352-.351.352H5.505c-.236 0-.354-.117-.354-.352V.353c0-.233.118-.353.354-.353h2.431c.234 0 .351.12.351.353v14.343l6.203-6.272c.165-.165.33-.246.495-.246h3.239c.144 0 .236.06.285.18.046.149.034.255-.036.315l-6.555 6.344 6.836 8.507c.095.104.117.208.07.358"/></svg>, gradient: 'from-cyan-500 to-cyan-700', hover: 'hover:shadow-cyan-500/30' },
-                { href: 'https://www.instagram.com/aminhdyt1/', label: 'Instagram', icon: <Instagram className="w-5 h-5" />, gradient: 'from-pink-500 to-purple-600', hover: 'hover:shadow-pink-500/30' },
-                { href: 'https://medium.com/@muhammadaminhidayat', label: 'Medium', icon: <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/></svg>, gradient: 'from-green-500 to-green-700', hover: 'hover:shadow-green-500/30' },
-                { href: 'https://orcid.org/0009-0003-0045-8498', label: 'ORCID', icon: <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947s-.422.947-.947.947a.95.95 0 0 1-.947-.947c0-.525.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-2.016 5.016-5.325 5.016h-3.919V7.416zm1.444 1.303v7.444h2.297c2.359 0 4.053-1.666 4.053-3.722 0-2.025-1.694-3.722-4.053-3.722h-2.297z"/></svg>, gradient: 'from-green-600 to-green-800', hover: 'hover:shadow-green-500/30' },
-                { href: 'https://developers.google.com/profile/u/muhammadaminhidayat', label: 'Google Dev', icon: <Code className="w-5 h-5" />, gradient: 'from-blue-400 to-blue-600', hover: 'hover:shadow-blue-500/30' },
+                { href: 'https://www.linkedin.com/in/muhammad-amin-hidayat', label: 'LinkedIn', icon: <img src="/images/logo/sosial-media/linkedin-svgrepo-com.svg" alt="LinkedIn" className="w-6 h-6 object-contain" />, hover: 'hover:shadow-blue-500/30' },
+                { href: 'https://github.com/dayattt111', label: 'GitHub', icon: <img src="/images/logo/programs/github-142-svgrepo-com.svg" alt="GitHub" className="w-6 h-6 object-contain" />, hover: 'hover:shadow-gray-500/30' },
+                { href: 'https://scholar.google.com/citations?user=LRRALCsAAAAJ&hl=id', label: 'Google Scholar', icon: <img src="/images/logo/sosial-media/google-scholar-svgrepo-com.svg" alt="Google Scholar" className="w-6 h-6 object-contain" />, hover: 'hover:shadow-red-500/30' },
+                { href: 'https://www.kaggle.com/muhammadaminhidayat', label: 'Kaggle', icon: <img src="/images/logo/sosial-media/kaggle-svgrepo-com.svg" alt="Kaggle" className="w-6 h-6 object-contain" />, hover: 'hover:shadow-cyan-500/30' },
+                { href: 'https://www.instagram.com/aminhdyt1/', label: 'Instagram', icon: <Instagram className="w-6 h-6" />, hover: 'hover:shadow-pink-500/30' },
+                { href: 'https://medium.com/@muhammadaminhidayat', label: 'Medium', icon: <img src="/images/logo/sosial-media/medium-fill-svgrepo-com.svg" alt="Medium" className="w-6 h-6 object-contain" />, hover: 'hover:shadow-green-500/30' },
+                { href: 'https://orcid.org/0009-0003-0045-8498', label: 'ORCID', icon: <img src="/images/logo/sosial-media/orcid-svgrepo-com.svg" alt="ORCID" className="w-6 h-6 object-contain" />, hover: 'hover:shadow-green-500/30' },
+                { href: 'https://developers.google.com/profile/u/muhammadaminhidayat', label: 'Google Dev', icon: <img src="/images/logo/sosial-media/google-developers-svgrepo-com.svg" alt="Google Dev" className="w-6 h-6 object-contain" />, hover: 'hover:shadow-blue-500/30' },
               ].map((link, i) => (
                 <a
                   key={i}
@@ -678,7 +678,7 @@ export default function About() {
                   itemProp="sameAs"
                   className={`group flex flex-col items-center gap-2 p-4 sm:p-5 rounded-xl border transition-all duration-300 hover:scale-[1.05] hover:shadow-xl ${link.hover} ${theme === 'dark' ? 'bg-gray-800/60 border-gray-700/50 hover:border-gray-600' : 'bg-white border-gray-200 hover:border-gray-300'}`}
                 >
-                  <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${link.gradient} flex items-center justify-center text-white shadow-lg group-hover:rotate-6 transition-transform duration-300`}>
+                  <div className={`w-11 h-11 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110 ${theme === 'dark' ? 'bg-gray-700/50' : 'bg-gray-100'}`}>
                     {link.icon}
                   </div>
                   <span className={`text-xs font-semibold ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>{link.label}</span>
@@ -699,7 +699,7 @@ export default function About() {
               {[
                 {
                   q: 'Siapa Muhammad Amin Hidayat?',
-                  a: 'Muhammad Amin Hidayat adalah seorang programmer muda berbakat dan Full Stack Developer yang berasal dari Makassar, Sulawesi Selatan, Indonesia. Ia merupakan mahasiswa Universitas Dipa Makassar dan anggota aktif Dipanegara Computer Club (DCC). Dengan pengalaman lebih dari 5 tahun di dunia IT, ia telah menyelesaikan lebih dari 100 proyek dan meraih 10+ sertifikasi profesional di bidang teknologi.'
+                  a: 'Muhammad Amin Hidayat adalah seorang programmer muda berbakat dan Full Stack Developer yang berasal dari Makassar, Sulawesi Selatan, Indonesia. Ia merupakan mahasiswa Universitas Dipa Makassar dan anggota aktif Dipanegara Computer Club (DCC). Dengan pengalaman lebih dari 3 tahun di dunia IT, ia telah menyelesaikan lebih dari 100 proyek dan meraih 10+ sertifikasi profesional di bidang teknologi.'
                 },
                 {
                   q: 'Apa saja keahlian Muhammad Amin Hidayat?',
