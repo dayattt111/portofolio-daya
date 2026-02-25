@@ -100,6 +100,18 @@ export default function About() {
   // Calculate total contributions
   const totalContributions = contributions.reduce((sum, day) => sum + day.count, 0);
 
+  // LinkedIn Badge — reload script setelah React render badge element
+  useEffect(() => {
+    const existing = document.querySelector('script[src*="platform.linkedin.com/badges"]');
+    if (existing) existing.remove();
+    const script = document.createElement('script');
+    script.src = 'https://platform.linkedin.com/badges/js/profile.js';
+    script.async = true;
+    script.defer = true;
+    document.body.appendChild(script);
+    return () => { script.remove(); };
+  }, []);
+
   // Fetch GitHub contributions dengan cache
   useEffect(() => {
     const fetchContributions = async () => {
@@ -659,32 +671,83 @@ export default function About() {
             <p className={`text-center text-sm mb-8 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
               Mari berkolaborasi! Hubungi saya melalui platform profesional berikut
             </p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto">
-              {[
-                { href: 'https://www.linkedin.com/in/muhammad-amin-hidayat', label: 'LinkedIn', icon: <img src="/images/logo/sosial-media/linkedin-svgrepo-com.svg" alt="LinkedIn" className="w-6 h-6 object-contain" />, hover: 'hover:shadow-blue-500/30' },
-                { href: 'https://github.com/dayattt111', label: 'GitHub', icon: <img src="/images/logo/programs/github-142-svgrepo-com.svg" alt="GitHub" className="w-6 h-6 object-contain" />, hover: 'hover:shadow-gray-500/30' },
-                { href: 'https://scholar.google.com/citations?user=LRRALCsAAAAJ&hl=id', label: 'Google Scholar', icon: <img src="/images/logo/sosial-media/google-scholar-svgrepo-com.svg" alt="Google Scholar" className="w-6 h-6 object-contain" />, hover: 'hover:shadow-red-500/30' },
-                { href: 'https://www.kaggle.com/muhammadaminhidayat', label: 'Kaggle', icon: <img src="/images/logo/sosial-media/kaggle-svgrepo-com.svg" alt="Kaggle" className="w-6 h-6 object-contain" />, hover: 'hover:shadow-cyan-500/30' },
-                { href: 'https://www.instagram.com/aminhdyt1/', label: 'Instagram', icon: <Instagram className="w-6 h-6" />, hover: 'hover:shadow-pink-500/30' },
-                { href: 'https://medium.com/@muhammadaminhidayat', label: 'Medium', icon: <img src="/images/logo/sosial-media/medium-fill-svgrepo-com.svg" alt="Medium" className="w-6 h-6 object-contain" />, hover: 'hover:shadow-green-500/30' },
-                { href: 'https://orcid.org/0009-0003-0045-8498', label: 'ORCID', icon: <img src="/images/logo/sosial-media/orcid-svgrepo-com.svg" alt="ORCID" className="w-6 h-6 object-contain" />, hover: 'hover:shadow-green-500/30' },
-                { href: 'https://developers.google.com/profile/u/muhammadaminhidayat', label: 'Google Dev', icon: <img src="/images/logo/sosial-media/google-developers-svgrepo-com.svg" alt="Google Dev" className="w-6 h-6 object-contain" />, hover: 'hover:shadow-blue-500/30' },
-              ].map((link, i) => (
-                <a
-                  key={i}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  itemProp="sameAs"
-                  className={`group flex flex-col items-center gap-2 p-4 sm:p-5 rounded-xl border transition-all duration-300 hover:scale-[1.05] hover:shadow-xl ${link.hover} ${theme === 'dark' ? 'bg-gray-800/60 border-gray-700/50 hover:border-gray-600' : 'bg-white border-gray-200 hover:border-gray-300'}`}
-                >
-                  <div className={`w-11 h-11 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110 ${theme === 'dark' ? 'bg-gray-700/50' : 'bg-gray-100'}`}>
-                    {link.icon}
+
+            <div className="grid grid-cols-1 lg:grid-cols-[auto_1fr] gap-6 items-start max-w-5xl mx-auto">
+
+              {/* ── Kiri: LinkedIn Badge ── */}
+              <div className="flex justify-center lg:justify-start">
+                <div className="relative group cursor-pointer">
+                  {/* Glow ring */}
+                  <div className="absolute -inset-3 bg-gradient-to-r from-blue-500 via-[#0a66c2] to-cyan-500 rounded-2xl blur-xl opacity-30 group-hover:opacity-60 transition-opacity duration-500 animate-pulse" />
+                  {/* Floating card wrapper */}
+                  <div
+                    className={`relative rounded-2xl border overflow-hidden transition-all duration-500 group-hover:scale-[1.04] group-hover:-translate-y-1 group-hover:shadow-2xl group-hover:shadow-blue-500/30
+                      ${ theme === 'dark' ? 'bg-gray-800/80 border-[#0a66c2]/50' : 'bg-white border-[#0a66c2]/30 shadow-lg'}`}
+                    style={{ animation: 'liFloat 4s ease-in-out infinite' }}
+                  >
+                    {/* Top accent bar */}
+                    <div className="h-1 w-full bg-gradient-to-r from-[#0a66c2] via-blue-400 to-cyan-400" />
+                    <div className="px-5 py-4">
+                      <div
+                        className="badge-base LI-profile-badge"
+                        data-locale="in_ID"
+                        data-size="large"
+                        data-theme={theme === 'dark' ? 'dark' : 'light'}
+                        data-type="VERTICAL"
+                        data-vanity="muhammad-amin-hidayat"
+                        data-version="v1"
+                      >
+                        <a
+                          className="badge-base__link LI-simple-link"
+                          href="https://id.linkedin.com/in/muhammad-amin-hidayat?trk=profile-badge"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Muhammad Amin Hidayat
+                        </a>
+                      </div>
+                    </div>
                   </div>
-                  <span className={`text-xs font-semibold ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>{link.label}</span>
-                </a>
-              ))}
+                </div>
+              </div>
+
+              {/* ── Kanan: Social Icon Grid ── */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
+                {[
+                  { href: 'https://www.linkedin.com/in/muhammad-amin-hidayat', label: 'LinkedIn', icon: <img src="/images/logo/sosial-media/linkedin-svgrepo-com.svg" alt="LinkedIn" className="w-[80px] h-[80px] object-contain" />, hover: 'hover:shadow-blue-500/30' },
+                  { href: 'https://github.com/dayattt111', label: 'GitHub', icon: <img src="/images/logo/programs/github-142-svgrepo-com.svg" alt="GitHub" className="w-[80px] h-[80px] object-contain" />, hover: 'hover:shadow-gray-500/30' },
+                  { href: 'https://scholar.google.com/citations?user=LRRALCsAAAAJ&hl=id', label: 'Google Scholar', icon: <img src="/images/logo/sosial-media/google-scholar-svgrepo-com.svg" alt="Google Scholar" className="w-[80px] h-[80px] object-contain" />, hover: 'hover:shadow-red-500/30' },
+                  { href: 'https://www.kaggle.com/muhammadaminhidayat', label: 'Kaggle', icon: <img src="/images/logo/sosial-media/kaggle-svgrepo-com.svg" alt="Kaggle" className="w-[80px] h-[80px] object-contain" />, hover: 'hover:shadow-cyan-500/30' },
+                  { href: 'https://www.instagram.com/aminhdyt1/', label: 'Instagram', icon: <Instagram className="w-[80px] h-[80px]" />, hover: 'hover:shadow-pink-500/30' },
+                  { href: 'https://medium.com/@muhammadaminhidayat', label: 'Medium', icon: <img src="/images/logo/sosial-media/medium-fill-svgrepo-com.svg" alt="Medium" className="w-[80px] h-[80px] object-contain" />, hover: 'hover:shadow-green-500/30' },
+                  { href: 'https://orcid.org/0009-0003-0045-8498', label: 'ORCID', icon: <img src="/images/logo/sosial-media/orcid-svgrepo-com.svg" alt="ORCID" className="w-[80px] h-[80px] object-contain" />, hover: 'hover:shadow-green-500/30' },
+                  { href: 'https://developers.google.com/profile/u/muhammadaminhidayat', label: 'Google Dev', icon: <img src="/images/logo/sosial-media/google-developers-svgrepo-com.svg" alt="Google Dev" className="w-[80px] h-[80px] object-contain" />, hover: 'hover:shadow-blue-500/30' },
+                ].map((link, i) => (
+                  <a
+                    key={i}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    itemProp="sameAs"
+                    className={`group flex flex-col items-center gap-2 p-4 sm:p-5 rounded-xl border transition-all duration-300 hover:scale-[1.05] hover:shadow-xl ${link.hover} ${theme === 'dark' ? 'bg-gray-800/60 border-gray-700/50 hover:border-gray-600' : 'bg-white border-gray-200 hover:border-gray-300'}`}
+                  >
+                    <div className={`w-[90px] h-[90px] rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110 ${theme === 'dark' ? 'bg-gray-700/50' : 'bg-gray-100'}`}>
+                      {link.icon}
+                    </div>
+                    <span className={`text-xs font-semibold ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>{link.label}</span>
+                  </a>
+                ))}
+              </div>
+
             </div>
+
+            {/* Keyframe for LinkedIn badge float */}
+            <style>{`
+              @keyframes liFloat {
+                0%, 100% { transform: translateY(0px); }
+                50%       { transform: translateY(-6px); }
+              }
+            `}</style>
           </div>
 
           {/* FAQ Section — Hidden SEO text for Google AI */}

@@ -256,6 +256,7 @@ export default function Home() {
                   <MessageCircle className="w-4 h-4" /> Contact Me
                 </a>
               </div>
+
             </div>
           </div>
         </div>
