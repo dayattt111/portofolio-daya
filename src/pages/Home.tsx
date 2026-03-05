@@ -248,7 +248,7 @@ export default function Home() {
 
               {/* CTA buttons */}
               <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start fade-in-up" style={{ animationDelay: '0.6s' }}>
-                <a href="https://docs.google.com/document/d/14eAmhXNkfFRMoWlU8IlmvrZVHebQnfWrXYs8ENy_GIw/edit?usp=sharing" className="group relative px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl hover:shadow-xl hover:shadow-blue-500/25 hover:scale-105 transition-all duration-300 text-sm sm:text-base text-center overflow-hidden">
+                <a href="https://docs.google.com/document/d/14eAmhXNkfFRMoWlU8IlmvrZVHebQnfWrXYs8ENy_GIw/edit?usp=sharing" className="group relative px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl hover:shadow-xl hover:shadow-blue-500/25 hover:scale-105 transition-all duration-300 text-sm sm:text-base text-center overflow-hidden" target="_blank" rel="noopener noreferrer">
                   <span className="relative z-10 flex items-center justify-center gap-2">View CV <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" /></span>
                 </a>
                 <a href="https://wa.me/6288242763942?text=Halo%2C%20saya%20tertarik%20dengan%20portfolio%20mu!" target="_blank" rel="noopener noreferrer"
