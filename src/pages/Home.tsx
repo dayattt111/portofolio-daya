@@ -1,12 +1,22 @@
 import { useEffect, useRef, useState } from 'react';
 import { ChevronDown, MessageCircle, Award, Users, Rocket, Sparkles, Github, ExternalLink, ArrowRight, Terminal } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 
 // ─── SEO ───
-const SEO_TITLE = 'Muhammad Amin Hidayat | Programmer Terlucu Makassar & Full Stack Developer';
-const SEO_DESC = 'Muhammad Amin Hidayat — programmer terlucu Makassar sekaligus Full Stack Developer berbakat asal Sulawesi Selatan. Ahli Web Development, Cloud Computing, UI/UX Design, dan Data Engineering.';
+const SEO_TITLE = 'Muhammad Amin Hidayat | Programmer Terlucu Makassar & Full Stack Developer | GSA 2026';
+const SEO_DESC = 'Muhammad Amin Hidayat — programmer terlucu Makassar, Google Student Ambassador (GSA) 2026, Cohort AI Engineer Dicoding x DBS Foundation Coding Camp. Full Stack Developer berbakat asal Sulawesi Selatan. Ahli Web Development, Cloud Computing, UI/UX Design, dan Data Engineering.';
+
+// ─── GSA Icons ───
+const gsaIcons = [
+  { src: '/images/logo/GSA/GSA (1).avif', fallback: '/images/logo/GSA/GSA (1).png', alt: 'GSA Icon - Search', from: { x: -200, y: -100, rotate: -45 } },
+  { src: '/images/logo/GSA/GSA (2).avif', fallback: '/images/logo/GSA/GSA (2).png', alt: 'GSA Icon - Explorer', from: { x: 200, y: -150, rotate: 30 } },
+  { src: '/images/logo/GSA/GSA (3).avif', fallback: '/images/logo/GSA/GSA (3).png', alt: 'GSA Icon - Ghost', from: { x: -250, y: 100, rotate: -20 } },
+  { src: '/images/logo/GSA/GSA (4).avif', fallback: '/images/logo/GSA/GSA (4).png', alt: 'GSA Icon - Python', from: { x: 250, y: 80, rotate: 40 } },
+  { src: '/images/logo/GSA/GSA (5).png', fallback: '/images/logo/GSA/GSA (5).png', alt: 'GSA Icon - Rocket', from: { x: 0, y: -200, rotate: 15 } },
+];
 
 // ─── GitHub cache ───
 const CACHE_KEY = 'github_contributions_dayattt111';
@@ -69,6 +79,8 @@ const roles = [
   { label: 'Cloud Enthusiast', gradient: 'from-purple-500 to-pink-500' },
   { label: 'UI/UX Designer', gradient: 'from-rose-500 to-orange-500' },
   { label: 'Data Engineer', gradient: 'from-emerald-500 to-teal-500' },
+  { label: 'GSA 2026', gradient: 'from-red-500 to-yellow-500' },
+  { label: 'AI Engineer', gradient: 'from-cyan-500 to-blue-500' },
 ];
 
 export default function Home() {
@@ -228,6 +240,7 @@ export default function Home() {
 
               <p className={`text-sm sm:text-base leading-relaxed max-w-xl mx-auto lg:mx-0 fade-in-up ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`} style={{ animationDelay: '0.5s' }}>
                 Undergraduate student at <strong>Universitas Dipa Makassar</strong> and passionate programmer focused on <strong>Full-Stack Web Development</strong>, <strong>Computer Networking</strong>, and <strong>Technical Communication</strong>. Active member of <em>Dipanegara Computer Club</em>.
+                {' '}<strong>Google Student Ambassador (GSA) 2026</strong> &amp; Cohort <strong>AI Engineer Dicoding x DBS Foundation</strong> Coding Camp.
                 {' '}Dikenal sebagai <strong>programmer terlucu di Makassar</strong> — serius soal kode, santai soal hidup.
               </p>
 
@@ -260,6 +273,57 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        {/* ── GSA Floating Icons ── */}
+        {gsaIcons.map((icon, i) => (
+          <motion.div
+            key={i}
+            className="absolute z-20 pointer-events-none hidden sm:block"
+            style={{
+              ...([
+                { top: '8%', left: '3%' },
+                { top: '12%', right: '4%' },
+                { bottom: '20%', left: '5%' },
+                { bottom: '15%', right: '3%' },
+                { top: '5%', left: '45%' },
+              ][i]),
+            }}
+            initial={{
+              opacity: 0,
+              x: icon.from.x,
+              y: icon.from.y,
+              rotate: icon.from.rotate,
+              scale: 0.3,
+            }}
+            animate={{
+              opacity: [0, 0.7, 0.5],
+              x: 0,
+              y: 0,
+              rotate: 0,
+              scale: 1,
+            }}
+            transition={{
+              duration: 1.4,
+              delay: 0.8 + i * 0.25,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+          >
+            <motion.div
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 3 + i * 0.5, repeat: Infinity, ease: 'easeInOut' }}
+            >
+              <picture>
+                <source srcSet={icon.src} type="image/avif" />
+                <img
+                  src={icon.fallback}
+                  alt={icon.alt}
+                  className="w-10 h-10 sm:w-14 sm:h-14 lg:w-16 lg:h-16 object-contain drop-shadow-lg opacity-60 hover:opacity-90 transition-opacity"
+                  loading="eager"
+                />
+              </picture>
+            </motion.div>
+          </motion.div>
+        ))}
 
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce hidden lg:block">
           <ChevronDown className={`w-6 h-6 ${theme === 'dark' ? 'text-gray-500' : 'text-gray-400'}`} />
