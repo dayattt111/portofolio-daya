@@ -6,6 +6,13 @@ import reactImg2 from '/images/certificates/PsertiNet.png';
 import reactImg3 from '/images/certificates/Muhammad_Amin_Hidayat.png';
 import reactImg4 from '/images/certificates/Sertifikat_AI_Nation_Makassar_Muhammad_Amin_Hidayat.png';
 import reactImg5 from '/images/certificates/Screenshot 2026-02-19 173120.png';
+import certAsistenDosen from '/images/certificates/Asisten Dosen.png';
+import certAzureAI from '/images/certificates/Azure AI Foundry.png';
+import certHackathonBKN from '/images/certificates/Hackathon BKN.png';
+import certIBMGranite from '/images/certificates/IBM Granite.png';
+import certJuniorNetwork from '/images/certificates/Junior Network.png';
+import certJuniorWeb from '/images/certificates/Junior Web.png';
+import certPemrogramanPython from '/images/certificates/Pemrograman Python.png';
 
 interface Certificate {
   title: string;
@@ -68,6 +75,76 @@ const certificates: Certificate[] = [
     skills: ['Cloud Architecture', 'AWS Services', 'Security'],
     accent: 'from-amber-500 to-blue-500',
     image: reactImg5,
+  },
+  {
+    title: 'Asisten Dosen',
+    issuer: 'Universitas Dipa Makassar',
+    date: '2025',
+    credentialId: '-',
+    credentialUrl: '#',
+    skills: ['Teaching', 'Mentoring', 'Academic'],
+    accent: 'from-teal-500 to-emerald-500',
+    image: certAsistenDosen,
+  },
+  {
+    title: 'Microsoft Azure AI Foundry',
+    issuer: 'Microsoft',
+    date: '2025',
+    credentialId: '-',
+    credentialUrl: '#',
+    skills: ['Azure', 'AI', 'Cloud'],
+    accent: 'from-blue-500 to-sky-400',
+    image: certAzureAI,
+  },
+  {
+    title: 'Hackathon BKN',
+    issuer: 'Badan Kepegawaian Negara',
+    date: '2025',
+    credentialId: '-',
+    credentialUrl: '#',
+    skills: ['Hackathon', 'Innovation', 'Problem Solving'],
+    accent: 'from-red-500 to-orange-500',
+    image: certHackathonBKN,
+  },
+  {
+    title: 'IBM Granite',
+    issuer: 'IBM',
+    date: '2025',
+    credentialId: '-',
+    credentialUrl: '#',
+    skills: ['IBM', 'AI', 'Machine Learning'],
+    accent: 'from-indigo-600 to-blue-500',
+    image: certIBMGranite,
+  },
+  {
+    title: 'Junior Network Administrator',
+    issuer: 'Dicoding Indonesia',
+    date: '2025',
+    credentialId: '-',
+    credentialUrl: '#',
+    skills: ['Networking', 'TCP/IP', 'Administration'],
+    accent: 'from-cyan-500 to-teal-500',
+    image: certJuniorNetwork,
+  },
+  {
+    title: 'Junior Web Developer',
+    issuer: 'Dicoding Indonesia',
+    date: '2025',
+    credentialId: '-',
+    credentialUrl: '#',
+    skills: ['HTML', 'CSS', 'JavaScript'],
+    accent: 'from-orange-500 to-yellow-400',
+    image: certJuniorWeb,
+  },
+  {
+    title: 'Pemrograman Python',
+    issuer: 'Dicoding Indonesia',
+    date: '2025',
+    credentialId: '-',
+    credentialUrl: '#',
+    skills: ['Python', 'Programming', 'Algorithm'],
+    accent: 'from-yellow-500 to-green-500',
+    image: certPemrogramanPython,
   },
 ];
 

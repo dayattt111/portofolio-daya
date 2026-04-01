@@ -9,18 +9,20 @@ import Footer from '../components/Footer';
 const SEO_TITLE = 'Muhammad Amin Hidayat | Programmer Terlucu Makassar & Full Stack Developer | GSA 2026';
 const SEO_DESC = 'Muhammad Amin Hidayat — programmer terlucu Makassar, Google Student Ambassador (GSA) 2026, Cohort AI Engineer Dicoding x DBS Foundation Coding Camp. Full Stack Developer berbakat asal Sulawesi Selatan. Ahli Web Development, Cloud Computing, UI/UX Design, dan Data Engineering.';
 
-// ─── GSA Icons — all 9 assets, spread across full page ───
+// ─── GSA Icons — 9 assets, left & right sides only, varied sizes ───
 interface GsaIcon { src: string; alt: string; size: number; top: string; left?: string; right?: string; fromX: number; fromY: number; fromRotate: number; floatDur: number; }
 const GSA_ALL_ICONS: GsaIcon[] = [
-  { src: '/images/logo/GSA/GSA (1).avif', alt: 'Google Student Ambassador Icon',  size: 56, top: '7%',  left: '4%',   fromX: -130, fromY: -70,  fromRotate: -30, floatDur: 3.2 },
-  { src: '/images/logo/GSA/GSA (1).png',  alt: 'Google Student Ambassador Icon',  size: 44, top: '13%', right: '5%',  fromX:  130, fromY: -80,  fromRotate:  25, floatDur: 2.8 },
-  { src: '/images/logo/GSA/GSA (2).avif', alt: 'Google Student Ambassador Icon',  size: 64, top: '37%', left: '2%',   fromX: -160, fromY:  40,  fromRotate: -15, floatDur: 3.8 },
-  { src: '/images/logo/GSA/GSA (2).png',  alt: 'Google Student Ambassador Icon',  size: 40, top: '51%', right: '3%',  fromX:  140, fromY:  55,  fromRotate:  35, floatDur: 2.5 },
-  { src: '/images/logo/GSA/GSA (3).avif', alt: 'Google Student Ambassador Icon',  size: 52, top: '70%', left: '5%',   fromX: -110, fromY:  90,  fromRotate: -20, floatDur: 3.5 },
-  { src: '/images/logo/GSA/GSA (3).png',  alt: 'Google Student Ambassador Icon',  size: 48, top: '82%', right: '6%',  fromX:  120, fromY:  95,  fromRotate:  40, floatDur: 4.0 },
-  { src: '/images/logo/GSA/GSA (4).avif', alt: 'Google Student Ambassador Icon',  size: 36, top: '27%', left: '44%',  fromX:   20, fromY: -110, fromRotate:  15, floatDur: 3.0 },
-  { src: '/images/logo/GSA/GSA (4).png',  alt: 'Google Student Ambassador Icon',  size: 60, top: '62%', left: '37%',  fromX:  -25, fromY:  125, fromRotate: -35, floatDur: 4.5 },
-  { src: '/images/logo/GSA/GSA (5).png',  alt: 'Google Student Ambassador Icon',  size: 52, top: '91%', left: '19%',  fromX:  -85, fromY:  110, fromRotate:  20, floatDur: 3.7 },
+  // ── LEFT SIDE ──
+  { src: '/images/logo/GSA/GSA (1).avif', alt: 'Google Student Ambassador Icon', size: 52, top:  '4%',  left: '1.5%', fromX: -150, fromY: -60,  fromRotate: -25, floatDur: 3.0 },
+  { src: '/images/logo/GSA/GSA (3).avif', alt: 'Google Student Ambassador Icon', size: 76, top: '20%',  left: '0.5%', fromX: -170, fromY:  30,  fromRotate: -10, floatDur: 3.8 },
+  { src: '/images/logo/GSA/GSA (2).png',  alt: 'Google Student Ambassador Icon', size: 44, top: '40%',  left: '2.5%', fromX: -130, fromY:  50,  fromRotate: -30, floatDur: 2.8 },
+  { src: '/images/logo/GSA/GSA (5).png',  alt: 'Google Student Ambassador Icon', size: 88, top: '58%',  left: '0%',   fromX: -180, fromY:  80,  fromRotate: -18, floatDur: 4.2 },
+  { src: '/images/logo/GSA/GSA (4).png',  alt: 'Google Student Ambassador Icon', size: 56, top: '77%',  left: '3%',   fromX: -120, fromY: 100,  fromRotate: -22, floatDur: 3.4 },
+  // ── RIGHT SIDE ──
+  { src: '/images/logo/GSA/GSA (2).avif', alt: 'Google Student Ambassador Icon', size: 80, top:  '8%',  right: '0.5%', fromX: 170, fromY: -70,  fromRotate:  20, floatDur: 3.6 },
+  { src: '/images/logo/GSA/GSA (1).png',  alt: 'Google Student Ambassador Icon', size: 46, top: '28%',  right: '2%',   fromX: 140, fromY:  20,  fromRotate:  30, floatDur: 2.6 },
+  { src: '/images/logo/GSA/GSA (4).avif', alt: 'Google Student Ambassador Icon', size: 68, top: '50%',  right: '1%',   fromX: 160, fromY:  70,  fromRotate:  15, floatDur: 4.0 },
+  { src: '/images/logo/GSA/GSA (3).png',  alt: 'Google Student Ambassador Icon', size: 52, top: '72%',  right: '2.5%', fromX: 130, fromY:  95,  fromRotate:  28, floatDur: 3.2 },
 ];
 
 // ─── GitHub cache ───
