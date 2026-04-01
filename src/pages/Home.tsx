@@ -19,7 +19,7 @@ const GSA_ALL_ICONS: GsaIcon[] = [
   { src: '/images/logo/GSA/GSA (5).png',  alt: 'Google Student Ambassador Icon', size: 88, top: '58%',  left: '0%',   fromX: -180, fromY:  80,  fromRotate: -18, floatDur: 4.2 },
   { src: '/images/logo/GSA/GSA (4).png',  alt: 'Google Student Ambassador Icon', size: 56, top: '77%',  left: '3%',   fromX: -120, fromY: 100,  fromRotate: -22, floatDur: 3.4 },
   // ── RIGHT SIDE ──
-  { src: '/images/logo/GSA/GSA (2).avif', alt: 'Google Student Ambassador Icon', size: 80, top:  '8%',  right: '0.5%', fromX: 170, fromY: -70,  fromRotate:  20, floatDur: 3.6 },
+  { src: '/images/logo/GSA/GSA (2).avif', alt: 'Google Student Ambassador Icon', size: 80, top:  '6%',  right: '0.1%', fromX: 170, fromY: -70,  fromRotate:  20, floatDur: 3.6 },
   { src: '/images/logo/GSA/GSA (1).png',  alt: 'Google Student Ambassador Icon', size: 46, top: '28%',  right: '2%',   fromX: 140, fromY:  20,  fromRotate:  30, floatDur: 2.6 },
   { src: '/images/logo/GSA/GSA (4).avif', alt: 'Google Student Ambassador Icon', size: 68, top: '50%',  right: '1%',   fromX: 160, fromY:  70,  fromRotate:  15, floatDur: 4.0 },
   { src: '/images/logo/GSA/GSA (3).png',  alt: 'Google Student Ambassador Icon', size: 52, top: '72%',  right: '2.5%', fromX: 130, fromY:  95,  fromRotate:  28, floatDur: 3.2 },
@@ -432,7 +432,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════════ FEATURED PROJECTS — Bento ═══════════ */}
+      {/* ═══════════ FEATURED PROJECTS — Stacked Cards ═══════════ */}
       <section ref={projectSection.ref} className={`py-16 md:py-24 transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-800/40' : 'bg-gray-50/80'}`}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className={`text-center mb-10 md:mb-14 transition-all duration-700 ${projectSection.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
@@ -440,43 +440,46 @@ export default function Home() {
             <p className={`text-sm sm:text-base ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Selected works & recent applications</p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-6">
-            {/* Featured large card */}
-            {(() => {
-              const p = featuredProjects[0];
-              return (
-                <div className={`group lg:row-span-2 rounded-2xl overflow-hidden border relative transition-all duration-700 hover:shadow-2xl ${projectSection.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} ${theme === 'dark' ? 'bg-gray-800/70 border-gray-700/50 hover:border-gray-600' : 'bg-white border-gray-200 hover:border-gray-300'}`}>
-                  <div className="relative h-64 lg:h-full min-h-[280px] overflow-hidden">
-                    <img src={p.image} alt={p.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" />
-                    <div className={`absolute inset-0 ${theme === 'dark' ? 'bg-gradient-to-t from-gray-900 via-gray-900/60 to-transparent' : 'bg-gradient-to-t from-white via-white/70 to-transparent'}`} />
-                    <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
-                      <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold mb-3 bg-gradient-to-r ${p.color} text-white`}><Sparkles className="w-3 h-3" />FEATURED</div>
-                      <h3 className={`text-xl sm:text-2xl lg:text-3xl font-bold mb-2 leading-tight ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{p.title}</h3>
-                      <p className={`text-sm mb-4 max-w-md ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>{p.description}</p>
-                      <div className="flex flex-wrap gap-2">
-                        {p.stack.map((t, i) => <span key={i} className={`px-2.5 py-1 rounded-lg text-[11px] font-medium ${theme === 'dark' ? 'bg-gray-700/80 text-gray-300 border border-gray-600/50' : 'bg-white/80 text-gray-700 border border-gray-200'}`}>{t}</span>)}
-                      </div>
-                    </div>
-                  </div>
-                  <div className={`absolute top-5 right-5 w-10 h-10 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 ${theme === 'dark' ? 'bg-white/10 text-white' : 'bg-black/5 text-gray-700'}`}><ExternalLink className="w-4 h-4" /></div>
-                </div>
-              );
-            })()}
+          <div className="flex flex-col gap-6 md:gap-8">
+            {featuredProjects.map((p, idx) => (
+              <div
+                key={p.id}
+                className={`group relative rounded-2xl overflow-hidden border transition-all duration-700 hover:shadow-2xl hover:-translate-y-1 ${projectSection.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'} ${theme === 'dark' ? 'bg-gray-800/70 border-gray-700/50 hover:border-gray-600' : 'bg-white border-gray-200 hover:border-gray-300'}`}
+                style={{ transitionDelay: `${idx * 150}ms` }}
+              >
+                {/* Accent bar */}
+                <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${p.color} opacity-70 group-hover:opacity-100 transition-opacity z-10`} />
 
-            {/* Smaller cards */}
-            {featuredProjects.slice(1).map((p, idx) => (
-              <div key={p.id} className={`group rounded-2xl overflow-hidden border transition-all duration-700 hover:shadow-xl hover:-translate-y-1 ${projectSection.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} ${theme === 'dark' ? 'bg-gray-800/70 border-gray-700/50 hover:border-gray-600' : 'bg-white border-gray-200 hover:border-gray-300'}`} style={{ transitionDelay: `${(idx + 1) * 150}ms` }}>
-                <div className="relative h-44 sm:h-48 overflow-hidden">
-                  <img src={p.image} alt={p.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" />
-                  <div className={`absolute inset-0 bg-gradient-to-t ${theme === 'dark' ? 'from-gray-800 to-transparent opacity-70' : 'from-white to-transparent opacity-50'}`} />
-                  <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${p.color} opacity-80`} />
-                </div>
-                <div className="p-5 sm:p-6">
-                  <h3 className={`text-lg font-bold mb-1.5 leading-tight ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{p.title}</h3>
-                  <p className={`text-sm mb-3 line-clamp-2 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>{p.description}</p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {p.stack.slice(0, 3).map((t, i) => <span key={i} className={`px-2 py-0.5 rounded-md text-[10px] font-medium ${theme === 'dark' ? 'bg-blue-500/15 text-blue-300' : 'bg-blue-50 text-blue-600'}`}>{t}</span>)}
-                    {p.stack.length > 3 && <span className={`px-2 py-0.5 rounded-md text-[10px] ${theme === 'dark' ? 'bg-gray-700 text-gray-400' : 'bg-gray-100 text-gray-500'}`}>+{p.stack.length - 3}</span>}
+                <div className={`flex flex-col ${idx % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
+                  {/* Image */}
+                  <div className="relative w-full md:w-1/2 h-56 sm:h-64 md:h-auto md:min-h-[320px] overflow-hidden shrink-0">
+                    <img src={p.image} alt={p.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" />
+                    <div className={`absolute inset-0 ${theme === 'dark' ? 'bg-gradient-to-t md:bg-gradient-to-r from-gray-900/80 via-transparent to-transparent' : 'bg-gradient-to-t md:bg-gradient-to-r from-white/70 via-transparent to-transparent'} ${idx % 2 !== 0 ? 'md:bg-gradient-to-l' : ''}`} />
+                    {p.featured && (
+                      <div className={`absolute top-4 left-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-bold bg-gradient-to-r ${p.color} text-white shadow-lg`}>
+                        <Sparkles className="w-3 h-3" />FEATURED
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex-1 p-6 sm:p-8 md:p-10 flex flex-col justify-center">
+                    <div className={`inline-flex items-center gap-2 mb-4 text-xs font-semibold tracking-wider uppercase ${theme === 'dark' ? 'text-gray-500' : 'text-gray-400'}`}>
+                      <div className={`w-8 h-[2px] bg-gradient-to-r ${p.color} rounded-full`} />
+                      Project {String(idx + 1).padStart(2, '0')}
+                    </div>
+                    <h3 className={`text-xl sm:text-2xl md:text-3xl font-bold mb-3 leading-tight ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{p.title}</h3>
+                    <p className={`text-sm sm:text-base mb-5 max-w-lg leading-relaxed ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>{p.description}</p>
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {p.stack.map((t, i) => (
+                        <span key={i} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${theme === 'dark' ? 'bg-gray-700/80 text-gray-300 border border-gray-600/50 hover:border-gray-500' : 'bg-gray-100 text-gray-700 border border-gray-200 hover:border-gray-300'}`}>{t}</span>
+                      ))}
+                    </div>
+                    <div className={`inline-flex items-center gap-2 text-sm font-semibold group-hover:gap-3 transition-all duration-300 ${theme === 'dark' ? 'text-blue-400' : 'text-blue-600'}`}>
+                      <ExternalLink className="w-4 h-4" />
+                      View Project
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </div>
                   </div>
                 </div>
               </div>
