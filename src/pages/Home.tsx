@@ -9,13 +9,18 @@ import Footer from '../components/Footer';
 const SEO_TITLE = 'Muhammad Amin Hidayat | Programmer Terlucu Makassar & Full Stack Developer | GSA 2026';
 const SEO_DESC = 'Muhammad Amin Hidayat — programmer terlucu Makassar, Google Student Ambassador (GSA) 2026, Cohort AI Engineer Dicoding x DBS Foundation Coding Camp. Full Stack Developer berbakat asal Sulawesi Selatan. Ahli Web Development, Cloud Computing, UI/UX Design, dan Data Engineering.';
 
-// ─── GSA Icons ───
-const gsaIcons = [
-  { src: '/images/logo/GSA/GSA (1).avif', fallback: '/images/logo/GSA/GSA (1).png', alt: 'GSA Icon - Search', from: { x: -200, y: -100, rotate: -45 } },
-  { src: '/images/logo/GSA/GSA (2).avif', fallback: '/images/logo/GSA/GSA (2).png', alt: 'GSA Icon - Explorer', from: { x: 200, y: -150, rotate: 30 } },
-  { src: '/images/logo/GSA/GSA (3).avif', fallback: '/images/logo/GSA/GSA (3).png', alt: 'GSA Icon - Ghost', from: { x: -250, y: 100, rotate: -20 } },
-  { src: '/images/logo/GSA/GSA (4).avif', fallback: '/images/logo/GSA/GSA (4).png', alt: 'GSA Icon - Python', from: { x: 250, y: 80, rotate: 40 } },
-  { src: '/images/logo/GSA/GSA (5).png', fallback: '/images/logo/GSA/GSA (5).png', alt: 'GSA Icon - Rocket', from: { x: 0, y: -200, rotate: 15 } },
+// ─── GSA Icons — all 9 assets, spread across full page ───
+interface GsaIcon { src: string; alt: string; size: number; top: string; left?: string; right?: string; fromX: number; fromY: number; fromRotate: number; floatDur: number; }
+const GSA_ALL_ICONS: GsaIcon[] = [
+  { src: '/images/logo/GSA/GSA (1).avif', alt: 'Google Student Ambassador Icon',  size: 56, top: '7%',  left: '4%',   fromX: -130, fromY: -70,  fromRotate: -30, floatDur: 3.2 },
+  { src: '/images/logo/GSA/GSA (1).png',  alt: 'Google Student Ambassador Icon',  size: 44, top: '13%', right: '5%',  fromX:  130, fromY: -80,  fromRotate:  25, floatDur: 2.8 },
+  { src: '/images/logo/GSA/GSA (2).avif', alt: 'Google Student Ambassador Icon',  size: 64, top: '37%', left: '2%',   fromX: -160, fromY:  40,  fromRotate: -15, floatDur: 3.8 },
+  { src: '/images/logo/GSA/GSA (2).png',  alt: 'Google Student Ambassador Icon',  size: 40, top: '51%', right: '3%',  fromX:  140, fromY:  55,  fromRotate:  35, floatDur: 2.5 },
+  { src: '/images/logo/GSA/GSA (3).avif', alt: 'Google Student Ambassador Icon',  size: 52, top: '70%', left: '5%',   fromX: -110, fromY:  90,  fromRotate: -20, floatDur: 3.5 },
+  { src: '/images/logo/GSA/GSA (3).png',  alt: 'Google Student Ambassador Icon',  size: 48, top: '82%', right: '6%',  fromX:  120, fromY:  95,  fromRotate:  40, floatDur: 4.0 },
+  { src: '/images/logo/GSA/GSA (4).avif', alt: 'Google Student Ambassador Icon',  size: 36, top: '27%', left: '44%',  fromX:   20, fromY: -110, fromRotate:  15, floatDur: 3.0 },
+  { src: '/images/logo/GSA/GSA (4).png',  alt: 'Google Student Ambassador Icon',  size: 60, top: '62%', left: '37%',  fromX:  -25, fromY:  125, fromRotate: -35, floatDur: 4.5 },
+  { src: '/images/logo/GSA/GSA (5).png',  alt: 'Google Student Ambassador Icon',  size: 52, top: '91%', left: '19%',  fromX:  -85, fromY:  110, fromRotate:  20, floatDur: 3.7 },
 ];
 
 // ─── GitHub cache ───
@@ -89,6 +94,7 @@ export default function Home() {
   const [contributions, setContributions] = useState<ContributionDay[]>([]);
   const [loading, setLoading] = useState(true);
   const [graphVisible, setGraphVisible] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
   const totalContributions = contributions.reduce((s, d) => s + d.count, 0);
   const typedText = useTypingEffect(roles.map(r => r.label), 80, 2000);
   const aboutSection = useInView(0.12);
@@ -122,6 +128,13 @@ export default function Home() {
   // Graph anim trigger
   useEffect(() => { if (aboutSection.visible) setTimeout(() => setGraphVisible(true), 300); }, [aboutSection.visible]);
 
+  // GSA icons scroll trigger
+  useEffect(() => {
+    const onScroll = () => setHasScrolled(true);
+    window.addEventListener('scroll', onScroll, { once: true, passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   // Canvas particle background with connections
   useEffect(() => {
     const canvas = canvasRef.current; if (!canvas) return;
@@ -147,7 +160,36 @@ export default function Home() {
   const ghColors = theme === 'dark' ? ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'] : ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'];
 
   return (
-    <div className={`min-h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
+    <div className={`relative min-h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
+
+      {/* ═══════════ GSA FLOATING ICONS — all 9 assets, full-page scatter ═══════════ */}
+      {GSA_ALL_ICONS.map((icon, i) => (
+        <motion.div
+          key={i}
+          className="absolute z-30 pointer-events-none hidden sm:block"
+          style={{ top: icon.top, ...(icon.left ? { left: icon.left } : {}), ...(icon.right ? { right: icon.right } : {}) }}
+          initial={{ opacity: 0, x: icon.fromX, y: icon.fromY, rotate: icon.fromRotate, scale: 0.3 }}
+          animate={hasScrolled
+            ? { opacity: 0.55, x: 0, y: 0, rotate: 0, scale: 1 }
+            : { opacity: 0, x: icon.fromX, y: icon.fromY, rotate: icon.fromRotate, scale: 0.3 }
+          }
+          transition={{ duration: 1.2, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <motion.div
+            animate={hasScrolled ? { y: [0, -10, 0] } : {}}
+            transition={{ duration: icon.floatDur, repeat: Infinity, ease: 'easeInOut', delay: i * 0.4 }}
+          >
+            <img
+              src={icon.src}
+              alt={icon.alt}
+              width={icon.size}
+              height={icon.size}
+              className="object-contain drop-shadow-lg hover:opacity-90 transition-opacity duration-300"
+              loading="lazy"
+            />
+          </motion.div>
+        </motion.div>
+      ))}
 
       {/* ═══════════ HERO ═══════════ */}
       <section className="relative min-h-screen flex items-center overflow-hidden pt-20 pb-12 lg:pb-20">
@@ -273,57 +315,6 @@ export default function Home() {
             </div>
           </div>
         </div>
-
-        {/* ── GSA Floating Icons ── */}
-        {gsaIcons.map((icon, i) => (
-          <motion.div
-            key={i}
-            className="absolute z-20 pointer-events-none hidden sm:block"
-            style={{
-              ...([
-                { top: '8%', left: '3%' },
-                { top: '12%', right: '4%' },
-                { bottom: '20%', left: '5%' },
-                { bottom: '15%', right: '3%' },
-                { top: '5%', left: '45%' },
-              ][i]),
-            }}
-            initial={{
-              opacity: 0,
-              x: icon.from.x,
-              y: icon.from.y,
-              rotate: icon.from.rotate,
-              scale: 0.3,
-            }}
-            animate={{
-              opacity: [0, 0.7, 0.5],
-              x: 0,
-              y: 0,
-              rotate: 0,
-              scale: 1,
-            }}
-            transition={{
-              duration: 1.4,
-              delay: 0.8 + i * 0.25,
-              ease: [0.16, 1, 0.3, 1],
-            }}
-          >
-            <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 3 + i * 0.5, repeat: Infinity, ease: 'easeInOut' }}
-            >
-              <picture>
-                <source srcSet={icon.src} type="image/avif" />
-                <img
-                  src={icon.fallback}
-                  alt={icon.alt}
-                  className="w-10 h-10 sm:w-14 sm:h-14 lg:w-16 lg:h-16 object-contain drop-shadow-lg opacity-60 hover:opacity-90 transition-opacity"
-                  loading="eager"
-                />
-              </picture>
-            </motion.div>
-          </motion.div>
-        ))}
 
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce hidden lg:block">
           <ChevronDown className={`w-6 h-6 ${theme === 'dark' ? 'text-gray-500' : 'text-gray-400'}`} />
