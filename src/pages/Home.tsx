@@ -3,6 +3,7 @@ import { ChevronDown, MessageCircle, Award, Users, Rocket, Sparkles, Github, Ext
 import { useTheme } from '../contexts/ThemeContext';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
+import Projects from '../components/Projects';
 
 // ─── SEO ───
 const SEO_TITLE = 'Muhammad Amin Hidayat | Software Engineer & Programmer Terlucu di Makassar';
@@ -52,12 +53,6 @@ function useInView(threshold = 0.15) {
 }
 
 // ─── Data ───
-const featuredProjects = [
-  { id: 1, title: 'Company Profile DataCC', description: 'Professional company profile with modern design, animations, and responsive layout.', color: 'from-emerald-500 to-cyan-500', stack: ['Next.Js', 'React', 'TypeScript', 'Tailwind CSS'], image: '/images/projects/DataCCProject.png', featured: true },
-  { id: 2, title: 'DCN UNDIPA Website', description: 'Community website for Dicoding UNDIPA with event management & member forums.', color: 'from-rose-500 to-orange-500', stack: ['React JS', 'Supabase', 'Next Js', 'Three JS'], image: '/images/projects/dcn.png', featured: false },
-  { id: 3, title: 'DCC Organization Website', description: 'New Website DCC with modern design, interactive UI, and responsive layout.', color: 'from-violet-500 to-purple-500', stack: ['Next Js', 'React Js', 'MySQL', 'Tailwind CSS'], image: '/images/projects/webdcc.png', featured: false },
-];
-
 const stats = [
   { icon: <Award className="w-5 h-5" />, value: '3+', label: 'Years Exp', color: 'from-blue-500 to-cyan-500' },
   { icon: <Users className="w-5 h-5" />, value: '50+', label: 'Clients', color: 'from-purple-500 to-pink-500' },
@@ -83,7 +78,6 @@ export default function Home() {
   const totalContributions = contributions.reduce((s, d) => s + d.count, 0);
   const typedText = useTypingEffect(roles.map(r => r.label), 80, 2000);
   const aboutSection = useInView(0.12);
-  const projectSection = useInView(0.12);
 
   // SEO
   useEffect(() => {
@@ -379,67 +373,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════════ FEATURED PROJECTS — Stacked Cards ═══════════ */}
-      <section ref={projectSection.ref} className={`py-16 md:py-24 transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-800/40' : 'bg-gray-50/80'}`}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className={`text-center mb-10 md:mb-14 transition-all duration-700 ${projectSection.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">Featured Projects</h2>
-            <p className={`text-sm sm:text-base ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Selected works & recent applications</p>
-          </div>
-
-          <div className="flex flex-col gap-6 md:gap-8">
-            {featuredProjects.map((p, idx) => (
-              <div
-                key={p.id}
-                className={`group relative rounded-2xl overflow-hidden border transition-all duration-700 hover:shadow-2xl hover:-translate-y-1 ${projectSection.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'} ${theme === 'dark' ? 'bg-gray-800/70 border-gray-700/50 hover:border-gray-600' : 'bg-white border-gray-200 hover:border-gray-300'}`}
-                style={{ transitionDelay: `${idx * 150}ms` }}
-              >
-                {/* Accent bar */}
-                <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${p.color} opacity-70 group-hover:opacity-100 transition-opacity z-10`} />
-
-                <div className={`flex flex-col ${idx % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
-                  {/* Image */}
-                  <div className="relative w-full md:w-1/2 h-56 sm:h-64 md:h-auto md:min-h-[320px] overflow-hidden shrink-0">
-                    <img src={p.image} alt={p.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" />
-                    <div className={`absolute inset-0 ${theme === 'dark' ? 'bg-gradient-to-t md:bg-gradient-to-r from-gray-900/80 via-transparent to-transparent' : 'bg-gradient-to-t md:bg-gradient-to-r from-white/70 via-transparent to-transparent'} ${idx % 2 !== 0 ? 'md:bg-gradient-to-l' : ''}`} />
-                    {p.featured && (
-                      <div className={`absolute top-4 left-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-bold bg-gradient-to-r ${p.color} text-white shadow-lg`}>
-                        <Sparkles className="w-3 h-3" />FEATURED
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Content */}
-                  <div className="flex-1 p-6 sm:p-8 md:p-10 flex flex-col justify-center">
-                    <div className={`inline-flex items-center gap-2 mb-4 text-xs font-semibold tracking-wider uppercase ${theme === 'dark' ? 'text-gray-500' : 'text-gray-400'}`}>
-                      <div className={`w-8 h-[2px] bg-gradient-to-r ${p.color} rounded-full`} />
-                      Project {String(idx + 1).padStart(2, '0')}
-                    </div>
-                    <h3 className={`text-xl sm:text-2xl md:text-3xl font-bold mb-3 leading-tight ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{p.title}</h3>
-                    <p className={`text-sm sm:text-base mb-5 max-w-lg leading-relaxed ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>{p.description}</p>
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      {p.stack.map((t, i) => (
-                        <span key={i} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${theme === 'dark' ? 'bg-gray-700/80 text-gray-300 border border-gray-600/50 hover:border-gray-500' : 'bg-gray-100 text-gray-700 border border-gray-200 hover:border-gray-300'}`}>{t}</span>
-                      ))}
-                    </div>
-                    <div className={`inline-flex items-center gap-2 text-sm font-semibold group-hover:gap-3 transition-all duration-300 ${theme === 'dark' ? 'text-blue-400' : 'text-blue-600'}`}>
-                      <ExternalLink className="w-4 h-4" />
-                      View Project
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center mt-10 md:mt-12">
-            <Link to="/projects" className="inline-flex items-center gap-2 px-8 py-3.5 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl hover:shadow-xl hover:shadow-blue-500/20 hover:scale-105 transition-all duration-300 text-sm sm:text-base">
-              View All Projects <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* ═══════════ FEATURED PROJECTS ═══════════ */}
+      <Projects limit={4} isHomePreview={true} />
 
       {/* Keyframes */}
       <style>{`
