@@ -1,29 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { ChevronDown, MessageCircle, Award, Users, Rocket, Sparkles, Github, ExternalLink, ArrowRight, Terminal } from 'lucide-react';
-import { motion } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 
 // ─── SEO ───
-const SEO_TITLE = 'Muhammad Amin Hidayat | Programmer Terlucu Makassar & Full Stack Developer | GSA 2026';
-const SEO_DESC = 'Muhammad Amin Hidayat — programmer terlucu Makassar, Google Student Ambassador (GSA) 2026, Cohort AI Engineer Dicoding x DBS Foundation Coding Camp. Full Stack Developer berbakat asal Sulawesi Selatan. Ahli Web Development, Cloud Computing, UI/UX Design, dan Data Engineering.';
+const SEO_TITLE = 'Muhammad Amin Hidayat | Software Engineer & Programmer Terlucu di Makassar';
+const SEO_DESC = 'Muhammad Amin Hidayat adalah Software Engineer dan Web Developer yang dikenal sebagai Programmer Terlucu di Makassar, Sulawesi Selatan. Spesialis Full-Stack Web Development, Cloud Computing, UI/UX Design, Data Engineering, dan Artificial Intelligence.';
 
-// ─── GSA Icons — 9 assets, left & right sides only, varied sizes ───
-interface GsaIcon { src: string; alt: string; size: number; top: string; left?: string; right?: string; fromX: number; fromY: number; fromRotate: number; floatDur: number; }
-const GSA_ALL_ICONS: GsaIcon[] = [
-  // ── LEFT SIDE ──
-  { src: '/images/logo/GSA/GSA (1).avif', alt: 'Google Student Ambassador Icon', size: 52, top:  '4%',  left: '1.5%', fromX: -150, fromY: -60,  fromRotate: -25, floatDur: 3.0 },
-  { src: '/images/logo/GSA/GSA (3).avif', alt: 'Google Student Ambassador Icon', size: 76, top: '20%',  left: '0.5%', fromX: -170, fromY:  30,  fromRotate: -10, floatDur: 3.8 },
-  { src: '/images/logo/GSA/GSA (2).png',  alt: 'Google Student Ambassador Icon', size: 44, top: '40%',  left: '2.5%', fromX: -130, fromY:  50,  fromRotate: -30, floatDur: 2.8 },
-  { src: '/images/logo/GSA/GSA (5).png',  alt: 'Google Student Ambassador Icon', size: 88, top: '58%',  left: '0%',   fromX: -180, fromY:  80,  fromRotate: -18, floatDur: 4.2 },
-  { src: '/images/logo/GSA/GSA (4).png',  alt: 'Google Student Ambassador Icon', size: 56, top: '77%',  left: '3%',   fromX: -120, fromY: 100,  fromRotate: -22, floatDur: 3.4 },
-  // ── RIGHT SIDE ──
-  { src: '/images/logo/GSA/GSA (2).avif', alt: 'Google Student Ambassador Icon', size: 80, top:  '6%',  right: '0.1%', fromX: 170, fromY: -70,  fromRotate:  20, floatDur: 3.6 },
-  { src: '/images/logo/GSA/GSA (1).png',  alt: 'Google Student Ambassador Icon', size: 46, top: '28%',  right: '2%',   fromX: 140, fromY:  20,  fromRotate:  30, floatDur: 2.6 },
-  { src: '/images/logo/GSA/GSA (4).avif', alt: 'Google Student Ambassador Icon', size: 68, top: '50%',  right: '1%',   fromX: 160, fromY:  70,  fromRotate:  15, floatDur: 4.0 },
-  { src: '/images/logo/GSA/GSA (3).png',  alt: 'Google Student Ambassador Icon', size: 52, top: '72%',  right: '2.5%', fromX: 130, fromY:  95,  fromRotate:  28, floatDur: 3.2 },
-];
 
 // ─── GitHub cache ───
 const CACHE_KEY = 'github_contributions_dayattt111';
@@ -86,7 +70,7 @@ const roles = [
   { label: 'Cloud Enthusiast', gradient: 'from-purple-500 to-pink-500' },
   { label: 'UI/UX Designer', gradient: 'from-rose-500 to-orange-500' },
   { label: 'Data Engineer', gradient: 'from-emerald-500 to-teal-500' },
-  { label: 'GSA 2026', gradient: 'from-red-500 to-yellow-500' },
+  { label: 'Software Engineer', gradient: 'from-red-500 to-yellow-500' },
   { label: 'AI Engineer', gradient: 'from-cyan-500 to-blue-500' },
 ];
 
@@ -96,7 +80,6 @@ export default function Home() {
   const [contributions, setContributions] = useState<ContributionDay[]>([]);
   const [loading, setLoading] = useState(true);
   const [graphVisible, setGraphVisible] = useState(false);
-  const [hasScrolled, setHasScrolled] = useState(false);
   const totalContributions = contributions.reduce((s, d) => s + d.count, 0);
   const typedText = useTypingEffect(roles.map(r => r.label), 80, 2000);
   const aboutSection = useInView(0.12);
@@ -130,13 +113,6 @@ export default function Home() {
   // Graph anim trigger
   useEffect(() => { if (aboutSection.visible) setTimeout(() => setGraphVisible(true), 300); }, [aboutSection.visible]);
 
-  // GSA icons scroll trigger
-  useEffect(() => {
-    const onScroll = () => setHasScrolled(true);
-    window.addEventListener('scroll', onScroll, { once: true, passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
   // Canvas particle background with connections
   useEffect(() => {
     const canvas = canvasRef.current; if (!canvas) return;
@@ -163,35 +139,6 @@ export default function Home() {
 
   return (
     <div className={`relative min-h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
-
-      {/* ═══════════ GSA FLOATING ICONS — all 9 assets, full-page scatter ═══════════ */}
-      {GSA_ALL_ICONS.map((icon, i) => (
-        <motion.div
-          key={i}
-          className="absolute z-30 pointer-events-none hidden sm:block"
-          style={{ top: icon.top, ...(icon.left ? { left: icon.left } : {}), ...(icon.right ? { right: icon.right } : {}) }}
-          initial={{ opacity: 0, x: icon.fromX, y: icon.fromY, rotate: icon.fromRotate, scale: 0.3 }}
-          animate={hasScrolled
-            ? { opacity: 0.55, x: 0, y: 0, rotate: 0, scale: 1 }
-            : { opacity: 0, x: icon.fromX, y: icon.fromY, rotate: icon.fromRotate, scale: 0.3 }
-          }
-          transition={{ duration: 1.2, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <motion.div
-            animate={hasScrolled ? { y: [0, -10, 0] } : {}}
-            transition={{ duration: icon.floatDur, repeat: Infinity, ease: 'easeInOut', delay: i * 0.4 }}
-          >
-            <img
-              src={icon.src}
-              alt={icon.alt}
-              width={icon.size}
-              height={icon.size}
-              className="object-contain drop-shadow-lg hover:opacity-90 transition-opacity duration-300"
-              loading="lazy"
-            />
-          </motion.div>
-        </motion.div>
-      ))}
 
       {/* ═══════════ HERO ═══════════ */}
       <section className="relative min-h-screen flex items-center overflow-hidden pt-20 pb-12 lg:pb-20">
@@ -283,9 +230,9 @@ export default function Home() {
               </div>
 
               <p className={`text-sm sm:text-base leading-relaxed max-w-xl mx-auto lg:mx-0 fade-in-up ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`} style={{ animationDelay: '0.5s' }}>
-                Undergraduate student at <strong>Universitas Dipa Makassar</strong> and passionate programmer focused on <strong>Full-Stack Web Development</strong>, <strong>Computer Networking</strong>, and <strong>Technical Communication</strong>. Active member of <em>Dipanegara Computer Club</em>.
-                {' '}<strong>Google Student Ambassador (GSA) 2026</strong> &amp; Cohort <strong>AI Engineer Dicoding x DBS Foundation</strong> Coding Camp.
-                {' '}Dikenal sebagai <strong>programmer terlucu di Makassar</strong> — serius soal kode, santai soal hidup.
+                Undergraduate student at <strong>Universitas Dipa Makassar</strong> and passionate <strong>Software Engineer berbasis di Makassar</strong> focused on <strong>Full-Stack Web Development</strong>, <strong>Computer Networking</strong>, and <strong>Technical Communication</strong>. Active member of <em>Dipanegara Computer Club</em>.
+                {' '}Cohort <strong>AI Engineer Dicoding x DBS Foundation</strong> Coding Camp.
+                {' '}Dikenal luas sebagai <strong>Programmer Terlucu di Makassar</strong> — serius soal kode, santai soal hidup.
               </p>
 
               {/* Social links */}

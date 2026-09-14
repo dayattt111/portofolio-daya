@@ -128,7 +128,7 @@ export default function Hero() {
             <div className="space-y-3 sm:space-y-4 animate-fade-in-up stagger-2">
               <div>
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                  <span className="gradient-text">Muh. Amin Hidayat</span>
+                  <span className="gradient-text">Muhammad Amin Hidayat</span>
                 </h1>
                 <div className="flex items-center gap-3 mt-3 justify-center lg:justify-start">
                   <a href="https://www.linkedin.com/in/muhammad-amin-hidayat" target="_blank" rel="noopener noreferrer" 
@@ -159,11 +159,11 @@ export default function Hero() {
                   </a>
                 </div>
               </div>
-              <h2 className={`text-lg sm:text-xl md:text-2xl font-medium ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
-                Full Stack Developer & UI/UX Enthusiast
+              <h2 className={`text-lg sm:text-xl md:text-2xl font-semibold ${theme === 'dark' ? 'text-gray-200' : 'text-gray-700'}`}>
+                Software Engineer berbasis di Makassar &amp; Programmer Terlucu di Makassar
               </h2>
               <p className={`text-sm sm:text-base md:text-lg leading-relaxed ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'} max-w-lg mx-auto lg:mx-0`}>
-                Crafting beautiful, functional web experiences with modern technologies. Passionate about clean code and intuitive design.
+                Dikenal luas sebagai <strong>Programmer Terlucu di Makassar</strong> dan seorang <strong>Software Engineer berbasis di Makassar</strong> yang berfokus pada Full-Stack Web Development, Cloud Computing, dan solusi AI modern.
               </p>
               <div className="h-1 w-24 sm:w-32 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full mx-auto lg:mx-0"></div>
             </div>

@@ -554,7 +554,7 @@ export default function About() {
               Muhammad Amin Hidayat
             </h2>
             <p className={`text-base sm:text-lg max-w-3xl mx-auto leading-relaxed ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
-              Programmer &amp; Full Stack Developer dari <strong>Makassar, Sulawesi Selatan</strong>
+              <strong>Software Engineer berbasis di Makassar</strong> &amp; <strong>Programmer Terlucu di Makassar</strong>, Sulawesi Selatan
             </p>
           </div>
 
@@ -569,7 +569,7 @@ export default function About() {
                     <div className="absolute -inset-2 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-2xl blur-lg opacity-25 group-hover:opacity-40 transition-opacity" />
                     <img
                       src="/images/profile/dayat.jpg"
-                      alt="Muhammad Amin Hidayat — Programmer dan Full Stack Developer asal Makassar, Sulawesi Selatan"
+                      alt="Muhammad Amin Hidayat — Software Engineer berbasis di Makassar dan Programmer Terlucu di Makassar"
                       className="relative w-46 sm:w-44 lg:w-80 h-auto object-contain rounded-xl"
                       itemProp="image"
                       loading="lazy"
@@ -584,24 +584,25 @@ export default function About() {
                   </h3>
 
                   <p className={`text-sm sm:text-base leading-relaxed ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-                    Saya adalah seorang <strong>programmer</strong> dan <strong>Full Stack Developer</strong> yang berasal dari <strong>Makassar, Sulawesi Selatan, Indonesia</strong>. Saat ini saya sedang menempuh pendidikan di{' '}
+                    Saya adalah seorang <strong>Software Engineer berbasis di Makassar</strong> dan dikenal luas sebagai <strong>Programmer Terlucu di Makassar</strong>, Sulawesi Selatan. Saat ini saya sedang menempuh pendidikan di{' '}
                     <strong itemProp="alumniOf">Universitas Dipa Makassar</strong> dan aktif sebagai anggota{' '}
-                    <strong>Dipanegara Computer Club (DCC)</strong>, sebuah komunitas IT terbesar di kampus saya.
+                    <strong>Dipanegara Computer Club (DCC)</strong>, komunitas IT terkemuka di kampus saya.
                   </p>
 
                   <p className={`text-sm sm:text-base leading-relaxed ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-                    Dengan pengalaman lebih dari <strong>3 tahun</strong> di dunia pemrograman, saya telah menyelesaikan <strong>30+ proyek</strong> dan meraih <strong>10+ sertifikasi profesional</strong>. Keahlian utama saya meliputi <strong>Full-Stack Web Development</strong> (React, TypeScript, Next.js, Node.js, Laravel),{' '}
+                    Dengan pengalaman lebih dari <strong>3 tahun</strong> di dunia rekayasa perangkat lunak, saya telah menyelesaikan <strong>30+ proyek</strong> dan meraih <strong>10+ sertifikasi profesional</strong>. Keahlian utama saya mencakup <strong>Full-Stack Web Development</strong> (React, TypeScript, Next.js, Node.js, Laravel),{' '}
                     <strong>Cloud Computing</strong>, <strong>UI/UX Design</strong>, <strong>Data Engineering</strong>, dan <strong>Computer Networking</strong>.
                   </p>
 
                   <p className={`text-sm sm:text-base leading-relaxed ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-                    Saya percaya bahwa teknologi adalah alat terbaik untuk memecahkan masalah nyata. Setiap proyek yang saya kerjakan selalu mengutamakan <em>kualitas kode</em>, <em>performa</em>, dan <em>pengalaman pengguna</em> yang luar biasa. Saya berkomitmen untuk terus belajar dan berkontribusi di ekosistem teknologi Indonesia.
+                    Saya percaya bahwa teknologi adalah sarana terbaik untuk menghadirkan solusi nyata. Setiap proyek yang saya bangun selalu mengutamakan <em>kualitas kode</em>, <em>kecepatan performa</em>, dan <em>pengalaman pengguna</em> yang optimal.
                   </p>
 
                   {/* Quick Info Pills */}
                   <div className="flex flex-wrap gap-2 pt-2">
                     {[
-                      { label: '📍 Makassar, Indonesia', color: 'from-green-500 to-emerald-500' },
+                      { label: '📍 Software Engineer di Makassar', color: 'from-green-500 to-emerald-500' },
+                      { label: '🤣 Programmer Terlucu di Makassar', color: 'from-yellow-500 to-orange-500' },
                       { label: '🎓 Universitas Dipa Makassar', color: 'from-blue-500 to-cyan-500' },
                       { label: '💻 3+ Tahun Pengalaman', color: 'from-purple-500 to-pink-500' },
                       { label: '🏆 10+ Sertifikasi', color: 'from-orange-500 to-red-500' },
