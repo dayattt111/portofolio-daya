@@ -23,3 +23,8 @@ dist-ssr
 .env
 
 .bolt/
+
+
+#.md
+ANTIGRAVITY.md
+repomix-output.xml
