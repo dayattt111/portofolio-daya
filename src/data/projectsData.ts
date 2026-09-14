@@ -10,6 +10,7 @@ export interface Project {
   demoUrl?: string;
   repoUrl?: string;
   featured: boolean;
+  color: string;
 }
 
 export const PROJECTS: Project[] = [
@@ -24,7 +25,8 @@ export const PROJECTS: Project[] = [
     image: '/images/projects/DataCCProject.png',
     demoUrl: 'https://github.com/dayattt111',
     repoUrl: 'https://github.com/dayattt111',
-    featured: true
+    featured: true,
+    color: 'from-emerald-500 to-cyan-500'
   },
   {
     id: 2,
@@ -37,7 +39,8 @@ export const PROJECTS: Project[] = [
     image: '/images/projects/dcn.png',
     demoUrl: 'https://github.com/dayattt111/dcn_undipa.git',
     repoUrl: 'https://github.com/dayattt111/dcn_undipa.git',
-    featured: true
+    featured: true,
+    color: 'from-rose-500 to-orange-500'
   },
   {
     id: 3,
@@ -50,7 +53,8 @@ export const PROJECTS: Project[] = [
     image: '/images/projects/webdcc.png',
     demoUrl: 'https://github.com/dayattt111',
     repoUrl: 'https://github.com/dayattt111',
-    featured: true
+    featured: true,
+    color: 'from-violet-500 to-purple-500'
   },
   {
     id: 4,
@@ -63,7 +67,8 @@ export const PROJECTS: Project[] = [
     image: '/images/projects/portov2.png',
     demoUrl: 'https://devdaya.my.id/',
     repoUrl: 'https://github.com/dayattt111/portofolio-daya',
-    featured: true
+    featured: true,
+    color: 'from-blue-500 to-cyan-500'
   },
   {
     id: 5,
@@ -75,7 +80,8 @@ export const PROJECTS: Project[] = [
     stack: ['Laravel', 'React', 'Oracle DB', 'Tailwind CSS', 'Docker'],
     image: '/images/projects/laundryApp.png',
     repoUrl: 'https://github.com/dayattt111',
-    featured: false
+    featured: false,
+    color: 'from-cyan-500 to-blue-600'
   },
   {
     id: 6,
@@ -88,7 +94,8 @@ export const PROJECTS: Project[] = [
     image: '/images/projects/petShop.png',
     demoUrl: 'https://github.com/dayattt111/petshop-php-native.git',
     repoUrl: 'https://github.com/dayattt111/petshop-php-native.git',
-    featured: false
+    featured: false,
+    color: 'from-pink-500 to-rose-500'
   },
   {
     id: 7,
@@ -101,7 +108,8 @@ export const PROJECTS: Project[] = [
     image: '/images/projects/dipaTalent.png',
     demoUrl: 'https://github.com/dayattt111/project_dipaTalent.git',
     repoUrl: 'https://github.com/dayattt111/project_dipaTalent.git',
-    featured: false
+    featured: false,
+    color: 'from-indigo-500 to-purple-500'
   },
   {
     id: 8,
@@ -114,7 +122,8 @@ export const PROJECTS: Project[] = [
     image: '/images/projects/monitoringFinance.png',
     demoUrl: 'https://github.com/dayattt111/sisfoAnalitikKeuangan.git',
     repoUrl: 'https://github.com/dayattt111/sisfoAnalitikKeuangan.git',
-    featured: false
+    featured: false,
+    color: 'from-amber-500 to-emerald-500'
   },
   {
     id: 9,
@@ -127,7 +136,8 @@ export const PROJECTS: Project[] = [
     image: '/images/projects/temanBus.png',
     demoUrl: 'https://github.com/dayattt111/sisfoAnalitikKeuangan.git',
     repoUrl: 'https://github.com/dayattt111/sisfoAnalitikKeuangan.git',
-    featured: false
+    featured: false,
+    color: 'from-orange-500 to-red-500'
   },
   {
     id: 10,
@@ -140,7 +150,8 @@ export const PROJECTS: Project[] = [
     image: '/images/projects/portoProject.png',
     demoUrl: 'https://github.com/dayattt111/portofolio-daya',
     repoUrl: 'https://github.com/dayattt111/portofolio-daya',
-    featured: false
+    featured: false,
+    color: 'from-blue-600 to-indigo-600'
   },
   {
     id: 11,
@@ -153,6 +164,7 @@ export const PROJECTS: Project[] = [
     image: '/images/projects/oldDCC.png',
     demoUrl: 'https://github.com/dayattt111',
     repoUrl: 'https://github.com/dayattt111',
-    featured: false
+    featured: false,
+    color: 'from-teal-500 to-emerald-500'
   }
 ];
