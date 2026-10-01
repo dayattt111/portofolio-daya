@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
-import { ChevronDown, MessageCircle, Award, Users, Rocket, Sparkles, Github, ExternalLink, ArrowRight, Terminal } from 'lucide-react';
+import { ChevronDown, MessageCircle, Award, Users, Rocket, Sparkles, Github, Instagram, ExternalLink, ArrowRight, Terminal } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Projects from '../components/Projects';
 
 // ─── SEO ───
-const SEO_TITLE = 'Muhammad Amin Hidayat | Software Engineer & Programmer Terlucu di Makassar';
-const SEO_DESC = 'Muhammad Amin Hidayat adalah Software Engineer dan Web Developer yang dikenal sebagai Programmer Terlucu di Makassar, Sulawesi Selatan. Spesialis Full-Stack Web Development, Cloud Computing, UI/UX Design, Data Engineering, dan Artificial Intelligence.';
+const SEO_TITLE = 'Muhammad Amin Hidayat | Software Engineer, Tech Enthusiast & Programmer Terlucu di Makassar';
+const SEO_DESC = 'Muhammad Amin Hidayat adalah Software Engineer, Tech Enthusiast, dan Expert di bidang Web & Generative AI (Gen AI) yang dikenal sebagai Programmer Terlucu di Makassar, Sulawesi Selatan. Founder Nokara.id (www.nokara.id) dan Lead Nokara Community (nokara.biz.id) di Timika Papua.';
 
 
 // ─── GitHub cache ───
@@ -224,22 +224,21 @@ export default function Home() {
               </div>
 
               <p className={`text-sm sm:text-base leading-relaxed max-w-xl mx-auto lg:mx-0 fade-in-up ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`} style={{ animationDelay: '0.5s' }}>
-                Undergraduate student at <strong>Universitas Dipa Makassar</strong> and passionate <strong>Software Engineer berbasis di Makassar</strong> focused on <strong>Full-Stack Web Development</strong>, <strong>Computer Networking</strong>, and <strong>Technical Communication</strong>. Active member of <em>Dipanegara Computer Club</em>.
-                {' '}Cohort <strong>AI Engineer Dicoding x DBS Foundation</strong> Coding Camp.
-                {' '}Dikenal luas sebagai <strong>Programmer Terlucu di Makassar</strong> — serius soal kode, santai soal hidup.
+                <strong>Software Engineer</strong>, <strong>Tech Enthusiast</strong>, dan <strong>Expert di bidang Web &amp; Generative AI (Gen AI)</strong> berbasis di Makassar. Founder <a href="https://www.nokara.id" target="_blank" rel="noopener noreferrer" className="font-semibold text-blue-500 hover:underline">Nokara.id</a> &amp; Lead <a href="https://nokara.biz.id" target="_blank" rel="noopener noreferrer" className="font-semibold text-purple-500 hover:underline">Nokara Community</a> di Timika, Papua. Mahasiswa <em>Universitas Dipa Makassar</em> dan aktif membagikan ilmu lewat sharing session &amp; workshop. Dikenal luas sebagai <strong>Programmer Terlucu di Makassar</strong>.
               </p>
 
               {/* Social links */}
               <div className="flex items-center justify-center lg:justify-start gap-2 fade-in-up" style={{ animationDelay: '0.55s' }}>
                 {[
+                  { href: 'https://www.instagram.com/ur.dayaa/', icon: <Instagram className="w-5 h-5" />, alt: 'Instagram @ur.dayaa' },
                   { href: 'https://www.linkedin.com/in/muhammad-amin-hidayat', img: '/images/sosial-media/linkedin.svg', alt: 'LinkedIn' },
+                  { href: 'https://github.com/dayattt111', icon: <Github className="w-5 h-5" />, alt: 'GitHub @dayattt111' },
                   { href: 'https://www.kaggle.com/muhammadaminhidayat', img: '/images/sosial-media/Kaggle_logo.png', alt: 'Kaggle' },
                   { href: 'https://scholar.google.com/citations?user=LRRALCsAAAAJ&hl=id', img: '/images/sosial-media/Google Scholar.svg', alt: 'Google Scholar' },
-                  { href: 'https://github.com/dayattt111', alt: 'GitHub' },
                 ].map((s, i) => (
                   <a key={i} href={s.href} target="_blank" rel="noopener noreferrer" title={s.alt}
                     className={`p-2 rounded-xl transition-all duration-300 hover:scale-110 hover:-translate-y-0.5 ${theme === 'dark' ? 'bg-gray-800/60 hover:bg-gray-700 border border-gray-700/50' : 'bg-white/80 hover:bg-gray-50 border border-gray-200'}`}>
-                    {s.img ? <img src={s.img} alt={s.alt} className="w-5 h-5 object-contain" /> : <Github className="w-5 h-5" />}
+                    {s.img ? <img src={s.img} alt={s.alt} className="w-5 h-5 object-contain" /> : s.icon}
                   </a>
                 ))}
               </div>
