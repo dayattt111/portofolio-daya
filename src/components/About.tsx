@@ -584,29 +584,28 @@ export default function About() {
                   </h3>
 
                   <p className={`text-sm sm:text-base leading-relaxed ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-                    Saya adalah seorang <strong>Software Engineer berbasis di Makassar</strong> dan dikenal luas sebagai <strong>Programmer Terlucu di Makassar</strong>, Sulawesi Selatan. Saat ini saya sedang menempuh pendidikan di{' '}
+                    Saya adalah seorang <strong>Software Engineer</strong>, <strong>Tech Enthusiast</strong>, dan <strong>Expert di bidang Web dan Generative AI (Gen AI)</strong> berbasis di Makassar, serta dikenal luas sebagai <strong>Programmer Terlucu di Makassar</strong>, Sulawesi Selatan. Saat ini saya sedang menempuh pendidikan di{' '}
                     <strong itemProp="alumniOf">Universitas Dipa Makassar</strong> dan aktif sebagai anggota{' '}
-                    <strong>Dipanegara Computer Club (DCC)</strong>, komunitas IT terkemuka di kampus saya.
+                    <strong>Dipanegara Computer Club (DCC)</strong>.
                   </p>
 
                   <p className={`text-sm sm:text-base leading-relaxed ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-                    Dengan pengalaman lebih dari <strong>3 tahun</strong> di dunia rekayasa perangkat lunak, saya telah menyelesaikan <strong>30+ proyek</strong> dan meraih <strong>10+ sertifikasi profesional</strong>. Keahlian utama saya mencakup <strong>Full-Stack Web Development</strong> (React, TypeScript, Next.js, Node.js, Laravel),{' '}
-                    <strong>Cloud Computing</strong>, <strong>UI/UX Design</strong>, <strong>Data Engineering</strong>, dan <strong>Computer Networking</strong>.
+                    Saya merupakan <strong>Founder dari <a href="https://www.nokara.id" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline font-semibold">Nokara.id (www.nokara.id)</a></strong> dan <strong>Lead <a href="https://nokara.biz.id" target="_blank" rel="noopener noreferrer" className="text-purple-500 hover:underline font-semibold">Nokara Community (nokara.biz.id)</a></strong> di Timika, Papua. Sebagai pegiat teknologi, saya aktif membagikan ilmu dan pengalaman melalui <em>sharing session</em>, <em>workshop teknologi</em>, dan pembinaan talenta digital muda.
                   </p>
 
                   <p className={`text-sm sm:text-base leading-relaxed ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-                    Saya percaya bahwa teknologi adalah sarana terbaik untuk menghadirkan solusi nyata. Setiap proyek yang saya bangun selalu mengutamakan <em>kualitas kode</em>, <em>kecepatan performa</em>, dan <em>pengalaman pengguna</em> yang optimal.
+                    Dengan pengalaman lebih dari <strong>3+ tahun</strong>, saya telah menyelesaikan <strong>30+ proyek</strong> dan meraih <strong>10+ sertifikasi profesional</strong> termasuk sebagai Cohort <strong>AI Engineer Dicoding x DBS Foundation</strong>. Keahlian utama saya mencakup <strong>Full-Stack Web Development</strong> (React, TypeScript, Next.js, Node.js, Laravel), <strong>Generative AI &amp; LLM Integration</strong>, <strong>Cloud Computing</strong>, dan <strong>Computer Networking</strong>.
                   </p>
 
                   {/* Quick Info Pills */}
                   <div className="flex flex-wrap gap-2 pt-2">
                     {[
-                      { label: '📍 Software Engineer di Makassar', color: 'from-green-500 to-emerald-500' },
+                      { label: '📍 Makassar & Timika Papua', color: 'from-green-500 to-emerald-500' },
+                      { label: '🚀 Founder Nokara.id', color: 'from-blue-500 to-cyan-500' },
+                      { label: '🌐 Lead Nokara Community', color: 'from-purple-500 to-pink-500' },
+                      { label: '🤖 Expert Web & Gen AI', color: 'from-cyan-500 to-blue-600' },
+                      { label: '🎙️ Speaker & Sharing Session', color: 'from-orange-500 to-red-500' },
                       { label: '🤣 Programmer Terlucu di Makassar', color: 'from-yellow-500 to-orange-500' },
-                      { label: '🎓 Universitas Dipa Makassar', color: 'from-blue-500 to-cyan-500' },
-                      { label: '💻 3+ Tahun Pengalaman', color: 'from-purple-500 to-pink-500' },
-                      { label: '🏆 10+ Sertifikasi', color: 'from-orange-500 to-red-500' },
-                      { label: '🚀 100+ Proyek', color: 'from-yellow-500 to-orange-500' },
                     ].map((pill, i) => (
                       <span key={i} className={`px-3 py-1.5 rounded-full text-xs font-medium border ${theme === 'dark' ? 'bg-gray-700/60 border-gray-600/60 text-gray-300' : 'bg-gray-50 border-gray-200 text-gray-700'}`}>
                         {pill.label}
@@ -719,7 +718,7 @@ export default function About() {
                   { href: 'https://github.com/dayattt111', label: 'GitHub', icon: <img src="/images/logo/programs/github-142-svgrepo-com.svg" alt="GitHub" className="w-[80px] h-[80px] object-contain" />, hover: 'hover:shadow-gray-500/30' },
                   { href: 'https://scholar.google.com/citations?user=LRRALCsAAAAJ&hl=id', label: 'Google Scholar', icon: <img src="/images/logo/sosial-media/google-scholar-svgrepo-com.svg" alt="Google Scholar" className="w-[80px] h-[80px] object-contain" />, hover: 'hover:shadow-red-500/30' },
                   { href: 'https://www.kaggle.com/muhammadaminhidayat', label: 'Kaggle', icon: <img src="/images/logo/sosial-media/kaggle-svgrepo-com.svg" alt="Kaggle" className="w-[80px] h-[80px] object-contain" />, hover: 'hover:shadow-cyan-500/30' },
-                  { href: 'https://www.instagram.com/aminhdyt1/', label: 'Instagram', icon: <Instagram className="w-[80px] h-[80px]" />, hover: 'hover:shadow-pink-500/30' },
+                  { href: 'https://www.instagram.com/ur.dayaa/', label: 'Instagram', icon: <Instagram className="w-[80px] h-[80px]" />, hover: 'hover:shadow-pink-500/30' },
                   { href: 'https://medium.com/@muhammadaminhidayat', label: 'Medium', icon: <img src="/images/logo/sosial-media/medium-fill-svgrepo-com.svg" alt="Medium" className="w-[80px] h-[80px] object-contain" />, hover: 'hover:shadow-green-500/30' },
                   { href: 'https://orcid.org/0009-0003-0045-8498', label: 'ORCID', icon: <img src="/images/logo/sosial-media/orcid-svgrepo-com.svg" alt="ORCID" className="w-[80px] h-[80px] object-contain" />, hover: 'hover:shadow-green-500/30' },
                   { href: 'https://developers.google.com/profile/u/muhammadaminhidayat', label: 'Google Dev', icon: <img src="/images/logo/sosial-media/google-developers-svgrepo-com.svg" alt="Google Dev" className="w-[80px] h-[80px] object-contain" />, hover: 'hover:shadow-blue-500/30' },

@@ -1,69 +1,25 @@
 import { useEffect, useRef, useState } from 'react';
-import { BookOpen, Calendar, ExternalLink, PenLine } from 'lucide-react';
+import { BookOpen, Calendar, ExternalLink, PenLine, RefreshCw, Tag } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
+import { useMediumArticles } from '../hooks/useMediumArticles';
 
-interface Article {
-  id: string;
-  title: string;
-  description: string;
-  publishedAt: string;
-  readTime: string;
-  url: string;
-  tags: string[];
+interface ArticlesProps {
+  limit?: number;
+  showViewAll?: boolean;
+  title?: string;
+  subtitle?: string;
 }
 
-const articles: Article[] = [
-  {
-    id: '1',
-    title: 'Error "Attempt to read property name on null" di Laravel dan Cara Menyelesaikannya',
-    description: 'Membahas penyebab error "Attempt to read property name on null" yang sering terjadi di Laravel beserta cara-cara untuk menyelesaikannya.',
-    publishedAt: '2024-01-01',
-    readTime: '5 min read',
-    url: 'https://medium.com/@MuhammadAminHidayat/error-attempt-to-read-property-name-on-null-di-laravel-dan-cara-menyelesaikannya-82fa56c0356c',
-    tags: ['Laravel', 'PHP', 'Debugging']
-  },
-  {
-    id: '2',
-    title: 'Tutorial Install WSL (Windows Subsystem Linux)',
-    description: 'Panduan lengkap cara menginstall WSL (Windows Subsystem for Linux) di Windows untuk menjalankan lingkungan Linux langsung di Windows.',
-    publishedAt: '2024-01-01',
-    readTime: '6 min read',
-    url: 'https://medium.com/@MuhammadAminHidayat/tutorial-install-wsl-windows-subsystem-linux-6090057323b5',
-    tags: ['WSL', 'Linux', 'Windows']
-  },
-  {
-    id: '3',
-    title: 'Konfigurasi DHCP Server pada Mikrotik',
-    description: 'Tutorial langkah demi langkah cara mengkonfigurasi DHCP Server pada perangkat Mikrotik untuk manajemen jaringan yang lebih efisien.',
-    publishedAt: '2024-01-01',
-    readTime: '5 min read',
-    url: 'https://medium.com/@MuhammadAminHidayat/konfigurasi-dhcp-server-pada-mikrotik-61b9328c3a6c',
-    tags: ['Mikrotik', 'DHCP', 'Networking']
-  },
-  {
-    id: '4',
-    title: 'Konfigurasi Routing Information Protocol (RIP) Sederhana Menggunakan 2 Router',
-    description: 'Panduan konfigurasi RIP (Routing Information Protocol) sederhana menggunakan 2 router untuk memahami dasar routing dinamis.',
-    publishedAt: '2024-01-01',
-    readTime: '7 min read',
-    url: 'https://medium.com/@MuhammadAminHidayat/konfigurasi-routing-information-protocol-rip-sederhana-menggunakan-2-router-b40b36691b21',
-    tags: ['Routing', 'RIP', 'Networking']
-  },
-  {
-    id: '5',
-    title: 'BIOS Terkunci (BIOS Lock)? Jangan Panik! Lupa Passwordnya? Ini Solusinya!',
-    description: 'Solusi praktis ketika BIOS laptop atau PC terkunci dan lupa password. Panduan lengkap untuk membuka BIOS yang terkunci.',
-    publishedAt: '2024-01-01',
-    readTime: '4 min read',
-    url: 'https://medium.com/@MuhammadAminHidayat/bios-terkunci-bios-lock-jangan-panik-lupa-passwordnya-ini-solusinya-8b45f63533a5',
-    tags: ['BIOS', 'Hardware', 'Troubleshooting']
-  }
-];
-
-export default function Articles() {
+export default function Articles({ 
+  limit, 
+  showViewAll = true,
+  title = "Insights & Tutorials",
+  subtitle = "Artikel, tutorial pemrograman, dan wawasan teknologi oleh Muhammad Amin Hidayat di Medium."
+}: ArticlesProps) {
   const { theme } = useTheme();
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const { articles, loading, error, refetch } = useMediumArticles();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -76,31 +32,37 @@ export default function Articles() {
     return () => observer.disconnect();
   }, []);
 
+  const displayedArticles = limit ? articles.slice(0, limit) : articles;
+
+  const formatDate = (dateString: string) => {
+    try {
+      const date = new Date(dateString.replace(/-/g, '/'));
+      return date.toLocaleDateString('id-ID', { 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric' 
+      });
+    } catch {
+      return dateString;
+    }
+  };
+
   // Unique scatter directions per card
   const getEntryStyle = (index: number): React.CSSProperties => {
     const dirs = [
       { x: -45, y: -35, r: -5 }, { x: 35, y: -45, r: 4 }, { x: 50, y: -15, r: 6 },
-      { x: -55, y: 15, r: -3 }, { x: 0, y: -55, r: 0 },
+      { x: -55, y: 15, r: -3 }, { x: 0, y: -55, r: 0 }, { x: -30, y: 40, r: 3 }
     ];
     const d = dirs[index % dirs.length];
-    const delay = index * 90;
+    const delay = index * 80;
     return {
       transition: `opacity 0.7s cubic-bezier(.22,1,.36,1) ${delay}ms, transform 0.7s cubic-bezier(.22,1,.36,1) ${delay}ms, filter 0.7s ease ${delay}ms`,
       opacity: isVisible ? 1 : 0,
       transform: isVisible
         ? 'translate3d(0,0,0) rotate(0deg) scale(1)'
-        : `translate3d(${d.x}px,${d.y}px,0) rotate(${d.r}deg) scale(0.88)`,
+        : `translate3d(${d.x}px,${d.y}px,0) rotate(${d.r}deg) scale(0.9)`,
       filter: isVisible ? 'blur(0px)' : 'blur(6px)',
     };
-  };
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('id-ID', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
-    });
   };
 
   return (
@@ -112,7 +74,7 @@ export default function Articles() {
       }`}
     >
       {/* Animated Background */}
-      <div className="absolute inset-0 opacity-5">
+      <div className="absolute inset-0 opacity-5 pointer-events-none">
         <div className="absolute inset-0" style={{
           backgroundImage: `radial-gradient(circle at 2px 2px, ${theme === 'dark' ? '#fff' : '#000'} 1px, transparent 0)`,
           backgroundSize: '40px 40px'
@@ -122,90 +84,194 @@ export default function Articles() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className={`mb-10 sm:mb-14 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <div className="flex items-center gap-3 mb-3">
-            <PenLine className={`w-6 h-6 ${theme === 'dark' ? 'text-blue-400' : 'text-blue-600'}`} />
-            <span className={`text-sm font-medium tracking-widest uppercase ${theme === 'dark' ? 'text-blue-400' : 'text-blue-600'}`}>
-              Blog
-            </span>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              <div className="flex items-center gap-3 mb-3">
+                <PenLine className={`w-6 h-6 ${theme === 'dark' ? 'text-blue-400' : 'text-blue-600'}`} />
+                <span className={`text-sm font-medium tracking-widest uppercase ${theme === 'dark' ? 'text-blue-400' : 'text-blue-600'}`}>
+                  Medium Feed &bull; @MuhammadAminHidayat
+                </span>
+              </div>
+              <h2 className={`text-3xl sm:text-4xl md:text-5xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                {title}
+              </h2>
+              <p className={`mt-3 text-base sm:text-lg max-w-2xl ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+                {subtitle}
+              </p>
+            </div>
+
+            {/* Refresh button */}
+            <button
+              onClick={() => refetch()}
+              disabled={loading}
+              title="Perbarui daftar artikel dari Medium"
+              className={`self-start sm:self-auto p-2.5 rounded-xl border flex items-center gap-2 text-xs font-medium transition-all ${
+                theme === 'dark' 
+                  ? 'bg-gray-800/80 border-gray-700 text-gray-300 hover:bg-gray-700' 
+                  : 'bg-white border-gray-200 text-gray-700 hover:bg-gray-100 shadow-sm'
+              }`}
+            >
+              <RefreshCw size={14} className={loading ? 'animate-spin text-blue-500' : ''} />
+              <span>{loading ? 'Memuat...' : 'Sinkronkan'}</span>
+            </button>
           </div>
-          <h2 className={`text-3xl sm:text-4xl md:text-5xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-            Insights &amp; Tutorials
-          </h2>
-          <p className={`mt-3 text-base sm:text-lg max-w-2xl ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
-            Thoughts, tutorials, and insights about web development &amp; technology.
-          </p>
         </div>
 
+        {/* Loading Skeleton */}
+        {loading && articles.length === 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {[1, 2, 3].map((n) => (
+              <div
+                key={n}
+                className={`rounded-2xl overflow-hidden border animate-pulse ${
+                  theme === 'dark' ? 'bg-gray-800/60 border-gray-700/60' : 'bg-white border-gray-200 shadow-md'
+                }`}
+              >
+                <div className={`h-48 w-full ${theme === 'dark' ? 'bg-gray-700/50' : 'bg-gray-200'}`} />
+                <div className="p-6 space-y-4">
+                  <div className={`h-4 w-28 rounded ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'}`} />
+                  <div className={`h-6 w-full rounded ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'}`} />
+                  <div className={`h-4 w-4/5 rounded ${theme === 'dark' ? 'bg-gray-700/80' : 'bg-gray-200'}`} />
+                  <div className={`h-4 w-2/3 rounded ${theme === 'dark' ? 'bg-gray-700/80' : 'bg-gray-200'}`} />
+                  <div className="flex gap-2 pt-2">
+                    <div className={`h-5 w-16 rounded-full ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'}`} />
+                    <div className={`h-5 w-16 rounded-full ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'}`} />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
         {/* Articles Grid */}
-        {articles.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-            {articles.map((article, index) => (
+        {!loading && displayedArticles.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {displayedArticles.map((article, index) => (
               <article
                 key={article.id}
-                className={`group rounded-xl overflow-hidden transition-shadow duration-500 will-change-transform ${
+                className={`group flex flex-col rounded-2xl overflow-hidden border transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl ${
                   theme === 'dark' 
-                    ? 'bg-gray-800 hover:bg-gray-750' 
-                    : 'bg-white hover:shadow-2xl'
-                } shadow-lg hover:-translate-y-2 touch-manipulation`}
+                    ? 'bg-gray-800/70 border-gray-700/60 hover:border-blue-500/50 hover:bg-gray-800' 
+                    : 'bg-white border-gray-200/90 hover:border-blue-400/60 shadow-lg'
+                }`}
                 style={getEntryStyle(index)}
               >
+                {/* Thumbnail */}
+                <div className="relative h-48 sm:h-52 w-full overflow-hidden bg-gradient-to-br from-blue-600/20 via-purple-600/20 to-pink-600/20 shrink-0">
+                  {article.thumbnail ? (
+                    <img
+                      src={article.thumbnail}
+                      alt={article.title}
+                      loading="lazy"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      onError={(e) => {
+                        // Fallback jika image gagal load
+                        const target = e.target as HTMLElement;
+                        target.style.display = 'none';
+                      }}
+                    />
+                  ) : (
+                    <div className="w-full h-full flex flex-col items-center justify-center gap-2 p-6 text-center">
+                      <BookOpen className={`w-10 h-10 ${theme === 'dark' ? 'text-blue-400/60' : 'text-blue-600/60'}`} />
+                      <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">Medium Story</span>
+                    </div>
+                  )}
+
+                  {/* Gradient Overlay */}
+                  <div className={`absolute inset-0 bg-gradient-to-t ${
+                    theme === 'dark' ? 'from-gray-900/90 via-transparent' : 'from-black/40 via-transparent'
+                  }`} />
+
+                  {/* Top Badge: Medium Publication */}
+                  <div className="absolute top-3 left-3">
+                    <span className="px-2.5 py-1 rounded-md text-[10px] font-bold bg-black/70 backdrop-blur-md text-white border border-white/20">
+                      Medium
+                    </span>
+                  </div>
+                </div>
+
                 {/* Content */}
-                <div className="p-4 sm:p-6">
-                  {/* Date */}
-                  <div className="flex items-center gap-2 mb-3">
-                    <Calendar size={14} className={theme === 'dark' ? 'text-gray-400' : 'text-gray-500'} />
-                    <time className={`text-xs sm:text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
-                      {formatDate(article.publishedAt)}
-                    </time>
+                <div className="p-6 flex-1 flex flex-col justify-between">
+                  <div>
+                    {/* Publication Date */}
+                    <div className="flex items-center gap-2 mb-3">
+                      <Calendar size={14} className={theme === 'dark' ? 'text-gray-400' : 'text-gray-500'} />
+                      <time 
+                        dateTime={article.pubDate}
+                        className={`text-xs font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}
+                      >
+                        {formatDate(article.pubDate)}
+                      </time>
+                      <span className="text-xs text-gray-500">&bull;</span>
+                      <span className={`text-xs ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
+                        {article.author}
+                      </span>
+                    </div>
+
+                    {/* Semantic Title with natural anchor link */}
+                    <h3 className={`text-lg sm:text-xl font-bold mb-3 leading-snug line-clamp-2 transition-colors ${
+                      theme === 'dark' ? 'text-white group-hover:text-blue-400' : 'text-gray-900 group-hover:text-blue-600'
+                    }`}>
+                      <a 
+                        href={article.link}
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        title={`Baca ${article.title} di Medium Muhammad Amin Hidayat`}
+                        className="hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 rounded"
+                      >
+                        {article.title}
+                      </a>
+                    </h3>
+
+                    {/* Description Snippet */}
+                    <p className={`text-sm mb-4 line-clamp-3 leading-relaxed ${
+                      theme === 'dark' ? 'text-gray-300' : 'text-gray-600'
+                    }`}>
+                      {article.snippet}
+                    </p>
                   </div>
 
-                  {/* Title */}
-                  <h3 className={`text-lg sm:text-xl font-bold mb-3 line-clamp-2 group-hover:text-blue-500 transition-colors ${
-                    theme === 'dark' ? 'text-white' : 'text-gray-900'
-                  }`}>
-                    {article.title}
-                  </h3>
+                  <div>
+                    {/* Categories / Tags */}
+                    {article.categories.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 mb-5">
+                        {article.categories.slice(0, 3).map((category, idx) => (
+                          <span
+                            key={idx}
+                            className={`inline-flex items-center gap-1 text-[11px] px-2.5 py-0.5 rounded-full font-medium ${
+                              theme === 'dark'
+                                ? 'bg-blue-500/15 text-blue-300 border border-blue-500/30'
+                                : 'bg-blue-50 text-blue-700 border border-blue-200'
+                            }`}
+                          >
+                            <Tag size={10} />
+                            {category}
+                          </span>
+                        ))}
+                      </div>
+                    )}
 
-                  {/* Description */}
-                  <p className={`text-sm sm:text-base mb-4 line-clamp-3 ${
-                    theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
-                  }`}>
-                    {article.description}
-                  </p>
-
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {article.tags.slice(0, 3).map((tag, idx) => (
-                      <span
-                        key={idx}
-                        className={`text-xs px-2.5 py-1 rounded-full ${
-                          theme === 'dark'
-                            ? 'bg-blue-500/20 text-blue-300'
-                            : 'bg-blue-100 text-blue-600'
+                    {/* Read on Medium Button */}
+                    <div className={`pt-4 border-t ${theme === 'dark' ? 'border-gray-700/60' : 'border-gray-100'}`}>
+                      <a
+                        href={article.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title={`Baca ${article.title} di Medium Muhammad Amin Hidayat`}
+                        className={`inline-flex items-center justify-between w-full text-sm font-semibold transition-colors ${
+                          theme === 'dark' 
+                            ? 'text-blue-400 hover:text-blue-300' 
+                            : 'text-blue-600 hover:text-blue-700'
                         }`}
                       >
-                        {tag}
-                      </span>
-                    ))}
+                        <span>Baca di Medium</span>
+                        <ExternalLink 
+                          size={15} 
+                          className="transition-transform duration-300 group-hover:translate-x-1" 
+                        />
+                      </a>
+                    </div>
                   </div>
-
-                  {/* Read More Button */}
-                  <a
-                    href={article.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`inline-flex items-center gap-2 text-sm font-semibold group/link transition-colors ${
-                      theme === 'dark' 
-                        ? 'text-blue-400 hover:text-blue-300' 
-                        : 'text-blue-600 hover:text-blue-700'
-                    }`}
-                  >
-                    Read More
-                    <ExternalLink 
-                      size={16} 
-                      className="transition-transform group-hover/link:translate-x-1" 
-                    />
-                  </a>
                 </div>
               </article>
             ))}
@@ -213,28 +279,39 @@ export default function Articles() {
         )}
 
         {/* Empty State */}
-        {articles.length === 0 && (
+        {!loading && displayedArticles.length === 0 && (
           <div className="text-center py-16">
             <BookOpen 
               size={64} 
               className={`mx-auto mb-4 ${theme === 'dark' ? 'text-gray-600' : 'text-gray-400'}`} 
             />
-            <p className={`text-lg ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
-              No articles available yet. Check back soon!
+            <p className={`text-lg font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+              Belum ada artikel yang dapat dimuat saat ini.
             </p>
+            <button
+              onClick={() => refetch()}
+              className="mt-4 px-4 py-2 rounded-xl bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition-colors"
+            >
+              Coba Lagi
+            </button>
           </div>
         )}
 
-        {/* View All Button */}
-        {articles.length > 0 && (
-          <div className={`text-center mt-12 transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+        {/* View All on Medium Button */}
+        {showViewAll && displayedArticles.length > 0 && (
+          <div className={`text-center mt-12 sm:mt-16 transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
             <a
               href="https://medium.com/@MuhammadAminHidayat"
               target="_blank"
               rel="noopener noreferrer"
-              className="modern-btn-outline text-sm sm:text-base py-3 px-8 inline-flex items-center gap-2"
+              title="Kunjungi Profil Medium Muhammad Amin Hidayat"
+              className={`inline-flex items-center gap-3 px-8 py-3.5 rounded-xl font-semibold text-sm sm:text-base transition-all duration-300 hover:scale-105 hover:shadow-xl ${
+                theme === 'dark'
+                  ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:shadow-blue-500/25'
+                  : 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:shadow-blue-500/25'
+              }`}
             >
-              View All Articles
+              <span>Ikuti di Medium &bull; @MuhammadAminHidayat</span>
               <ExternalLink size={18} />
             </a>
           </div>

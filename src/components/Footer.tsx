@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail, Heart, ArrowUp } from 'lucide-react';
+import { Github, Linkedin, Mail, Heart, ArrowUp, Instagram, ExternalLink } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { Link } from 'react-router-dom';
 
@@ -11,6 +11,7 @@ export default function Footer() {
   };
 
   const socialLinks = [
+    { icon: <Instagram className="w-5 h-5" />, href: 'https://www.instagram.com/ur.dayaa/', label: 'Instagram' },
     { icon: <Github className="w-5 h-5" />, href: 'https://github.com/dayattt111', label: 'GitHub' },
     { icon: <Linkedin className="w-5 h-5" />, href: 'https://www.linkedin.com/in/muhammad-amin-hidayat', label: 'LinkedIn' },
     { icon: <Mail className="w-5 h-5" />, href: 'mailto:hidayatbaru0304@gmail.com', label: 'Email' },
@@ -53,8 +54,8 @@ export default function Footer() {
                 </p>
               </div>
             </div>
-            <p className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
-              Crafting modern web experiences with passion and precision. Let's build something amazing together.
+            <p className={`text-sm leading-relaxed ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+              Software Engineer, Tech Enthusiast &amp; Expert Web &amp; Gen AI. Founder <a href="https://www.nokara.id" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline font-semibold">Nokara.id</a> dan Lead <a href="https://nokara.biz.id" target="_blank" rel="noopener noreferrer" className="text-purple-500 hover:underline font-semibold">Nokara Community</a> di Timika, Papua.
             </p>
             
             {/* Social Links */}

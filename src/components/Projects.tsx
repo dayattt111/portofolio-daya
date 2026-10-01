@@ -1,295 +1,179 @@
-import { ChevronRight, Layers } from 'lucide-react';
-import { useState, useEffect, useRef } from 'react';
-import ProjectStack from './ProjectStack';
+import { ExternalLink, Github, ArrowRight, Code2 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
+import { PROJECTS, Project } from '../data/projectsData';
+import ProjectStack from './ProjectStack';
 
-interface Project {
-  id: number;
-  title: string;
-  description: string;
-  rating: number;
-  color: string;
-  stack: string[];
-  link?: string;
-  image?: string;
+interface ProjectsProps {
+  limit?: number;
+  isHomePreview?: boolean;
 }
 
-const projects: Project[] = [
-  {
-    id: 1,
-    title: 'Company Profile',
-    description: 'professional company profile website with modern design and responsive layout.',
-    rating: 5,
-    color: '#00ff88',
-    stack: ['Next.Js', 'React', 'TypeScript', 'Node.js', 'Tailwind CSS', 'Prisma ORM'],
-    link: 'https://github.com/dayattt111',
-    image: '/images/projects/DataCCProject.png'
-  }
-  ,
-  {
-    id: 2,
-    title: 'Web Portfolio V1',
-    description: 'Personal portfolio website showcasing projects, skills, and experience with a clean and modern design.',
-    rating: 5,
-    color: '#ff006e',
-    stack: ['React', 'Vite', 'Tailwind CSS', 'TypeScript'],
-    link: 'https://github.com/dayattt111/portofolio-daya',
-    image: '/images/projects/portoProject.png'
-  }
-  ,
-  {
-    id: 3,
-    title: 'Organize Website DCC',
-    description: 'Website DCC',
-    rating: 4,
-    color: '#b537f2',
-    stack: ['Laravel', 'MySql', 'Chart.js', 'Bootstrap', 'Axios'],
-    link: 'dcc-dp.com',
-    image: '/images/projects/oldDCC.png'
-  },
-  {
-    id: 4,
-    title: 'Organize New DCC Webiste',
-    description: 'New Website DCC with modern design and responsive layout.',
-    rating: 5,
-    color: '#ffbe0b',
-    stack: ['React JS', 'Next Js', 'Firebase', 'Mysql', 'Three JS'],
-    link: '#',
-    image: '/images/projects/webdcc.png'
-  },
-  {
-    id: 5,
-    title: 'Laundry Apps',
-    description: 'Laundry management app with real-time order tracking and automated notifications.',
-    rating: 5,
-    color: '#ff006e',
-    stack: ['Laravel', 'React', 'Oracle','Tailwind CSS', 'Docker'],
-    link: '#',
-    image: '/images/projects/laundryApp.png'
-  },
-  {
-    id: 6,
-    title: 'petShop Website Regresi Linear',
-    description: 'E-commerce site for pet supplies with user reviews and secure checkout.',
-    rating: 5,
-    color: '#00a3ff',
-    stack: ['Next.js', 'Vite', 'Prisma', 'PostgreSQL', 'Vercel'],
-    link: 'https://github.com/dayattt111/petshop-php-native.git',
-    image: '/images/projects/petShop.png'
-  }
-  ,
-  {
-    id: 7,
-    title: 'website Portofolio V2',
-    description: 'Redesign portfolio website with enhanced UX and interactive project showcases.',
-    rating: 5,
-    color: '#de0dbf',
-    stack: ['React js', 'Vite', 'Suppabase', 'TypeScript', 'Tailwinds CSS', 'Vercel'],
-    link: 'https://www.devdaya.my.id/',
-    image: '/images/projects/portov2.png'
-  }
-  ,
-  {
-    id: 8,
-    title: 'Website Community Network Dicoding UNDIPA',
-    description: 'Community website for Dicoding UNDIPA with event management and member forums.',
-    rating: 5,
-    color: '#0dde6b',
-    stack: ['React js', 'Next Js', 'Vite', 'Suppabase', 'TypeScript', 'Tailwinds CSS', 'Vercel'],
-    link: 'https://github.com/dayattt111/dcn_undipa.git',
-    image: '/images/projects/dcn.png'
-  }
-  ,
-  {
-    id: 9,
-    title: 'Website Manajemen Prestasi Dipatalent di UNDIPA',
-    description: 'Prestasi management website for Dipatalent at UNDIPA with achievement tracking and reporting features.',
-    rating: 5,
-    color: '#de5a0d',
-    stack: ['React js', 'Next Js', 'Vite', 'Suppabase', 'TypeScript', 'Tailwinds CSS', 'Vercel'],
-    link: 'https://github.com/dayattt111/project_dipaTalent.git',
-    image: '/images/projects/dipaTalent.png'
-  }
-  ,
-  {
-    id: 10,
-    title: 'Sistem Informasi Monitoring Keungangan Methode Regresi Linear ',
-    description: 'Sistem informasi untuk monitoring keuangan dengan fitur pelaporan dan analisis data.',
-    rating: 5,
-    color: '#2c02fb',
-    stack: ['React js', 'Next Js', 'Vite', 'Suppabase', 'TypeScript', 'Tailwinds CSS', 'Vercel'],
-    link: 'https://github.com/dayattt111/sisfoAnalitikKeuangan.git',
-    image: '/images/projects/monitoringFinance.png'
-  }
-  ,
-  {
-    id: 11,
-    title: 'Sistem Informasi Teman Bus,  Booking dan Pembayaran Bus ',
-    description: 'Sistem informasi untuk monitoring keuangan dengan fitur pelaporan dan analisis data.',
-    rating: 5,
-    color: '#2c02fb',
-    stack: ['React js', 'Next Js', 'Vite', 'Suppabase', 'TypeScript', 'Tailwinds CSS', 'Vercel'],
-    link: 'https://github.com/dayattt111/sisfoAnalitikKeuangan.git',
-    image: '/images/projects/temanBus.png'
-  }
-];
-
-export default function Projects() {
+export default function Projects({ limit = 4, isHomePreview = true }: ProjectsProps) {
   const { theme } = useTheme();
-  const [isStackOpen, setIsStackOpen] = useState(false);
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setIsVisible(true);
-      },
-      { threshold: 0.05 }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
+  const featuredProjects: Project[] = PROJECTS.filter((p) => p.featured).slice(0, limit);
 
-  // Unique stagger directions for each card
-  const getEntryStyle = (index: number): React.CSSProperties => {
-    const directions = [
-      { x: -50, y: -30, r: -6 }, { x: 30, y: -50, r: 4 }, { x: 50, y: -20, r: 6 },
-      { x: -60, y: 20, r: -4 }, { x: 0, y: -60, r: 0 }, { x: 60, y: 10, r: 5 },
-      { x: -40, y: 40, r: -3 }, { x: 40, y: 30, r: 3 }, { x: -20, y: 50, r: -5 },
-      { x: 20, y: -40, r: 2 }, { x: -30, y: -20, r: -2 },
-    ];
-    const d = directions[index % directions.length];
-    const delay = index * 80;
-    return {
-      transition: `opacity 0.7s cubic-bezier(.22,1,.36,1) ${delay}ms, transform 0.7s cubic-bezier(.22,1,.36,1) ${delay}ms, filter 0.7s ease ${delay}ms`,
-      opacity: isVisible ? 1 : 0,
-      transform: isVisible
-        ? 'translate3d(0,0,0) rotate(0deg) scale(1)'
-        : `translate3d(${d.x}px,${d.y}px,0) rotate(${d.r}deg) scale(0.85)`,
-      filter: isVisible ? 'blur(0px)' : 'blur(6px)',
-    };
+  const getCategoryBadgeClass = (category: string) => {
+    switch (category) {
+      case 'Full Stack':
+        return 'bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border-emerald-500/40';
+      case 'Web App':
+        return 'bg-blue-500/20 text-blue-700 dark:text-blue-300 border-blue-500/40';
+      case 'AI / Data':
+        return 'bg-purple-500/20 text-purple-700 dark:text-purple-300 border-purple-500/40';
+      case 'System & Network':
+        return 'bg-amber-500/20 text-amber-700 dark:text-amber-300 border-amber-500/40';
+      default:
+        return 'bg-cyan-500/20 text-cyan-700 dark:text-cyan-300 border-cyan-500/40';
+    }
   };
 
   return (
-    <>
-      <section ref={sectionRef} id="projects" className={`py-20 relative overflow-hidden transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
-        {/* Animated Background Pattern */}
-        <div className="absolute inset-0 opacity-5 pointer-events-none">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `radial-gradient(circle at 2px 2px, ${theme === 'dark' ? '#fff' : '#000'} 1px, transparent 0)`,
-            backgroundSize: '40px 40px'
-          }} />
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className={`mb-10 sm:mb-14 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <div className="flex items-center gap-3 mb-3">
-              <Layers className={`w-6 h-6 ${theme === 'dark' ? 'text-blue-400' : 'text-blue-600'}`} />
-              <span className={`text-sm font-medium tracking-widest uppercase ${theme === 'dark' ? 'text-blue-400' : 'text-blue-600'}`}>
-                Portfolio
-              </span>
+    <section 
+      id="featured-projects" 
+      className={`py-16 sm:py-24 transition-colors duration-300 ${
+        theme === 'dark' ? 'bg-gray-900/60 text-white' : 'bg-gray-50/80 text-gray-900'
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Section Header */}
+        <div className="mb-12 border-b border-gray-200 dark:border-gray-800 pb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-blue-500 dark:text-blue-400 mb-2 font-semibold">
+              <Code2 size={14} />
+              <span>Selected Works // 01</span>
             </div>
-            <h2 className={`text-3xl sm:text-4xl md:text-5xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
               Featured Projects
             </h2>
-            <p className={`mt-3 text-base sm:text-lg max-w-2xl ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
-              Selected works and applications I've built with passion &amp; precision.
+            <p className={`mt-3 text-sm sm:text-base ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} max-w-2xl leading-relaxed`}>
+              Karya terpilih yang dirancang dengan performa tinggi, UI presisi, dan arsitektur web modern oleh Muhammad Amin Hidayat.
             </p>
           </div>
 
-          {/* Grid Layout */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-            {projects.map((project, index) => (
-              <button
-                key={project.id}
-                onClick={() => {
-                  setSelectedProject(project);
-                  setIsStackOpen(true);
-                }}
-                onMouseEnter={() => setHoveredIndex(index)}
-                onMouseLeave={() => setHoveredIndex(null)}
-                className="text-left will-change-transform"
-                style={getEntryStyle(index)}
-              >
-                <div className={`relative h-full group overflow-hidden rounded-2xl transition-all duration-500 ${hoveredIndex === index ? 'scale-105 shadow-2xl' : 'scale-100'} ${theme === 'dark' ? 'bg-gradient-to-br from-gray-800 to-gray-900' : 'bg-gradient-to-br from-white to-gray-50'} border ${theme === 'dark' ? 'border-gray-700' : 'border-gray-200'}`}>
-                  {/* Hover Glow Effect */}
-                  <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}>
-                    <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-2xl blur-xl opacity-30" />
-                  </div>
-
-                  <div className="relative z-10 p-6 h-full flex flex-col">
-                    {/* Project Image with Overlay */}
-                    <div className={`aspect-video rounded-xl mb-4 overflow-hidden relative group ${theme === 'dark' ? 'bg-gray-700' : 'bg-gradient-to-br from-gray-100 to-gray-200'}`}>
-                      {project.image ? (
-                        <>
-                          <img 
-                            src={project.image} 
-                            alt={project.title}
-                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                        </>
-                      ) : (
-                        <div className="flex items-center justify-center h-full">
-                          <div className={`text-4xl ${theme === 'dark' ? 'text-gray-600' : 'text-gray-400'}`}>■</div>
-                        </div>
-                      )}
-                      
-                      {/* Floating Badge */}
-                      <div className="absolute top-3 right-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-xs px-3 py-1 rounded-full font-semibold shadow-lg transform group-hover:scale-110 transition-transform">
-                        NEW
-                      </div>
-                    </div>
-
-                    {/* Content */}
-                    <h3 className={`text-lg font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
-                      {project.title}
-                    </h3>
-
-                    <p className={`text-sm mb-3 leading-relaxed flex-grow ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
-                      {project.description}
-                    </p>
-
-                    {/* Stack Tags */}
-                    <div className="flex flex-wrap gap-2 mb-3">
-                      {project.stack.slice(0, 2).map((tech) => (
-                        <span
-                          key={tech}
-                          className={`px-2 py-1 text-xs font-medium rounded-full ${theme === 'dark' ? 'bg-blue-900/50 text-blue-300' : 'bg-blue-100 text-blue-700'}`}
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                      {project.stack.length > 2 && (
-                        <span className={`px-2 py-1 text-xs font-medium rounded-full ${theme === 'dark' ? 'bg-gray-700 text-gray-400' : 'bg-gray-100 text-gray-600'}`}>
-                          +{project.stack.length - 2}
-                        </span>
-                      )}
-                    </div>
-
-                    {/* CTA */}
-                    <div className="flex items-center gap-2 text-sm font-medium text-blue-600">
-                      <span>View Details</span>
-                      <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </div>
-                  </div>
-                </div>
-              </button>
-            ))}
+          <div className="hidden md:flex items-center gap-2 font-mono text-xs px-3 py-1.5 border border-blue-500/30 bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-none font-semibold">
+            [TOTAL: {PROJECTS.length} REPOSITORIES]
           </div>
         </div>
-      </section>
 
-      <ProjectStack
-        project={selectedProject}
-        isOpen={isStackOpen}
-        onClose={() => {
-          setIsStackOpen(false);
-          setSelectedProject(null);
-        }}
-      />
-    </>
+        {/* Structural Sharp Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+          {featuredProjects.map((project, idx) => (
+            <div
+              key={project.id}
+              className={`group rounded-none flex flex-col border transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl ${
+                theme === 'dark' 
+                  ? 'bg-gray-800/80 border-gray-700 hover:border-blue-500/60 hover:shadow-blue-500/10' 
+                  : 'bg-white border-gray-200 hover:border-blue-400 hover:shadow-blue-500/10'
+              }`}
+            >
+              {/* Colorful Accent bar */}
+              <div className={`h-1.5 w-full bg-gradient-to-r ${project.color} opacity-90 group-hover:opacity-100 transition-opacity`} />
+
+              {/* Header Card Meta */}
+              <div className={`flex items-center justify-between gap-2 px-4 py-2.5 border-b ${
+                theme === 'dark' ? 'bg-gray-900/60 border-gray-700/70' : 'bg-gray-50 border-gray-200'
+              }`}>
+                <span className="font-mono text-xs font-semibold text-blue-500 dark:text-blue-400">
+                  REF_{String(idx + 1).padStart(2, '0')} &bull; {project.year}
+                </span>
+                <span className="rounded-none px-2 py-0.5 text-[10px] font-mono font-bold uppercase tracking-wider border border-emerald-500/40 text-emerald-600 dark:text-emerald-400 bg-emerald-500/10">
+                  {project.status}
+                </span>
+              </div>
+
+              {/* Locked Aspect Video Thumbnail */}
+              <div className="aspect-video w-full overflow-hidden border-b border-gray-200 dark:border-gray-700/70 bg-gray-100 dark:bg-gray-900 relative group/thumb">
+                <img
+                  src={project.image}
+                  alt={`Screenshot antarmuka ${project.title} oleh Muhammad Amin Hidayat`}
+                  width="640"
+                  height="360"
+                  loading="lazy"
+                  className="rounded-none w-full h-full object-cover transition-transform duration-500 group-hover/thumb:scale-105"
+                />
+                <div className={`rounded-none absolute top-2 right-2 px-2.5 py-0.5 text-[10px] font-mono uppercase tracking-widest font-bold border backdrop-blur-sm ${getCategoryBadgeClass(project.category)}`}>
+                  {project.category}
+                </div>
+              </div>
+
+              {/* Card Body */}
+              <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between">
+                <div>
+                  <h3 className={`text-xl font-bold tracking-tight mb-2 transition-colors ${
+                    theme === 'dark' ? 'text-white group-hover:text-blue-400' : 'text-gray-900 group-hover:text-blue-600'
+                  }`}>
+                    {project.title}
+                  </h3>
+                  <p className={`text-sm leading-relaxed mb-4 ${
+                    theme === 'dark' ? 'text-gray-300' : 'text-gray-600'
+                  }`}>
+                    {project.description}
+                  </p>
+                </div>
+
+                <div>
+                  {/* Tech Stack Component */}
+                  <div className="mb-5">
+                    <ProjectStack stack={project.stack} limit={4} />
+                  </div>
+
+                  {/* Actions Buttons */}
+                  <div className="flex items-center gap-2 pt-4 border-t border-gray-200 dark:border-gray-700/60">
+                    {project.demoUrl && (
+                      <a
+                        href={project.demoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title={`Lihat demo project ${project.title} oleh Muhammad Amin Hidayat`}
+                        aria-label={`Live Demo ${project.title}`}
+                        className="rounded-none flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2.5 text-xs font-mono font-bold bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700 shadow-md shadow-blue-500/20 transition-all hover:scale-[1.01] active:scale-[0.99]"
+                      >
+                        <span>Live Demo</span>
+                        <ExternalLink size={13} />
+                      </a>
+                    )}
+                    {project.repoUrl && (
+                      <a
+                        href={project.repoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title={`Lihat kode sumber repository ${project.title} oleh Muhammad Amin Hidayat di GitHub`}
+                        aria-label={`Source Code ${project.title}`}
+                        className={`rounded-none flex-1 inline-flex items-center justify-center gap-1.5 px-4 py-2.5 text-xs font-mono font-bold border transition-all ${
+                          theme === 'dark' 
+                            ? 'border-blue-500/40 text-blue-400 bg-blue-500/10 hover:bg-blue-500/20 hover:border-blue-400' 
+                            : 'border-blue-500/40 text-blue-600 bg-blue-50 hover:bg-blue-100 hover:border-blue-500'
+                        }`}
+                      >
+                        <Github size={13} />
+                        <span>Source Code</span>
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Home Navigation CTA to /projects */}
+        {isHomePreview && (
+          <div className="mt-12 text-center border-t border-gray-200 dark:border-gray-800 pt-8">
+            <Link
+              to="/projects"
+              title="Buka katalog lengkap seluruh proyek oleh Muhammad Amin Hidayat"
+              className="rounded-none inline-flex items-center gap-2.5 px-8 py-3.5 text-sm font-mono font-bold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white hover:opacity-95 shadow-xl shadow-blue-500/25 hover:scale-105 transition-all duration-300"
+            >
+              <span>Lihat Semua Proyek ({PROJECTS.length})</span>
+              <ArrowRight size={16} />
+            </Link>
+          </div>
+        )}
+
+      </div>
+    </section>
   );
 }

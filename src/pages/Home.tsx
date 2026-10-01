@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
-import { ChevronDown, MessageCircle, Award, Users, Rocket, Sparkles, Github, ExternalLink, ArrowRight, Terminal } from 'lucide-react';
+import { ChevronDown, MessageCircle, Award, Users, Rocket, Sparkles, Github, Instagram, ExternalLink, ArrowRight, Terminal } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
+import Projects from '../components/Projects';
 
 // ─── SEO ───
-const SEO_TITLE = 'Muhammad Amin Hidayat | Software Engineer & Programmer Terlucu di Makassar';
-const SEO_DESC = 'Muhammad Amin Hidayat adalah Software Engineer dan Web Developer yang dikenal sebagai Programmer Terlucu di Makassar, Sulawesi Selatan. Spesialis Full-Stack Web Development, Cloud Computing, UI/UX Design, Data Engineering, dan Artificial Intelligence.';
+const SEO_TITLE = 'Muhammad Amin Hidayat | Software Engineer, Tech Enthusiast & Programmer Terlucu di Makassar';
+const SEO_DESC = 'Muhammad Amin Hidayat adalah Software Engineer, Tech Enthusiast, dan Expert di bidang Web & Generative AI (Gen AI) yang dikenal sebagai Programmer Terlucu di Makassar, Sulawesi Selatan. Founder Nokara.id (www.nokara.id) dan Lead Nokara Community (nokara.biz.id) di Timika Papua.';
 
 
 // ─── GitHub cache ───
@@ -52,12 +53,6 @@ function useInView(threshold = 0.15) {
 }
 
 // ─── Data ───
-const featuredProjects = [
-  { id: 1, title: 'Company Profile DataCC', description: 'Professional company profile with modern design, animations, and responsive layout.', color: 'from-emerald-500 to-cyan-500', stack: ['Next.Js', 'React', 'TypeScript', 'Tailwind CSS'], image: '/images/projects/DataCCProject.png', featured: true },
-  { id: 2, title: 'DCN UNDIPA Website', description: 'Community website for Dicoding UNDIPA with event management & member forums.', color: 'from-rose-500 to-orange-500', stack: ['React JS', 'Supabase', 'Next Js', 'Three JS'], image: '/images/projects/dcn.png', featured: false },
-  { id: 3, title: 'DCC Organization Website', description: 'New Website DCC with modern design, interactive UI, and responsive layout.', color: 'from-violet-500 to-purple-500', stack: ['Next Js', 'React Js', 'MySQL', 'Tailwind CSS'], image: '/images/projects/webdcc.png', featured: false },
-];
-
 const stats = [
   { icon: <Award className="w-5 h-5" />, value: '3+', label: 'Years Exp', color: 'from-blue-500 to-cyan-500' },
   { icon: <Users className="w-5 h-5" />, value: '50+', label: 'Clients', color: 'from-purple-500 to-pink-500' },
@@ -83,7 +78,6 @@ export default function Home() {
   const totalContributions = contributions.reduce((s, d) => s + d.count, 0);
   const typedText = useTypingEffect(roles.map(r => r.label), 80, 2000);
   const aboutSection = useInView(0.12);
-  const projectSection = useInView(0.12);
 
   // SEO
   useEffect(() => {
@@ -230,22 +224,21 @@ export default function Home() {
               </div>
 
               <p className={`text-sm sm:text-base leading-relaxed max-w-xl mx-auto lg:mx-0 fade-in-up ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`} style={{ animationDelay: '0.5s' }}>
-                Undergraduate student at <strong>Universitas Dipa Makassar</strong> and passionate <strong>Software Engineer berbasis di Makassar</strong> focused on <strong>Full-Stack Web Development</strong>, <strong>Computer Networking</strong>, and <strong>Technical Communication</strong>. Active member of <em>Dipanegara Computer Club</em>.
-                {' '}Cohort <strong>AI Engineer Dicoding x DBS Foundation</strong> Coding Camp.
-                {' '}Dikenal luas sebagai <strong>Programmer Terlucu di Makassar</strong> — serius soal kode, santai soal hidup.
+                <strong>Software Engineer</strong>, <strong>Tech Enthusiast</strong>, dan <strong>Expert di bidang Web &amp; Generative AI (Gen AI)</strong> berbasis di Makassar. Founder <a href="https://www.nokara.id" target="_blank" rel="noopener noreferrer" className="font-semibold text-blue-500 hover:underline">Nokara.id</a> &amp; Lead <a href="https://nokara.biz.id" target="_blank" rel="noopener noreferrer" className="font-semibold text-purple-500 hover:underline">Nokara Community</a> di Timika, Papua. Mahasiswa <em>Universitas Dipa Makassar</em> dan aktif membagikan ilmu lewat sharing session &amp; workshop. Dikenal luas sebagai <strong>Programmer Terlucu di Makassar</strong>.
               </p>
 
               {/* Social links */}
               <div className="flex items-center justify-center lg:justify-start gap-2 fade-in-up" style={{ animationDelay: '0.55s' }}>
                 {[
+                  { href: 'https://www.instagram.com/ur.dayaa/', icon: <Instagram className="w-5 h-5" />, alt: 'Instagram @ur.dayaa' },
                   { href: 'https://www.linkedin.com/in/muhammad-amin-hidayat', img: '/images/sosial-media/linkedin.svg', alt: 'LinkedIn' },
+                  { href: 'https://github.com/dayattt111', icon: <Github className="w-5 h-5" />, alt: 'GitHub @dayattt111' },
                   { href: 'https://www.kaggle.com/muhammadaminhidayat', img: '/images/sosial-media/Kaggle_logo.png', alt: 'Kaggle' },
                   { href: 'https://scholar.google.com/citations?user=LRRALCsAAAAJ&hl=id', img: '/images/sosial-media/Google Scholar.svg', alt: 'Google Scholar' },
-                  { href: 'https://github.com/dayattt111', alt: 'GitHub' },
                 ].map((s, i) => (
                   <a key={i} href={s.href} target="_blank" rel="noopener noreferrer" title={s.alt}
                     className={`p-2 rounded-xl transition-all duration-300 hover:scale-110 hover:-translate-y-0.5 ${theme === 'dark' ? 'bg-gray-800/60 hover:bg-gray-700 border border-gray-700/50' : 'bg-white/80 hover:bg-gray-50 border border-gray-200'}`}>
-                    {s.img ? <img src={s.img} alt={s.alt} className="w-5 h-5 object-contain" /> : <Github className="w-5 h-5" />}
+                    {s.img ? <img src={s.img} alt={s.alt} className="w-5 h-5 object-contain" /> : s.icon}
                   </a>
                 ))}
               </div>
@@ -379,67 +372,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══════════ FEATURED PROJECTS — Stacked Cards ═══════════ */}
-      <section ref={projectSection.ref} className={`py-16 md:py-24 transition-colors duration-300 ${theme === 'dark' ? 'bg-gray-800/40' : 'bg-gray-50/80'}`}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className={`text-center mb-10 md:mb-14 transition-all duration-700 ${projectSection.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">Featured Projects</h2>
-            <p className={`text-sm sm:text-base ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Selected works & recent applications</p>
-          </div>
-
-          <div className="flex flex-col gap-6 md:gap-8">
-            {featuredProjects.map((p, idx) => (
-              <div
-                key={p.id}
-                className={`group relative rounded-2xl overflow-hidden border transition-all duration-700 hover:shadow-2xl hover:-translate-y-1 ${projectSection.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'} ${theme === 'dark' ? 'bg-gray-800/70 border-gray-700/50 hover:border-gray-600' : 'bg-white border-gray-200 hover:border-gray-300'}`}
-                style={{ transitionDelay: `${idx * 150}ms` }}
-              >
-                {/* Accent bar */}
-                <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${p.color} opacity-70 group-hover:opacity-100 transition-opacity z-10`} />
-
-                <div className={`flex flex-col ${idx % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
-                  {/* Image */}
-                  <div className="relative w-full md:w-1/2 h-56 sm:h-64 md:h-auto md:min-h-[320px] overflow-hidden shrink-0">
-                    <img src={p.image} alt={p.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" />
-                    <div className={`absolute inset-0 ${theme === 'dark' ? 'bg-gradient-to-t md:bg-gradient-to-r from-gray-900/80 via-transparent to-transparent' : 'bg-gradient-to-t md:bg-gradient-to-r from-white/70 via-transparent to-transparent'} ${idx % 2 !== 0 ? 'md:bg-gradient-to-l' : ''}`} />
-                    {p.featured && (
-                      <div className={`absolute top-4 left-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-bold bg-gradient-to-r ${p.color} text-white shadow-lg`}>
-                        <Sparkles className="w-3 h-3" />FEATURED
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Content */}
-                  <div className="flex-1 p-6 sm:p-8 md:p-10 flex flex-col justify-center">
-                    <div className={`inline-flex items-center gap-2 mb-4 text-xs font-semibold tracking-wider uppercase ${theme === 'dark' ? 'text-gray-500' : 'text-gray-400'}`}>
-                      <div className={`w-8 h-[2px] bg-gradient-to-r ${p.color} rounded-full`} />
-                      Project {String(idx + 1).padStart(2, '0')}
-                    </div>
-                    <h3 className={`text-xl sm:text-2xl md:text-3xl font-bold mb-3 leading-tight ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{p.title}</h3>
-                    <p className={`text-sm sm:text-base mb-5 max-w-lg leading-relaxed ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>{p.description}</p>
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      {p.stack.map((t, i) => (
-                        <span key={i} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${theme === 'dark' ? 'bg-gray-700/80 text-gray-300 border border-gray-600/50 hover:border-gray-500' : 'bg-gray-100 text-gray-700 border border-gray-200 hover:border-gray-300'}`}>{t}</span>
-                      ))}
-                    </div>
-                    <div className={`inline-flex items-center gap-2 text-sm font-semibold group-hover:gap-3 transition-all duration-300 ${theme === 'dark' ? 'text-blue-400' : 'text-blue-600'}`}>
-                      <ExternalLink className="w-4 h-4" />
-                      View Project
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center mt-10 md:mt-12">
-            <Link to="/projects" className="inline-flex items-center gap-2 px-8 py-3.5 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl hover:shadow-xl hover:shadow-blue-500/20 hover:scale-105 transition-all duration-300 text-sm sm:text-base">
-              View All Projects <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* ═══════════ FEATURED PROJECTS ═══════════ */}
+      <Projects limit={4} isHomePreview={true} />
 
       {/* Keyframes */}
       <style>{`
