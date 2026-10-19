@@ -32,12 +32,13 @@ function PageLoader() {
 
 function App() {
   const { theme } = useTheme();
+  const isDark = theme === 'dark';
 
   return (
     <Router>
-      <div className={`min-h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
+      <div className={`min-h-screen ${isDark ? 'dark bg-neutral-950 text-neutral-100' : 'bg-white text-neutral-900'}`}>
         <Sidebar />
-        <div className="lg:pl-64 xl:pl-72 flex flex-col min-h-screen transition-all duration-300">
+        <div className="lg:pl-64 xl:pl-[260px] flex flex-col min-h-screen">
           <main className="flex-1">
             <Suspense fallback={<PageLoader />}>
               <Routes>

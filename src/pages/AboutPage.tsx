@@ -14,7 +14,7 @@ export default function AboutPage() {
   }, []);
   
   return (
-    <div className={`min-h-screen pt-20 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
+    <div className={`min-h-screen pt-14 lg:pt-0 ${theme === 'dark' ? 'bg-neutral-950 text-neutral-100' : 'bg-white text-neutral-900'}`}>
       <About />
       <Footer />
     </div>
