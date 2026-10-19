@@ -28,3 +28,6 @@ dist-ssr
 #.md
 ANTIGRAVITY.md
 repomix-output.xml
+
+# AI Agent Skills & Customizations
+.agents/
