@@ -1,10 +1,8 @@
 import { useEffect } from 'react';
 import About from '../components/About';
 import Footer from '../components/Footer';
-import { useTheme } from '../contexts/ThemeContext';
 
 export default function AboutPage() {
-  const { theme } = useTheme();
 
   // SEO meta for About page
   useEffect(() => {
@@ -14,7 +12,7 @@ export default function AboutPage() {
   }, []);
   
   return (
-    <div className={`min-h-screen pt-14 lg:pt-0 ${theme === 'dark' ? 'bg-neutral-950 text-neutral-100' : 'bg-white text-neutral-900'}`}>
+    <div className="space-y-12">
       <About />
       <Footer />
     </div>

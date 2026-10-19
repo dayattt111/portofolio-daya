@@ -22,7 +22,6 @@ export default function ProjectsPage() {
   const [query, setQuery] = useState('');
 
   /* Token aliases */
-  const bg = isDark ? 'bg-neutral-950' : 'bg-neutral-50';
   const text = isDark ? 'text-white' : 'text-neutral-900';
   const muted = isDark ? 'text-neutral-400' : 'text-neutral-500';
   const border = isDark ? 'border-neutral-800' : 'border-neutral-200';
@@ -99,11 +98,11 @@ export default function ProjectsPage() {
   }, []);
 
   return (
-    <div className={`min-h-screen pt-20 lg:pt-0 transition-colors duration-200 ${bg} ${text}`}>
+    <div className={`space-y-12 transition-colors duration-200 ${text}`}>
 
       {/* ── Page header ── */}
-      <section className={`border-b ${border} ${isDark ? 'bg-neutral-950' : 'bg-white'}`}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <section className={`border-b ${border} pb-8`}>
+        <div className="py-2">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="max-w-2xl">
               <div className={`flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-widest mb-2 font-semibold ${muted}`}>
@@ -171,14 +170,14 @@ export default function ProjectsPage() {
       </section>
 
       {/* ── Project grid ── */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <section className="py-2">
         {filtered.length === 0 ? (
           <div className={`text-center py-20 ${muted}`}>
             <FolderGit2 size={40} className="mx-auto mb-3 opacity-30" />
             <p className="text-sm">Tidak ada proyek yang ditemukan.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {filtered.map((project, idx) => (
               <article
                 key={project.id}

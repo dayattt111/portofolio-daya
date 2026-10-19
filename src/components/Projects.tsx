@@ -28,11 +28,8 @@ export default function Projects({ limit = 6, isHomePreview = true }: ProjectsPr
   const muted = isDark ? 'text-neutral-400' : 'text-neutral-500';
 
   return (
-    <section
-      id="featured-projects"
-      className={`py-16 sm:py-24 border-b ${border} ${isDark ? 'bg-neutral-950' : 'bg-neutral-50/60'}`}
-    >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="featured-projects" className="space-y-6 pt-4">
+      <div>
 
         {/* Section header */}
         <div className={`mb-10 pb-6 border-b flex flex-col md:flex-row md:items-end justify-between gap-4 ${border}`}>

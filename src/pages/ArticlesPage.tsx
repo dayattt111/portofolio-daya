@@ -76,12 +76,12 @@ export default function ArticlesPage() {
   }, [articles]);
 
   return (
-    <div className={`min-h-screen pt-24 sm:pt-28 transition-colors duration-300 ${
-      theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'
+    <div className={`space-y-12 transition-colors duration-200 ${
+      theme === 'dark' ? 'text-white' : 'text-gray-900'
     }`}>
       {/* Hero Header Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-4">
-        <div className={`relative rounded-3xl p-6 sm:p-10 md:p-14 overflow-hidden border ${
+      <section className="pb-4">
+        <div className={`relative rounded-2xl p-6 sm:p-8 overflow-hidden border ${
           theme === 'dark' 
             ? 'bg-gradient-to-br from-gray-800/80 via-gray-850 to-gray-900 border-gray-700/60 shadow-2xl' 
             : 'bg-gradient-to-br from-blue-50/70 via-white to-purple-50/70 border-gray-200 shadow-xl'

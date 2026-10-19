@@ -1,10 +1,8 @@
 import { useEffect } from 'react';
 import Skills from '../components/Skills';
 import Footer from '../components/Footer';
-import { useTheme } from '../contexts/ThemeContext';
 
 export default function SkillsPage() {
-  const { theme } = useTheme();
 
   useEffect(() => {
     document.title = 'Skills & Services — Muhammad Amin Hidayat | Full Stack Developer Makassar';
@@ -13,7 +11,7 @@ export default function SkillsPage() {
   }, []);
 
   return (
-    <div className={`min-h-screen pt-14 lg:pt-0 ${theme === 'dark' ? 'bg-neutral-950 text-neutral-100' : 'bg-white text-neutral-900'}`}>
+    <div className="space-y-12">
       <Skills />
       <Footer />
     </div>

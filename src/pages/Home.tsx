@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import {
-  ChevronDown, MessageCircle, Award, Users, Rocket, Sparkles,
-  Github, Instagram, ArrowRight, Terminal, ExternalLink,
+  MessageCircle, Award, Users, Rocket, Sparkles,
+  Github, Instagram, Terminal, ExternalLink,
+  MapPin,
 } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
-import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Projects from '../components/Projects';
 
@@ -80,13 +80,6 @@ const SOCIAL_LINKS = [
   { href: 'https://scholar.google.com/citations?user=LRRALCsAAAAJ&hl=id', img: '/images/sosial-media/Google Scholar.svg', label: 'Google Scholar' },
 ];
 
-const FLOATING_LOGOS = [
-  { src: '/images/logo/programs/laravel-svgrepo-com.svg', alt: 'Laravel', style: { top: '250px', left: '-40px' } },
-  { src: '/images/logo/programs/docker-logo-svgrepo-com.svg', alt: 'Docker', style: { top: '190px', right: '-40px' } },
-  { src: '/images/logo/programs/python-svgrepo-com.svg', alt: 'Python', style: { top: '50px', right: '-40px' } },
-  { src: '/images/logo/programs/react-svgrepo-com.svg', alt: 'React', style: { top: '100px', left: '-40px' } },
-];
-
 export default function Home() {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
@@ -134,7 +127,6 @@ export default function Home() {
   useEffect(() => { if (ghSection.visible) setTimeout(() => setGraphVisible(true), 300); }, [ghSection.visible]);
 
   /* Palette tokens */
-  const bg = isDark ? 'bg-neutral-950' : 'bg-white';
   const text = isDark ? 'text-neutral-100' : 'text-neutral-900';
   const muted = isDark ? 'text-neutral-400' : 'text-neutral-500';
   const border = isDark ? 'border-neutral-800' : 'border-neutral-200';
@@ -144,184 +136,169 @@ export default function Home() {
     : ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'];
 
   return (
-    <div className={`relative min-h-screen ${bg} ${text}`}>
+    <div className={`space-y-16 lg:space-y-20 ${text}`}>
 
-      {/* ══════ HERO ══════ */}
-      <section className={`relative min-h-screen flex items-center overflow-hidden pt-20 pb-12 lg:pb-20 border-b ${border}`}>
-        {/* Subtle grid background */}
-        <div
-          className="absolute inset-0 opacity-[0.03] pointer-events-none"
-          style={{
-            backgroundImage: `linear-gradient(${isDark ? '#fff' : '#000'} 1px, transparent 1px), linear-gradient(90deg, ${isDark ? '#fff' : '#000'} 1px, transparent 1px)`,
-            backgroundSize: '60px 60px',
-          }}
-          aria-hidden="true"
-        />
+      {/* ══════ INTRO BIO & HERO (RIGHT COLUMN HEADER) ══════ */}
+      <section className="space-y-8">
+        {/* Meta badges: Location & Availability */}
+        <div className="flex flex-wrap items-center gap-2">
+          {/* Location Badge */}
+          <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium border ${
+            isDark ? 'border-neutral-800 bg-neutral-900/60 text-neutral-300' : 'border-neutral-200 bg-neutral-50 text-neutral-700'
+          }`}>
+            <MapPin size={12} className="text-rose-500" />
+            <span>Makassar, Indonesia</span>
+          </div>
 
-        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-
-            {/* Profile Image Column */}
-            <div className="flex justify-center order-1 mt-6 lg:mt-0">
-              <div className="relative">
-                {/* Floating tech logos */}
-                {FLOATING_LOGOS.map((logo, i) => (
-                  <div
-                    key={i}
-                    className={`absolute w-10 h-10 rounded-md border flex items-center justify-center ${cardBg}`}
-                    style={{ ...logo.style, animation: `float ${5 + i}s ease-in-out infinite`, animationDelay: `${i * 0.6}s` }}
-                  >
-                    <img src={logo.src} alt={logo.alt} className="w-6 h-6 object-contain" />
-                  </div>
-                ))}
-
-                {/* Profile photo frame */}
-                <div className={`relative w-60 sm:w-72 lg:w-80 rounded-2xl overflow-hidden border ${border}`}>
-                  <img
-                    src="/images/profile/pp.png"
-                    alt="Muhammad Amin Hidayat — Full Stack Developer Makassar"
-                    className="w-full h-auto object-contain"
-                    style={{ maxHeight: '480px' }}
-                    loading="eager"
-                  />
-                  {/* Availability badge */}
-                  <div className={`absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border text-xs font-medium ${cardBg}`}>
-                    <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-                    </span>
-                    <span className="text-emerald-500 font-semibold">Available</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Text Column */}
-            <div className="order-2 text-center lg:text-left space-y-5">
-              <div>
-                <span className={`text-sm font-medium ${muted}`}>Hi there 👋, I'm</span>
-              </div>
-
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-[3.2rem] font-extrabold leading-tight tracking-tight">
-                Muhammad<br />Amin Hidayat
-              </h1>
-
-              {/* Typing role */}
-              <div className="h-7 flex items-center justify-center lg:justify-start">
-                <span className={`text-base sm:text-lg font-mono font-medium ${isDark ? 'text-blue-400' : 'text-blue-600'}`}>
-                  {typedText}
-                  <span className="inline-block w-0.5 h-5 bg-blue-500 ml-0.5 animate-pulse align-middle" />
-                </span>
-              </div>
-
-              {/* Role badges — sharp, no gradients */}
-              <div className="flex flex-wrap gap-1.5 justify-center lg:justify-start">
-                {ROLES.map((r, i) => (
-                  <span key={i} className={`px-2.5 py-1 rounded-md border text-xs font-medium ${
-                    isDark
-                      ? 'bg-neutral-900 border-neutral-700 text-neutral-300'
-                      : 'bg-neutral-100 border-neutral-200 text-neutral-700'
-                  }`}>
-                    {r}
-                  </span>
-                ))}
-              </div>
-
-              {/* Bio */}
-              <p className={`text-sm sm:text-base leading-relaxed max-w-xl mx-auto lg:mx-0 ${muted}`}>
-                <strong className={text}>Software Engineer</strong>,{' '}
-                <strong className={text}>Tech Enthusiast</strong>, dan{' '}
-                <strong className={text}>Expert di bidang Web &amp; Generative AI</strong> berbasis di
-                Makassar. Founder{' '}
-                <a href="https://www.nokara.id" target="_blank" rel="noopener noreferrer"
-                  className="font-semibold text-blue-500 hover:underline underline-offset-2">Nokara.id</a>
-                {' '}&amp; Lead{' '}
-                <a href="https://nokara.biz.id" target="_blank" rel="noopener noreferrer"
-                  className="font-semibold text-blue-500 hover:underline underline-offset-2">Nokara Community</a>{' '}
-                di Timika, Papua. Dikenal sebagai{' '}
-                <strong className={text}>Programmer Terlucu di Makassar</strong>.
-              </p>
-
-              {/* Social links */}
-              <div className="flex items-center justify-center lg:justify-start gap-1.5">
-                {SOCIAL_LINKS.map((s, i) => (
-                  <a
-                    key={i}
-                    href={s.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title={s.label}
-                    className={`p-2 rounded-md border transition-colors ${
-                      isDark
-                        ? 'border-neutral-700 bg-neutral-900 text-neutral-400 hover:text-white hover:border-neutral-600'
-                        : 'border-neutral-200 bg-white text-neutral-600 hover:text-neutral-900 hover:border-neutral-300'
-                    }`}
-                  >
-                    {s.img
-                      ? <img src={s.img} alt={s.label} className="w-4 h-4 object-contain" />
-                      : s.icon && <s.icon className="w-4 h-4" />
-                    }
-                  </a>
-                ))}
-              </div>
-
-              {/* CTA buttons */}
-              <div className="flex flex-col sm:flex-row gap-2.5 justify-center lg:justify-start">
-                <a
-                  href="https://docs.google.com/document/d/14eAmhXNkfFRMoWlU8IlmvrZVHebQnfWrXYs8ENy_GIw/edit?usp=sharing"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-md bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm transition-colors"
-                >
-                  View CV <ExternalLink className="w-3.5 h-3.5" />
-                </a>
-                <a
-                  href="https://wa.me/6288242763942?text=Halo%2C%20saya%20tertarik%20dengan%20portfolio%20mu!"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-md border font-semibold text-sm transition-colors ${
-                    isDark
-                      ? 'border-neutral-700 bg-neutral-900 text-neutral-200 hover:bg-neutral-800'
-                      : 'border-neutral-200 bg-white text-neutral-800 hover:bg-neutral-50'
-                  }`}
-                >
-                  <MessageCircle className="w-3.5 h-3.5" /> Contact Me
-                </a>
-              </div>
-            </div>
-
+          {/* Status Badge */}
+          <div className={`inline-flex items-center gap-2 px-2.5 py-1 rounded-md text-xs font-medium border ${
+            isDark ? 'border-neutral-800 bg-neutral-900/60 text-emerald-400' : 'border-neutral-200 bg-neutral-50 text-emerald-600'
+          }`}>
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+            </span>
+            <span>Available for projects</span>
           </div>
         </div>
 
-        {/* Scroll hint */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce hidden lg:block">
-          <ChevronDown className={`w-5 h-5 ${muted}`} />
-        </div>
-      </section>
+        {/* H1 Heading (Protected SEO & GEO requirement) */}
+        <div className="space-y-2">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
+            Muhammad Amin Hidayat
+          </h1>
 
-      {/* ══════ STATS BAR ══════ */}
-      <section className={`border-b ${border}`}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 ${border}">
-            {STATS.map((s, i) => {
-              const Icon = s.icon;
-              return (
-                <div key={i} className={`flex items-center gap-3 px-6 py-5 ${isDark ? 'divide-neutral-800' : 'divide-neutral-200'}`}>
-                  <div className={`p-2 rounded-md border ${cardBg}`}>
-                    <Icon className={`w-4 h-4 ${muted}`} />
-                  </div>
-                  <div>
-                    <div className={`text-xl font-extrabold tracking-tight ${text}`}>{s.value}</div>
-                    <div className={`text-xs ${muted}`}>{s.label}</div>
-                  </div>
-                </div>
-              );
-            })}
+          {/* Dynamic role subtitle */}
+          <div className="h-6 flex items-center">
+            <span className={`text-base sm:text-lg font-mono font-medium ${isDark ? 'text-blue-400' : 'text-blue-600'}`}>
+              {typedText}
+              <span className="inline-block w-0.5 h-4 bg-blue-500 ml-0.5 animate-pulse align-middle" />
+            </span>
+          </div>
+        </div>
+
+        {/* Intro Editorial Bio */}
+        <p className={`text-base sm:text-lg leading-relaxed ${muted}`}>
+          <strong className={text}>Software Engineer</strong>,{' '}
+          <strong className={text}>Tech Enthusiast</strong>, dan{' '}
+          <strong className={text}>Expert di bidang Web &amp; Generative AI (Gen AI)</strong> berbasis di{' '}
+          <span className={isDark ? 'text-neutral-200 font-medium' : 'text-neutral-800 font-medium'}>
+            Makassar, Indonesia
+          </span>
+          . Founder{' '}
+          <a
+            href="https://www.nokara.id"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 hover:underline underline-offset-2 font-medium"
+          >
+            Nokara.id
+          </a>{' '}
+          &amp; Lead{' '}
+          <a
+            href="https://nokara.biz.id"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 hover:underline underline-offset-2 font-medium"
+          >
+            Nokara Community
+          </a>{' '}
+          di Timika, Papua. Di komunitas teknologi lokal dikenal dengan julukan{' '}
+          <strong className={text}>Programmer Terlucu di Makassar</strong>.
+        </p>
+
+        {/* Action Buttons & Socials */}
+        <div className="flex flex-wrap items-center gap-3 pt-1">
+          <a
+            href="https://docs.google.com/document/d/14eAmhXNkfFRMoWlU8IlmvrZVHebQnfWrXYs8ENy_GIw/edit?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-medium text-sm transition-colors shadow-xs"
+          >
+            <span>View CV</span>
+            <ExternalLink size={13} />
+          </a>
+
+          <a
+            href="https://wa.me/6288242763942?text=Halo%20Amin%2C%20saya%20tertarik%20dengan%20portfolio%20kamu!"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg border font-medium text-sm transition-colors ${
+              isDark
+                ? 'border-neutral-800 bg-neutral-900 text-neutral-200 hover:bg-neutral-800 hover:border-neutral-700'
+                : 'border-neutral-200 bg-white text-neutral-800 hover:bg-neutral-50'
+            }`}
+          >
+            <MessageCircle size={14} className="text-emerald-500" />
+            <span>Contact Me</span>
+          </a>
+
+          <div className="flex items-center gap-1 pl-1">
+            {SOCIAL_LINKS.map((s, i) => (
+              <a
+                key={i}
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={s.label}
+                aria-label={s.label}
+                className={`p-2 rounded-lg border transition-colors ${
+                  isDark
+                    ? 'border-neutral-800 bg-neutral-900/60 text-neutral-400 hover:text-white hover:border-neutral-700'
+                    : 'border-neutral-200 bg-white text-neutral-600 hover:text-neutral-900'
+                }`}
+              >
+                {s.img ? (
+                  <img src={s.img} alt={s.label} className="w-3.5 h-3.5 object-contain" />
+                ) : (
+                  s.icon && <s.icon className="w-3.5 h-3.5" />
+                )}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* Roles & Expertise Badges */}
+        <div className="space-y-2 pt-2">
+          <p className="text-xs font-mono uppercase tracking-wider text-neutral-500">Core Disciplines</p>
+          <div className="flex flex-wrap gap-1.5">
+            {ROLES.map((role, i) => (
+              <span
+                key={i}
+                className={`px-2.5 py-1 rounded-md border text-xs font-medium ${
+                  isDark
+                    ? 'border-neutral-800 bg-neutral-900/50 text-neutral-300'
+                    : 'border-neutral-200 bg-neutral-100/70 text-neutral-700'
+                }`}
+              >
+                {role}
+              </span>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ══════ SEO hidden block ══════ */}
+      {/* ══════ STATS HIGHLIGHTS ══════ */}
+      <section className={`py-6 border-y ${border}`}>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-4">
+          {STATS.map((s, i) => {
+            const Icon = s.icon;
+            return (
+              <div key={i} className="flex items-center gap-3">
+                <div className={`p-2 rounded-lg border ${cardBg}`}>
+                  <Icon className={`w-4 h-4 ${muted}`} />
+                </div>
+                <div>
+                  <div className={`text-xl font-bold tracking-tight ${text}`}>{s.value}</div>
+                  <div className={`text-xs ${muted}`}>{s.label}</div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ══════ SEO HIDDEN BLOCK (Accessible & indexed) ══════ */}
       <div aria-label="Tentang Muhammad Amin Hidayat programmer terlucu Makassar" className="sr-only">
         <h2>Programmer Terlucu Makassar</h2>
         <p>
@@ -329,139 +306,130 @@ export default function Home() {
         </p>
       </div>
 
-      {/* ══════ CODING HISTORY ══════ */}
-      <section ref={ghSection.ref} className={`py-16 md:py-24 border-b ${border} ${bg}`}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-
-          {/* Section header */}
-          <div className={`mb-10 transition-all duration-700 ${ghSection.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
-            <div className="flex items-center gap-2 mb-2">
-              <Terminal className={`w-4 h-4 ${muted}`} />
-              <span className={`text-xs font-mono font-semibold uppercase tracking-widest ${muted}`}>
-                GitHub Activity
-              </span>
+      {/* ══════ CODING HISTORY (GITHUB ACTIVITY) ══════ */}
+      <section ref={ghSection.ref} className="space-y-4">
+        <div className={`flex flex-col sm:flex-row sm:items-end justify-between gap-2 pb-2 transition-all duration-700 ${
+          ghSection.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+        }`}>
+          <div>
+            <div className="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wider text-neutral-500 mb-1">
+              <Terminal size={12} />
+              <span>GitHub Commit Ledger</span>
             </div>
-            <h2 className={`text-2xl sm:text-3xl font-bold tracking-tight ${text}`}>Coding History</h2>
-            <p className={`mt-1.5 text-sm ${muted}`}>
-              Contribution graph dari{' '}
-              <a href="https://github.com/dayattt111" target="_blank" rel="noopener noreferrer"
-                className="text-blue-500 hover:underline underline-offset-2 font-medium">@dayattt111</a>
-            </p>
+            <h2 className="text-xl sm:text-2xl font-bold tracking-tight">Coding History</h2>
           </div>
+          <a
+            href="https://github.com/dayattt111"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs text-blue-500 hover:underline font-mono inline-flex items-center gap-1"
+          >
+            <span>@dayattt111</span>
+            <ExternalLink size={11} />
+          </a>
+        </div>
 
-          {/* Graph card */}
-          <div className={`transition-all duration-700 ${ghSection.visible ? 'opacity-100 scale-100' : 'opacity-0 scale-[0.98]'}`}>
-            <div className={`rounded-lg border p-5 sm:p-7 ${isDark ? 'bg-neutral-900 border-neutral-800' : 'bg-neutral-50 border-neutral-200'}`}>
-              {!loading && (
-                <div className={`text-sm font-medium mb-5 ${muted}`}>
-                  <span className={`text-2xl font-extrabold ${text}`}>{totalContributions.toLocaleString()}</span>
-                  {' '}contributions in the last year
-                </div>
-              )}
+        {/* Activity Card */}
+        <div className={`rounded-xl border p-5 sm:p-6 transition-all duration-700 ${cardBg} ${
+          ghSection.visible ? 'opacity-100 scale-100' : 'opacity-0 scale-[0.98]'
+        }`}>
+          {!loading && (
+            <div className={`text-xs font-medium mb-4 ${muted}`}>
+              <span className={`text-lg font-bold ${text}`}>{totalContributions.toLocaleString()}</span>
+              {' '}contributions in the last year
+            </div>
+          )}
 
-              <div className="w-full">
-                {loading ? (
-                  <div className="flex justify-center items-center py-14">
-                    <div className={`w-8 h-8 border-2 border-t-transparent rounded-full animate-spin ${isDark ? 'border-neutral-600' : 'border-neutral-300'}`} />
+          <div className="w-full">
+            {loading ? (
+              <div className="flex justify-center items-center py-10">
+                <div className={`w-6 h-6 border-2 border-t-transparent rounded-full animate-spin ${
+                  isDark ? 'border-neutral-700' : 'border-neutral-300'
+                }`} />
+              </div>
+            ) : (
+              <div className="w-full overflow-x-auto pb-2 scrollbar-none">
+                <div className="flex flex-col w-full min-w-[680px]">
+                  {/* Month labels */}
+                  <div className="flex mb-1.5 ml-7">
+                    {Array.from({ length: 53 }).map((_, wi) => {
+                      const d = new Date(Date.now() - (52 - wi) * 604800000);
+                      const m = d.getMonth();
+                      const prev = wi > 0 ? new Date(Date.now() - (52 - (wi - 1)) * 604800000) : null;
+                      const isNew = !prev || m !== prev.getMonth();
+                      return (
+                        <div key={wi} className="flex-1 text-[9px]">
+                          {isNew && (
+                            <span className={muted}>
+                              {['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][m]}
+                            </span>
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
-                ) : (
-                  <div className="w-full overflow-x-auto pb-3">
-                    <div className="flex flex-col w-full min-w-[750px]">
-                      {/* Month labels */}
-                      <div className="flex mb-2 ml-8">
-                        {Array.from({ length: 53 }).map((_, wi) => {
-                          const d = new Date(Date.now() - (52 - wi) * 604800000);
-                          const m = d.getMonth();
-                          const prev = wi > 0 ? new Date(Date.now() - (52 - (wi - 1)) * 604800000) : null;
-                          const isNew = !prev || m !== prev.getMonth();
-                          return (
-                            <div key={wi} className="flex-1 text-[10px]">
-                              {isNew && (
-                                <span className={muted}>
-                                  {['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][m]}
-                                </span>
-                              )}
-                            </div>
-                          );
-                        })}
-                      </div>
-                      {/* Grid */}
-                      <div className="flex w-full gap-2">
-                        <div className={`flex flex-col justify-between text-[10px] w-6 py-1 h-[100px] ${muted}`}>
-                          {['Mon','Wed','Fri'].map((d) => <div key={d}>{d}</div>)}
+                  {/* Grid */}
+                  <div className="flex w-full gap-2">
+                    <div className={`flex flex-col justify-between text-[9px] w-5 py-0.5 h-[84px] ${muted}`}>
+                      {['Mon','Wed','Fri'].map((d) => <div key={d}>{d}</div>)}
+                    </div>
+                    <div className="flex flex-1 justify-between gap-[2.5px]">
+                      {Array.from({ length: 53 }).map((_, wi) => (
+                        <div key={wi} className="flex flex-col gap-[2.5px] flex-1">
+                          {Array.from({ length: 7 }).map((_, di) => {
+                            const idx = wi * 7 + di;
+                            const c = contributions[idx] || { level: 0, count: 0, date: '' };
+                            const delay = (6 - di) * 20 + wi * 1;
+                            return (
+                              <div
+                                key={di}
+                                className="aspect-square w-full rounded-[1.5px] transition-transform duration-150 hover:scale-125 cursor-pointer"
+                                style={{
+                                  backgroundColor: ghColors[c.level] || ghColors[0],
+                                  animation: graphVisible
+                                    ? `nodeSlideUp 0.35s cubic-bezier(0.34,1.56,0.64,1) ${delay}ms forwards`
+                                    : 'none',
+                                  opacity: 0,
+                                  transform: 'translateY(6px)',
+                                }}
+                                title={`${c.count} contributions on ${c.date}`}
+                              />
+                            );
+                          })}
                         </div>
-                        <div className="flex flex-1 justify-between gap-[3px]">
-                          {Array.from({ length: 53 }).map((_, wi) => (
-                            <div key={wi} className="flex flex-col gap-[3px] flex-1">
-                              {Array.from({ length: 7 }).map((_, di) => {
-                                const idx = wi * 7 + di;
-                                const c = contributions[idx] || { level: 0, count: 0, date: '' };
-                                const delay = (6 - di) * 30 + wi * 1.5;
-                                return (
-                                  <div
-                                    key={di}
-                                    className="aspect-square w-full rounded-[2px] transition-all duration-200 hover:scale-[1.4] cursor-pointer"
-                                    style={{
-                                      backgroundColor: ghColors[c.level] || ghColors[0],
-                                      animation: graphVisible
-                                        ? `nodeSlideUp 0.4s cubic-bezier(0.34,1.56,0.64,1) ${delay}ms forwards`
-                                        : 'none',
-                                      opacity: 0,
-                                      transform: 'translateY(10px)',
-                                    }}
-                                    title={`${c.count} contributions on ${c.date}`}
-                                  />
-                                );
-                              })}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                      {/* Legend */}
-                      <div className={`flex items-center justify-end gap-1 mt-3 text-[10px] ${muted}`}>
-                        <span>Less</span>
-                        {[0,1,2,3,4].map((l) => <div key={l} className="w-3 h-3 rounded-[2px]" style={{ backgroundColor: ghColors[l] }} />)}
-                        <span>More</span>
-                      </div>
+                      ))}
                     </div>
                   </div>
-                )}
+                  {/* Legend */}
+                  <div className={`flex items-center justify-end gap-1 mt-2 text-[10px] ${muted}`}>
+                    <span>Less</span>
+                    {[0,1,2,3,4].map((l) => (
+                      <div key={l} className="w-2.5 h-2.5 rounded-[1.5px]" style={{ backgroundColor: ghColors[l] }} />
+                    ))}
+                    <span>More</span>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-
-          <div className="text-center mt-8">
-            <Link
-              to="/about"
-              className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-md border font-semibold text-sm transition-colors ${
-                isDark
-                  ? 'border-neutral-700 bg-neutral-900 text-neutral-200 hover:bg-neutral-800'
-                  : 'border-neutral-200 bg-white text-neutral-800 hover:bg-neutral-50'
-              }`}
-            >
-              Learn More About Me <ArrowRight className="w-4 h-4" />
-            </Link>
+            )}
           </div>
         </div>
       </section>
 
       {/* ══════ FEATURED PROJECTS ══════ */}
-      <Projects limit={4} isHomePreview={true} />
+      <section className="space-y-4">
+        <Projects limit={4} isHomePreview={true} />
+      </section>
 
-      {/* Keyframe */}
+      {/* ══════ FOOTER ══════ */}
+      <Footer />
+
+      {/* Keyframe animation */}
       <style>{`
         @keyframes nodeSlideUp {
-          0% { opacity: 0; transform: translateY(10px) scale(0.8); }
-          60% { transform: translateY(-2px) scale(1.05); }
+          0% { opacity: 0; transform: translateY(6px) scale(0.9); }
           100% { opacity: 1; transform: translateY(0) scale(1); }
         }
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-10px); }
-        }
       `}</style>
-
-      <Footer />
     </div>
   );
 }
