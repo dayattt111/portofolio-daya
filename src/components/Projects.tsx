@@ -9,7 +9,7 @@ interface ProjectsProps {
   isHomePreview?: boolean;
 }
 
-export default function Projects({ limit = 4, isHomePreview = true }: ProjectsProps) {
+export default function Projects({ limit = 6, isHomePreview = true }: ProjectsProps) {
   const { theme } = useTheme();
 
   const featuredProjects: Project[] = PROJECTS.filter((p) => p.featured).slice(0, limit);
