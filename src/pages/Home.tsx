@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ChevronDown, MessageCircle, Award, Users, Rocket, Sparkles, Github, Instagram, ExternalLink, ArrowRight, Terminal } from 'lucide-react';
+import { ChevronDown, MessageCircle, Award, Users, Rocket, Sparkles, Github, Instagram, ArrowRight, Terminal } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';

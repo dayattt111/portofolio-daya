@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail, Heart, ArrowUp, Instagram, ExternalLink } from 'lucide-react';
+import { Github, Linkedin, Mail, Heart, ArrowUp, Instagram } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { Link } from 'react-router-dom';
 

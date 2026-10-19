@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { ExternalLink, Github, Terminal, FolderGit2 } from 'lucide-react';
 import Footer from '../components/Footer';
 import { useTheme } from '../contexts/ThemeContext';
-import { PROJECTS, Project } from '../data/projectsData';
+import { PROJECTS } from '../data/projectsData';
 import ProjectStack from '../components/ProjectStack';
 
 type CategoryFilter = 'Semua' | 'Full Stack' | 'Web App' | 'AI / Data' | 'System & Network';

@@ -1,6 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
+import Sidebar from './components/Sidebar';
 import { useTheme } from './contexts/ThemeContext';
 
 // Lazy load pages for better performance
@@ -35,18 +35,22 @@ function App() {
 
   return (
     <Router>
-      <div className={`min-h-screen overflow-x-hidden ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
-        <Navbar />
-        <Suspense fallback={<PageLoader />}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/projects" element={<ProjectsPage />} />
-            <Route path="/articles" element={<ArticlesPage />} />
-            <Route path="/certificates" element={<CertificatesPage />} />
-            <Route path="/skills" element={<SkillsPage />} />
-          </Routes>
-        </Suspense>
+      <div className={`min-h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'}`}>
+        <Sidebar />
+        <div className="lg:pl-64 xl:pl-72 flex flex-col min-h-screen transition-all duration-300">
+          <main className="flex-1">
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/projects" element={<ProjectsPage />} />
+                <Route path="/articles" element={<ArticlesPage />} />
+                <Route path="/certificates" element={<CertificatesPage />} />
+                <Route path="/skills" element={<SkillsPage />} />
+              </Routes>
+            </Suspense>
+          </main>
+        </div>
       </div>
     </Router>
   );

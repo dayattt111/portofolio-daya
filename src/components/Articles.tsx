@@ -19,7 +19,7 @@ export default function Articles({
   const { theme } = useTheme();
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const { articles, loading, error, refetch } = useMediumArticles();
+  const { articles, loading, refetch } = useMediumArticles();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
