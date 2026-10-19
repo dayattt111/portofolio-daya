@@ -26,8 +26,8 @@ interface NavItem {
 }
 
 interface SidebarProps {
-  isOpen?: boolean;
-  onToggle?: () => void;
+  isOpen: boolean;
+  onToggle: () => void;
 }
 
 const NAV_ITEMS: NavItem[] = [
@@ -45,7 +45,7 @@ const SOCIAL_LINKS = [
   { href: 'https://www.instagram.com/ur.dayaa/', icon: Instagram, label: 'Instagram' },
 ];
 
-export default function Sidebar({ onToggle }: SidebarProps) {
+export default function Sidebar({ isOpen, onToggle }: SidebarProps) {
   const { theme, toggleTheme } = useTheme();
   const location = useLocation();
   const isDark = theme === 'dark';
@@ -55,49 +55,65 @@ export default function Sidebar({ onToggle }: SidebarProps) {
 
   /* Style tokens */
   const navLinkActive = isDark
-    ? 'bg-neutral-900 text-neutral-100'
-    : 'bg-neutral-100 text-neutral-900';
+    ? 'bg-neutral-900 text-neutral-100 font-medium'
+    : 'bg-neutral-100 text-neutral-900 font-medium';
 
   const navLinkIdle = isDark
     ? 'text-neutral-400 hover:text-neutral-200 hover:bg-neutral-900/50'
     : 'text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100';
 
   return (
-    <aside className="w-full lg:sticky lg:top-12 space-y-8 max-h-[calc(100vh-5rem)] overflow-y-auto scrollbar-none pb-4">
-      {/* ── PROFILE HEADER ── */}
-      <div className="space-y-4">
-        {/* Top Header Row: Avatar & Toggle Close */}
-        <div className="flex items-start justify-between gap-3">
-          {/* Avatar Profil Bundar */}
-          <div className="relative inline-block shrink-0">
-            <img
-              src="/images/profile/pp.png"
-              alt="Muhammad Amin Hidayat"
-              className={`rounded-full w-24 h-24 object-cover border ${
-                isDark ? 'border-neutral-800 bg-neutral-900' : 'border-neutral-200 bg-neutral-100'
-              }`}
-              onError={(e) => {
-                (e.target as HTMLImageElement).src = '/profil.svg';
-              }}
-            />
-            {/* Active online indicator */}
-            <span className="absolute bottom-1 right-1 flex h-3.5 w-3.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60" />
-              <span
-                className={`relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500 border-2 ${
-                  isDark ? 'border-neutral-950' : 'border-white'
-                }`}
-              />
-            </span>
-          </div>
+    <>
+      {/* ── MOBILE BACKDROP OVERLAY ── */}
+      {isOpen && (
+        <div
+          onClick={onToggle}
+          className="lg:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-xs transition-opacity duration-300"
+          aria-hidden="true"
+        />
+      )}
 
-          {/* Toggle Button Tutup Sidebar */}
-          {onToggle && (
+      {/* ── FIXED RIGHT SIDEBAR (NO SCROLL, OVERFLOW HIDDEN) ── */}
+      <aside
+        className={`fixed top-4 right-4 bottom-4 w-[280px] lg:w-[290px] z-50 rounded-2xl border p-5 flex flex-col justify-between overflow-hidden shadow-2xl transition-transform duration-300 ease-in-out select-none ${
+          isDark
+            ? 'bg-neutral-950/95 border-neutral-800 text-neutral-200 backdrop-blur-xl'
+            : 'bg-white/95 border-neutral-200 text-neutral-800 backdrop-blur-xl shadow-neutral-200/60'
+        } ${isOpen ? 'translate-x-0' : 'translate-x-[calc(100%+2rem)] pointer-events-none'}`}
+        aria-label="Main Portfolio Sidebar"
+      >
+        {/* ── TOP SECTION: AVATAR & IDENTITY ── */}
+        <div className="space-y-3.5 flex-shrink-0">
+          {/* Header Row: Avatar + Toggle Close Button */}
+          <div className="flex items-start justify-between">
+            <div className="relative inline-block">
+              <img
+                src="/images/profile/pp.png"
+                alt="Muhammad Amin Hidayat"
+                className={`rounded-full w-16 h-16 object-cover border ${
+                  isDark ? 'border-neutral-800 bg-neutral-900' : 'border-neutral-200 bg-neutral-100'
+                }`}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = '/profil.svg';
+                }}
+              />
+              {/* Online indicator */}
+              <span className="absolute bottom-0 right-0 flex h-3.5 w-3.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60" />
+                <span
+                  className={`relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500 border-2 ${
+                    isDark ? 'border-neutral-950' : 'border-white'
+                  }`}
+                />
+              </span>
+            </div>
+
+            {/* Toggle Button untuk Menutup Sidebar */}
             <button
               onClick={onToggle}
               title="Tutup sidebar"
               aria-label="Tutup sidebar"
-              className={`p-2 rounded-lg border transition-colors ${
+              className={`p-2 rounded-xl border transition-colors ${
                 isDark
                   ? 'border-neutral-800 bg-neutral-900/80 text-neutral-400 hover:text-white hover:bg-neutral-800 hover:border-neutral-700'
                   : 'border-neutral-200 bg-neutral-50 text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100'
@@ -105,152 +121,154 @@ export default function Sidebar({ onToggle }: SidebarProps) {
             >
               <PanelRightClose size={16} />
             </button>
-          )}
-        </div>
-
-        {/* Nama & Handle + Verification Badge */}
-        <div className="space-y-1">
-          <div className="flex items-center gap-1.5">
-            <h2 className={`font-bold text-lg tracking-tight ${isDark ? 'text-white' : 'text-neutral-900'}`}>
-              Amin Hidayat
-            </h2>
-            <CheckCircle2
-              size={15}
-              className="text-blue-500 fill-blue-500/10 shrink-0"
-              aria-label="Verified Profile"
-            />
           </div>
-          <p className="text-xs font-mono text-neutral-500">@dayattt111</p>
-          <p className={`text-xs ${isDark ? 'text-neutral-400' : 'text-neutral-600'} pt-0.5`}>
-            Software Engineer &amp; Gen AI Specialist
-          </p>
-        </div>
 
-        {/* Quick Switcher / Utilities Toggle */}
-        <div className="flex items-center gap-2 pt-1">
-          <button
-            onClick={toggleTheme}
-            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium border transition-colors ${
-              isDark
-                ? 'border-neutral-800 bg-neutral-900 text-neutral-300 hover:text-white hover:border-neutral-700'
-                : 'border-neutral-200 bg-neutral-50 text-neutral-600 hover:text-neutral-900 hover:border-neutral-300'
-            }`}
-            aria-label="Toggle theme"
-          >
-            {isDark ? <Sun size={12} className="text-amber-400" /> : <Moon size={12} className="text-blue-500" />}
-            <span>{isDark ? 'Light' : 'Dark'}</span>
-          </button>
+          {/* Name & Handle */}
+          <div className="space-y-0.5">
+            <div className="flex items-center gap-1.5">
+              <h2 className={`font-bold text-base tracking-tight leading-tight ${isDark ? 'text-white' : 'text-neutral-900'}`}>
+                Amin Hidayat
+              </h2>
+              <CheckCircle2
+                size={14}
+                className="text-blue-500 fill-blue-500/10 shrink-0"
+                aria-label="Verified Profile"
+              />
+            </div>
+            <p className="text-[11px] font-mono text-neutral-500">@dayattt111</p>
+            <p className={`text-[11px] ${isDark ? 'text-neutral-400' : 'text-neutral-600'} leading-snug pt-0.5`}>
+              Software Engineer &amp; Gen AI Specialist
+            </p>
+          </div>
 
-          <div
-            className={`inline-flex items-center rounded-md border p-0.5 text-xs ${
-              isDark ? 'border-neutral-800 bg-neutral-900/50' : 'border-neutral-200 bg-neutral-50'
-            }`}
-          >
-            <span
-              className={`px-2 py-0.5 rounded text-[11px] font-medium ${
-                isDark ? 'bg-neutral-800 text-neutral-200' : 'bg-white text-neutral-900 shadow-xs'
+          {/* Utilities / Switcher */}
+          <div className="flex items-center gap-2 pt-0.5">
+            <button
+              onClick={toggleTheme}
+              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium border transition-colors ${
+                isDark
+                  ? 'border-neutral-800 bg-neutral-900 text-neutral-300 hover:text-white hover:border-neutral-700'
+                  : 'border-neutral-200 bg-neutral-50 text-neutral-600 hover:text-neutral-900 hover:border-neutral-300'
+              }`}
+              aria-label="Toggle theme"
+            >
+              {isDark ? <Sun size={12} className="text-amber-400" /> : <Moon size={12} className="text-blue-500" />}
+              <span>{isDark ? 'Light' : 'Dark'}</span>
+            </button>
+
+            <div
+              className={`inline-flex items-center rounded-lg border p-0.5 text-xs ${
+                isDark ? 'border-neutral-800 bg-neutral-900/50' : 'border-neutral-200 bg-neutral-50'
               }`}
             >
-              ID
-            </span>
-            <span className="px-2 py-0.5 text-[11px] text-neutral-500">
-              EN
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* ── VERTICAL NAVIGATION ── */}
-      <nav className="flex flex-wrap lg:flex-col gap-1" aria-label="Main Navigation">
-        {NAV_ITEMS.map((item) => {
-          const Icon = item.icon;
-          const active = isActive(item.path);
-
-          return (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                active ? navLinkActive : navLinkIdle
-              }`}
-            >
-              <div className="flex items-center gap-2.5">
-                <Icon size={16} className={active ? (isDark ? 'text-white' : 'text-neutral-900') : 'text-neutral-500'} />
-                <span>{item.label}</span>
-              </div>
-              {item.badge && (
-                <span
-                  className={`text-[10px] font-mono px-1.5 py-0.2 rounded border ${
-                    active
-                      ? isDark
-                        ? 'border-neutral-700 bg-neutral-800 text-neutral-300'
-                        : 'border-neutral-300 bg-white text-neutral-700'
-                      : isDark
-                        ? 'border-neutral-800 bg-neutral-900 text-neutral-500'
-                        : 'border-neutral-200 bg-neutral-100 text-neutral-600'
-                  }`}
-                >
-                  {item.badge}
-                </span>
-              )}
-            </Link>
-          );
-        })}
-      </nav>
-
-      {/* ── CONNECT & SOCIAL ── */}
-      <div className="space-y-3 pt-2">
-        {/* WhatsApp Quick Action */}
-        <a
-          href="https://wa.me/6288242763942?text=Halo%20Amin%2C%20saya%20melihat%20portfolio%20kamu!"
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`w-full inline-flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold border transition-colors ${
-            isDark
-              ? 'border-neutral-800 bg-neutral-900/60 text-neutral-300 hover:bg-neutral-800 hover:text-white hover:border-neutral-700'
-              : 'border-neutral-200 bg-neutral-50 text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900'
-          }`}
-        >
-          <div className="flex items-center gap-2">
-            <MessageCircle size={14} className="text-emerald-500" />
-            <span>Chat via WhatsApp</span>
-          </div>
-          <ExternalLink size={12} className="text-neutral-500" />
-        </a>
-
-        {/* Social Icons */}
-        <div className="flex items-center gap-1">
-          {SOCIAL_LINKS.map((s) => {
-            const SIcon = s.icon;
-            return (
-              <a
-                key={s.href}
-                href={s.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                title={s.label}
-                aria-label={s.label}
-                className={`p-2 rounded-lg text-neutral-500 transition-colors ${
-                  isDark
-                    ? 'hover:text-neutral-200 hover:bg-neutral-900'
-                    : 'hover:text-neutral-900 hover:bg-neutral-100'
+              <span
+                className={`px-2 py-0.5 rounded text-[11px] font-medium ${
+                  isDark ? 'bg-neutral-800 text-neutral-200' : 'bg-white text-neutral-900 shadow-xs'
                 }`}
               >
-                <SIcon size={15} />
-              </a>
+                ID
+              </span>
+              <span className="px-2 py-0.5 text-[11px] text-neutral-500">
+                EN
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* ── MIDDLE SECTION: VERTICAL NAVIGATION ── */}
+        <nav className="space-y-1 my-auto py-2" aria-label="Main Navigation">
+          {NAV_ITEMS.map((item) => {
+            const Icon = item.icon;
+            const active = isActive(item.path);
+
+            return (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`w-full flex items-center justify-between px-3 py-1.5 rounded-lg text-xs transition-colors ${
+                  active ? navLinkActive : navLinkIdle
+                }`}
+              >
+                <div className="flex items-center gap-2.5">
+                  <Icon size={15} className={active ? (isDark ? 'text-white' : 'text-neutral-900') : 'text-neutral-500'} />
+                  <span>{item.label}</span>
+                </div>
+                {item.badge && (
+                  <span
+                    className={`text-[9px] font-mono px-1.5 py-0.2 rounded border ${
+                      active
+                        ? isDark
+                          ? 'border-neutral-700 bg-neutral-800 text-neutral-300'
+                          : 'border-neutral-300 bg-white text-neutral-700'
+                        : isDark
+                          ? 'border-neutral-800 bg-neutral-900 text-neutral-500'
+                          : 'border-neutral-200 bg-neutral-100 text-neutral-600'
+                    }`}
+                  >
+                    {item.badge}
+                  </span>
+                )}
+              </Link>
             );
           })}
-        </div>
-      </div>
+        </nav>
 
-      {/* ── COPYRIGHT FOOTER ── */}
-      <div className="pt-4 border-t border-neutral-800/40">
-        <p className="text-xs text-neutral-500 leading-relaxed">
-          &copy; {new Date().getFullYear()} Muhammad Amin Hidayat.
-          <br />
-          Makassar, Indonesia.
-        </p>
-      </div>
-    </aside>
+        {/* ── BOTTOM SECTION: SOCIAL & COPYRIGHT ── */}
+        <div className="space-y-3 pt-2 border-t border-neutral-800/50 flex-shrink-0">
+          {/* WhatsApp Action */}
+          <a
+            href="https://wa.me/6288242763942?text=Halo%20Amin%2C%20saya%20melihat%20portfolio%20kamu!"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`w-full inline-flex items-center justify-between px-3 py-1.5 rounded-lg text-xs font-semibold border transition-colors ${
+              isDark
+                ? 'border-neutral-800 bg-neutral-900/60 text-neutral-300 hover:bg-neutral-800 hover:text-white hover:border-neutral-700'
+                : 'border-neutral-200 bg-neutral-50 text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900'
+            }`}
+          >
+            <div className="flex items-center gap-2">
+              <MessageCircle size={13} className="text-emerald-500" />
+              <span>Chat WhatsApp</span>
+            </div>
+            <ExternalLink size={11} className="text-neutral-500" />
+          </a>
+
+          {/* Social Media Links */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-1">
+              {SOCIAL_LINKS.map((s) => {
+                const SIcon = s.icon;
+                return (
+                  <a
+                    key={s.href}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={s.label}
+                    aria-label={s.label}
+                    className={`p-1.5 rounded-lg text-neutral-500 transition-colors ${
+                      isDark
+                        ? 'hover:text-neutral-200 hover:bg-neutral-900'
+                        : 'hover:text-neutral-900 hover:bg-neutral-100'
+                    }`}
+                  >
+                    <SIcon size={14} />
+                  </a>
+                );
+              })}
+            </div>
+
+            <span className="text-[10px] text-neutral-500 font-mono">
+              Makassar, ID
+            </span>
+          </div>
+
+          {/* Copyright text */}
+          <p className="text-[10px] text-neutral-500">
+            &copy; {new Date().getFullYear()} Muhammad Amin Hidayat.
+          </p>
+        </div>
+      </aside>
+    </>
   );
 }

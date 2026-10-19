@@ -38,11 +38,11 @@ function App() {
     <Router>
       <div className={`min-h-screen ${isDark ? 'dark bg-neutral-950 text-neutral-100' : 'bg-white text-neutral-900'} antialiased selection:bg-neutral-800 selection:text-white transition-colors duration-200 relative`}>
 
-        {/* Floating Toggle Button (Tampil saat sidebar ditutup) */}
+        {/* ── FLOATING OPEN BUTTON (Hadir saat sidebar ditutup) ── */}
         {!isSidebarOpen && (
           <button
             onClick={() => setIsSidebarOpen(true)}
-            className={`fixed top-8 right-6 lg:right-10 z-40 flex items-center gap-2 px-3.5 py-2 rounded-xl border shadow-lg backdrop-blur-md transition-all duration-200 hover:scale-105 active:scale-95 ${
+            className={`fixed top-6 right-6 z-40 flex items-center gap-2 px-3.5 py-2 rounded-xl border shadow-xl backdrop-blur-md transition-all duration-200 hover:scale-105 active:scale-95 ${
               isDark
                 ? 'border-neutral-800 bg-neutral-900/90 text-neutral-200 hover:bg-neutral-800 hover:border-neutral-700'
                 : 'border-neutral-200 bg-white/95 text-neutral-800 hover:bg-neutral-50 shadow-neutral-200/50'
@@ -55,40 +55,34 @@ function App() {
           </button>
         )}
 
-        {/* Centered Main Layout Container */}
-        <div className={`mx-auto px-6 py-12 lg:py-20 transition-all duration-300 ${
-          isSidebarOpen ? 'max-w-6xl' : 'max-w-4xl'
-        }`}>
-          <div className={`grid grid-cols-1 ${
-            isSidebarOpen ? 'lg:grid-cols-[1fr_260px] gap-12 lg:gap-16' : ''
-          } items-start`}>
-
-            {/* Main Content (Kolom Kiri di Desktop) */}
-            <main className="min-w-0 order-2 lg:order-1">
-              <Suspense fallback={<PageLoader />}>
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/about" element={<AboutPage />} />
-                  <Route path="/projects" element={<ProjectsPage />} />
-                  <Route path="/articles" element={<ArticlesPage />} />
-                  <Route path="/certificates" element={<CertificatesPage />} />
-                  <Route path="/skills" element={<SkillsPage />} />
-                </Routes>
-              </Suspense>
-            </main>
-
-            {/* Sidebar (Kolom Kanan di Desktop, Tetap Sticky saat Scroll) */}
-            {isSidebarOpen && (
-              <div className="order-1 lg:order-2 w-full">
-                <Sidebar
-                  isOpen={isSidebarOpen}
-                  onToggle={() => setIsSidebarOpen(false)}
-                />
-              </div>
-            )}
-
-          </div>
+        {/* ── MAIN CONTENT WRAPPER (RESPONSIF MENYESUAIKAN BUKA/TUTUP) ── */}
+        <div
+          className={`px-6 py-12 lg:py-20 transition-all duration-300 ease-in-out ${
+            isSidebarOpen
+              ? 'max-w-5xl mx-auto lg:mr-[305px] xl:mr-[320px]'
+              : 'max-w-5xl mx-auto'
+          }`}
+        >
+          <main className="min-w-0">
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/projects" element={<ProjectsPage />} />
+                <Route path="/articles" element={<ArticlesPage />} />
+                <Route path="/certificates" element={<CertificatesPage />} />
+                <Route path="/skills" element={<SkillsPage />} />
+              </Routes>
+            </Suspense>
+          </main>
         </div>
+
+        {/* ── FIXED NON-SCROLLABLE SIDEBAR ── */}
+        <Sidebar
+          isOpen={isSidebarOpen}
+          onToggle={() => setIsSidebarOpen((prev) => !prev)}
+        />
+
       </div>
     </Router>
   );
