@@ -32,3 +32,8 @@ repomix-output.xml
 # AI Agent Skills & Customizations
 .agents/
 SKILLS_GUIDE.md
+
+public/.well-known
+
+public/.well-known/*
+public/.well-known/discord
