@@ -14,6 +14,7 @@ import {
   Instagram,
   ExternalLink,
   CheckCircle2,
+  PanelRightClose,
 } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 
@@ -22,6 +23,11 @@ interface NavItem {
   label: string;
   icon: typeof LayoutDashboard;
   badge?: string;
+}
+
+interface SidebarProps {
+  isOpen?: boolean;
+  onToggle?: () => void;
 }
 
 const NAV_ITEMS: NavItem[] = [
@@ -39,7 +45,7 @@ const SOCIAL_LINKS = [
   { href: 'https://www.instagram.com/ur.dayaa/', icon: Instagram, label: 'Instagram' },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ onToggle }: SidebarProps) {
   const { theme, toggleTheme } = useTheme();
   const location = useLocation();
   const isDark = theme === 'dark';
@@ -57,30 +63,49 @@ export default function Sidebar() {
     : 'text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100';
 
   return (
-    <aside className="w-full lg:sticky lg:top-12 space-y-8">
+    <aside className="w-full lg:sticky lg:top-12 space-y-8 max-h-[calc(100vh-5rem)] overflow-y-auto scrollbar-none pb-4">
       {/* ── PROFILE HEADER ── */}
       <div className="space-y-4">
-        {/* Avatar Profil Bundar */}
-        <div className="relative inline-block">
-          <img
-            src="/images/profile/pp.png"
-            alt="Muhammad Amin Hidayat"
-            className={`rounded-full w-24 h-24 object-cover border ${
-              isDark ? 'border-neutral-800 bg-neutral-900' : 'border-neutral-200 bg-neutral-100'
-            }`}
-            onError={(e) => {
-              (e.target as HTMLImageElement).src = '/profil.svg';
-            }}
-          />
-          {/* Active online indicator */}
-          <span className="absolute bottom-1 right-1 flex h-3.5 w-3.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60" />
-            <span
-              className={`relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500 border-2 ${
-                isDark ? 'border-neutral-950' : 'border-white'
+        {/* Top Header Row: Avatar & Toggle Close */}
+        <div className="flex items-start justify-between gap-3">
+          {/* Avatar Profil Bundar */}
+          <div className="relative inline-block shrink-0">
+            <img
+              src="/images/profile/pp.png"
+              alt="Muhammad Amin Hidayat"
+              className={`rounded-full w-24 h-24 object-cover border ${
+                isDark ? 'border-neutral-800 bg-neutral-900' : 'border-neutral-200 bg-neutral-100'
               }`}
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = '/profil.svg';
+              }}
             />
-          </span>
+            {/* Active online indicator */}
+            <span className="absolute bottom-1 right-1 flex h-3.5 w-3.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60" />
+              <span
+                className={`relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500 border-2 ${
+                  isDark ? 'border-neutral-950' : 'border-white'
+                }`}
+              />
+            </span>
+          </div>
+
+          {/* Toggle Button Tutup Sidebar */}
+          {onToggle && (
+            <button
+              onClick={onToggle}
+              title="Tutup sidebar"
+              aria-label="Tutup sidebar"
+              className={`p-2 rounded-lg border transition-colors ${
+                isDark
+                  ? 'border-neutral-800 bg-neutral-900/80 text-neutral-400 hover:text-white hover:bg-neutral-800 hover:border-neutral-700'
+                  : 'border-neutral-200 bg-neutral-50 text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100'
+              }`}
+            >
+              <PanelRightClose size={16} />
+            </button>
+          )}
         </div>
 
         {/* Nama & Handle + Verification Badge */}
