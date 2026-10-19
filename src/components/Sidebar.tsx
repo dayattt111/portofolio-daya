@@ -14,7 +14,7 @@ import {
   Instagram,
   ExternalLink,
   CheckCircle2,
-  PanelLeftClose,
+  PanelRightClose,
 } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 
@@ -107,7 +107,7 @@ export default function Sidebar({ onToggle }: SidebarProps) {
                   : 'border-neutral-200 bg-white text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100'
               }`}
             >
-              <PanelLeftClose size={16} />
+              <PanelRightClose size={16} />
             </button>
           )}
         </div>

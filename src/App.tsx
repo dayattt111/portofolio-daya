@@ -1,6 +1,6 @@
 import { lazy, Suspense, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { PanelLeftOpen } from 'lucide-react';
+import { PanelRightOpen } from 'lucide-react';
 import Sidebar from './components/Sidebar';
 import { useTheme } from './contexts/ThemeContext';
 
@@ -38,27 +38,20 @@ function App() {
     <Router>
       <div className={`min-h-screen ${isDark ? 'dark bg-neutral-950 text-neutral-100' : 'bg-white text-neutral-900'} antialiased selection:bg-neutral-800 selection:text-white transition-colors duration-200`}>
 
-        {/* ── MAIN CONTAINER (MEMBAGI KOLOM KE LAYOUT UTAMA TANPA Z-INDEX OVERLAY) ── */}
+        {/* ── MAIN CONTAINER (MEMBAGI KOLOM KE LAYOUT UTAMA, SIDEBAR TETAP DI KANAN, NO Z-INDEX OVERLAY) ── */}
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 lg:py-16">
           <div
             className={`grid grid-cols-1 ${
               isSidebarOpen
-                ? 'lg:grid-cols-[280px_1fr] gap-8 lg:gap-14'
+                ? 'lg:grid-cols-[1fr_280px] gap-8 lg:gap-14'
                 : 'max-w-4xl mx-auto'
             } items-start transition-all duration-300 ease-in-out`}
           >
-            {/* ── KOLOM KIRI: SIDEBAR KHUSUS (STICKY SAAT SCROLL, NO Z-INDEX OVERLAY) ── */}
-            {isSidebarOpen && (
-              <aside className="w-full lg:sticky lg:top-10 self-start">
-                <Sidebar onToggle={() => setIsSidebarOpen(false)} />
-              </aside>
-            )}
-
-            {/* ── KOLOM KANAN: MAIN CONTENT ── */}
-            <main className="min-w-0 w-full">
+            {/* ── KOLOM KIRI (DESKTOP): MAIN CONTENT ── */}
+            <main className="min-w-0 w-full order-2 lg:order-1">
               {/* Tombol In-Flow untuk Membuka Kembali Sidebar (Muncul saat Sidebar Ditutup) */}
               {!isSidebarOpen && (
-                <div className="mb-6">
+                <div className="mb-6 flex justify-end">
                   <button
                     onClick={() => setIsSidebarOpen(true)}
                     className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl border text-xs font-semibold transition-all duration-150 hover:scale-[1.02] active:scale-95 ${
@@ -69,7 +62,7 @@ function App() {
                     title="Buka kembali sidebar"
                     aria-label="Buka kembali sidebar"
                   >
-                    <PanelLeftOpen size={15} className="text-blue-500" />
+                    <PanelRightOpen size={15} className="text-blue-500" />
                     <span>Buka Sidebar</span>
                   </button>
                 </div>
@@ -86,6 +79,13 @@ function App() {
                 </Routes>
               </Suspense>
             </main>
+
+            {/* ── KOLOM KANAN (DESKTOP): SIDEBAR KHUSUS (STICKY SAAT SCROLL, NO Z-INDEX OVERLAY) ── */}
+            {isSidebarOpen && (
+              <aside className="w-full lg:sticky lg:top-10 self-start order-1 lg:order-2">
+                <Sidebar onToggle={() => setIsSidebarOpen(false)} />
+              </aside>
+            )}
           </div>
         </div>
 
